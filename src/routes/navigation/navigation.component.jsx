@@ -1,21 +1,20 @@
 import { Fragment } from 'react'
 import { Outlet, Link } from 'react-router-dom'
 
-import { ReactComponent as Logo } from '../../assets/crown.svg'
 
-const Navigation = () => {
+const Navigation = ({ className }) => {
     return (
         <Fragment>
-            <div className="flex items-center justify-between font-bold text-white">
+            <div className="flex items-center justify-between font-bold font-playfairDisplay text-white">
                 {/* Logo */}
                 <Link to="/">
-                    <div className="text-3xl text-orangePeach">iSchool</div>
+                    <div className={`text-3xl text-orangePeach ${className}`}>iSchool</div>
                 </Link>
                 {/* Menu */}
-                <div className="hidden h-10 font-alata md:flex md:space-x-8">
+                <div className="hidden items-center h-10 font-alata md:flex md:space-x-8">
                     <div className="group">
                         <Link to="/">Home</Link>
-                        <div className="mx-2 group-hover:border-b group-hover:border-orangePeach"></div>
+                        <div className={`mx-2 group-hover:border-b group-hover:border-orangePeach`}></div>
                     </div>
                     <div className="group">
                         <Link to="/shop">Shop</Link>
@@ -28,7 +27,7 @@ const Navigation = () => {
                 </div>
 
                 {/* Hamburger Button */}
-                <div class="md:hidden">
+                <div className="md:hidden items-center">
                     <button
                         id="menu-btn"
                         type="button"
