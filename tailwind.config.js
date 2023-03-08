@@ -14,8 +14,22 @@ module.exports = {
             colors: {
                 whitePeach: '#F3F3E3',
                 orangePeach: '#FC6C4C',
+                heroPeach: '#e5d6d1',
+                buttonPeach: '#E95B42',
+                darkBlue: '#4D5881'
+            },
+            fontFamily: {
+                playfairDisplay: ['Playfair Display', 'serif'],
+                tapestry: ['Tapestry', 'cursive'],
             }
+
         },
+        screens: {
+            sm: '480px',
+            md: '768px',
+            lg: '976px',
+            xl: '1440px',
+        }
     },
     plugins: [],
 }
