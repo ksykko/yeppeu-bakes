@@ -14,7 +14,7 @@ module.exports = {
             colors: {
                 whitePeach: '#F3F3E3',
                 orangePeach: '#FC6C4C',
-                heroPeach: '#e5d6d1',
+                heroPeach: '#e9dad5',
                 buttonPeach: '#E95B42',
                 darkBlue: '#4D5881'
             },

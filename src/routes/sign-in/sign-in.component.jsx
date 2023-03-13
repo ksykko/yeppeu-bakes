@@ -32,7 +32,7 @@ const SignIn = () => {
                         {/* Top Content */}
                         <div className="p-6">
                             <h1 className="mt-8 mb-5 text-center">Logo Here</h1>
-                            <h1 className="mb-7 text-darkBlue font-bold font-playfairDisplay text-center">
+                            <h1 className="mb-7 text-darkBlue font-extrabold font-playfairDisplay text-center">
                                 Signin to your account
                             </h1>
                             <div className="space-y-3">
