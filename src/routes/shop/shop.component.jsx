@@ -7,7 +7,7 @@ const Shop = () => {
             <div>
                 <section id="shop" className="bg-orangePeach">
                     <div className="container max-w-6xl mx-auto px-6 py-3">
-                        <Navigation className="text-white" />
+                        <Navigation className="text-white" borderLine="bg-white" />
                     </div>
                 </section>
                 <h1>Shop Page</h1>

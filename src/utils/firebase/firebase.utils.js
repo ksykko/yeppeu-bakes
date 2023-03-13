@@ -67,6 +67,7 @@ export const createUserProfileDocumentFromAuth = async(
     console.log(userSnapshot.exists());
 
 
+    // If user does not exist, create user
     if (!userSnapshot.exists()) {
         const { displayName, email } = userAuth;
         const createdAt = new Date();
@@ -90,7 +91,7 @@ export const createUserProfileDocumentFromAuth = async(
 // Create user with email and password
 export const createAuthUserWithEmailAndPassword = async(email, password) => {
 
-    // Check if email and password are valid
+    // Check if email and password have been provided
     if (!email || !password) return;
 
     return await createUserWithEmailAndPassword(auth, email, password)

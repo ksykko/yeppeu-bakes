@@ -16,7 +16,10 @@ module.exports = {
                 orangePeach: '#FC6C4C',
                 heroPeach: '#e9dad5',
                 buttonPeach: '#E95B42',
-                darkBlue: '#4D5881'
+                darkBlue: '#4D5881',
+                yellowText: '#FAB564',
+                lightblueText: '#8D99C0',
+                facebookBg: '#5271AF'
             },
             fontFamily: {
                 playfairDisplay: ['Playfair Display', 'serif'],

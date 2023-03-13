@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import {
     signInWithGooglePopup,
     createUserProfileDocumentFromAuth,
@@ -14,7 +15,6 @@ const SignIn = () => {
         const userDocRef = await createUserProfileDocumentFromAuth(user)
     }
 
-    const altAtrribute = { text: 'text-white', borderLine: 'bg-white' }
 
     return (
         <Fragment>
@@ -22,43 +22,89 @@ const SignIn = () => {
                 {/* Navbar */}
                 <nav id="sign-in" className="bg-orangePeach">
                     <div className="container max-w-6xl mx-auto px-6 py-3">
-                        <Navigation className=" text-white" />
+                        <Navigation className="text-white" borderLine="bg-white" />
                     </div>
                 </nav>
                 {/* Global Container */}
-                <div className="max-w-lg mx-auto pt-10">
+                <div className="max-w-lg mx-auto pt-1">
                     {/* Card Container */}
                     <div className="flex-col m-6 space-y-10 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 ">
                         {/* Top Content */}
-                        <div className="p-6">
+                        <div className="p-2 px-14">
                             <h1 className="mt-8 mb-5 text-center">Logo Here</h1>
-                            <h1 className="mb-7 text-darkBlue font-extrabold font-playfairDisplay text-center">
+                            <h1 className="mb-4 text-darkBlue font-extrabold font-playfairDisplay text-center">
                                 Signin to your account
                             </h1>
                             <div className="space-y-3">
-                                <p className=" text-sm text-gray-500">Email</p>
+                                {/* facebook logo span with button */}
+                                <button className="w-full p-2 text-sm bg-facebookBg text-white rounded-md uppercase hover:opacity-90">
+                                    Sign in with Facebook
+                                </button>
+                                <button
+                                    onClick={logGoogleUser}
+                                    className="w-full p-2 text-sm bg-red-500 text-white rounded-md uppercase hover:opacity-90"
+                                >
+                                    Sign in with Google
+                                </button>
+                            </div>
+                            <div className="inline-flex items-center justify-center w-full">
+                                <hr className="w-64 h-px my-6 bg-gray-300 border-0" />
+                                <span className="absolute px-3 font-medium text-slate-400 uppercase text-xs -translate-x-1/2 bg-white left-1/2 font-playfairDisplay">
+                                    or
+                                </span>
+                            </div>
+                            <div className="space-y-3">
+                                <p className=" text-sm text-darkBlue font-semibold">
+                                    Email
+                                </p>
                                 <input
                                     type="email"
                                     name=""
                                     id=""
-                                    className="w-full p-3 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light"
+                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-darkBlue"
                                     placeholder="example@gmail.com"
                                 />
-                                <p className=" text-sm text-gray-500">Password</p>
+                                <p className=" text-sm text-darkBlue font-semibold">
+                                    Password
+                                </p>
                                 <input
                                     type="password"
                                     name=""
                                     id=""
-                                    className="w-full p-3 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light"
+                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-darkBlue"
                                     placeholder="********"
                                 />
+                                <div className="flex justify-between">
+                                    <div className="flex items-center mb-4">
+                                        <input
+                                            id="default-checkbox"
+                                            type="checkbox"
+                                            value=""
+                                            className="w-4 h-4 text-darkBlue bg-darkBlue border-darkBlue accent-darkBlue rounded focus:ring-1"
+                                        />
+                                        <label
+                                            htmlFor="default-checkbox"
+                                            className="ml-2 text-xs font-semibold text-darkBlue"
+                                        >
+                                            Remember me
+                                        </label>
+                                    </div>
+                                    <div className=" text-xs font-semibold text-yellowText">
+                                        Forgot Password?
+                                    </div>
+                                </div>
+                            </div>
+                            <button className="w-full p-2 bg-orangePeach text-white rounded-md mt-3 hover:opacity-90">
+                                Sign in
+                            </button>
+                            <div className="text-center my-4 mb-5 text-xs font-semibold text-lightblueText">
+                                Don't have an account?{' '}
+                                <span className=" text-yellowText">
+                                    <Link to="/sign-up">Sign Up Free!</Link>
+                                </span>
                             </div>
                         </div>
                     </div>
-
-                    {/* <div className="m-6 space-y-10 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 md:m-0 p-32">
-
-                    </div> */}
                 </div>
             </div>
         </Fragment>
