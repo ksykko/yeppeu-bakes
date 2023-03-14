@@ -1,14 +1,3 @@
-
-
-/*
-    default button
-
-    facebook sign in button
-
-    google sign in button
-
-*/
-
 const BUTTON_TYPE_CLASSES = {
     default: 'btn-default',
     google: 'btn-google-signin',
