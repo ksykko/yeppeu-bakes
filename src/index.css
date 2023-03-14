@@ -63,6 +63,8 @@ code {
     transform: rotate(-45deg) translateY(6px) translateX(-6px);
 }
 
+
+/** Directories */
 .categories-container {
     @apply flex flex-col justify-between w-full space-y-6 text-2xl text-white uppercase;
 }
@@ -75,6 +77,22 @@ code {
     @apply absolute px-6 duration-200 w-52 bottom-8 md:bottom-8 md:left-0 md:px-10 group-hover:scale-110 group-hover:text-black font-playfairDisplay;
 }
 
+
+/** Buttons */
+.btn-default {
+    @apply w-full p-2 bg-orangePeach text-white rounded-md mt-3 hover:opacity-90;
+}
+
+.btn-google-signin {
+    @apply w-full p-2 text-sm bg-red-500 text-white rounded-md uppercase hover:opacity-90;
+}
+
+.btn-facebook-signin {
+    @apply w-full p-2 text-sm bg-facebookBg text-white rounded-md uppercase hover:opacity-90;
+}
+
+
+/** Hero Section */
 #hero {
     background-image: url('/src/assets/hero-2.jpg');
     background-size: cover;
