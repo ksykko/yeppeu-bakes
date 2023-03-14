@@ -6,6 +6,7 @@ import {
 } from '../../utils/firebase/firebase.utils'
 
 import Navigation from '../navigation/navigation.component'
+import Button from '../../components/button/button.component'
 
 // import SignUpForm from '../../components/sign-up-form/sign-up-form.component'
 
@@ -15,14 +16,16 @@ const SignIn = () => {
         const userDocRef = await createUserProfileDocumentFromAuth(user)
     }
 
-
     return (
         <Fragment>
             <div className="h-screen bg-heroPeach">
                 {/* Navbar */}
                 <nav id="sign-in" className="bg-orangePeach">
                     <div className="container max-w-6xl mx-auto px-6 py-3">
-                        <Navigation className="text-white" borderLine="bg-white" />
+                        <Navigation
+                            className="text-white"
+                            borderLine="bg-white"
+                        />
                     </div>
                 </nav>
                 {/* Global Container */}
@@ -37,15 +40,15 @@ const SignIn = () => {
                             </h1>
                             <div className="space-y-3">
                                 {/* facebook logo span with button */}
-                                <button className="w-full p-2 text-sm bg-facebookBg text-white rounded-md uppercase hover:opacity-90">
+                                <Button buttonType="facebook">
                                     Sign in with Facebook
-                                </button>
-                                <button
+                                </Button>
+                                <Button
+                                    buttonType="google"
                                     onClick={logGoogleUser}
-                                    className="w-full p-2 text-sm bg-red-500 text-white rounded-md uppercase hover:opacity-90"
                                 >
                                     Sign in with Google
-                                </button>
+                                </Button>
                             </div>
                             <div className="inline-flex items-center justify-center w-full">
                                 <hr className="w-64 h-px my-6 bg-gray-300 border-0" />
@@ -94,9 +97,9 @@ const SignIn = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button className="w-full p-2 bg-orangePeach text-white rounded-md mt-3 hover:opacity-90">
+                            <Button buttonType="default" type="submit">
                                 Sign in
-                            </button>
+                            </Button>
                             <div className="text-center my-4 mb-5 text-xs font-semibold text-lightblueText">
                                 Don't have an account?{' '}
                                 <span className=" text-yellowText">

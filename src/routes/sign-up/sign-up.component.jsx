@@ -3,7 +3,6 @@ import Navigation from '../navigation/navigation.component'
 import SignupForm from '../../components/signup-form/signup-form.component'
 
 
-
 const SignUp = () => {
 
     return (

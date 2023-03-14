@@ -1,13 +1,14 @@
 import { Routes, Route } from 'react-router-dom'
 
-import Navigation from './routes/navigation/navigation.component'
 import Home from './routes/home/home.component'
 import SignIn from './routes/sign-in/sign-in.component'
-import { useState } from 'react'
 import Shop from './routes/shop/shop.component'
 import SignUp from './routes/sign-up/sign-up.component'
+import { useHamburgerMenu } from './hooks/script'
 
 const App = () => {
+    useHamburgerMenu()
+
     return (
         <Routes>
             <Route path="/" element={<Home />} />

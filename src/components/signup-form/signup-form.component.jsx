@@ -2,10 +2,11 @@ import { useState } from 'react'
 import { Fragment } from 'react'
 import {
     createAuthUserWithEmailAndPassword,
-    createUserProfileDocumentFromAuth
+    createUserProfileDocumentFromAuth,
 } from '../../utils/firebase/firebase.utils'
 
 import FormInput from '../form-input/form-input.component'
+import Button from '../button/button.component'
 
 const defaultFormFields = {
     displayName: '',
@@ -60,7 +61,7 @@ const SignupForm = () => {
             {/* Global Container */}
             <div className="max-w-lg mx-auto pt-1">
                 {/* Card Container */}
-                <div className="flex-col m-6 space-y-10 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+                <div className="flex-col m-6 space-y-10 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 pb-12">
                     {/* Top Content */}
                     <div className="p-2 px-14">
                         <h1 className="mb-4 mt-10 text-darkBlue font-extrabold font-playfairDisplay text-center">
@@ -137,12 +138,12 @@ const SignupForm = () => {
                                     </div>
                                 </div>
                             </div>
-                            <button
+                            <Button
+                                buttonType="default"
                                 type="submit"
-                                className="w-full p-2 bg-orangePeach text-white rounded-md mt-3 mb-12 hover:opacity-90"
                             >
                                 Create an Account
-                            </button>
+                            </Button>
                         </form>
                     </div>
                 </div>
