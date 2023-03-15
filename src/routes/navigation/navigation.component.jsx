@@ -1,35 +1,62 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { Outlet, Link } from 'react-router-dom'
 
+import { UserContext } from '../../contexts/user.context'
+
+import { signOutUser } from '../../utils/firebase/firebase.utils'
+import { useHamburgerMenu } from '../../hooks/script'
 
 const Navigation = ({ className, borderLine }) => {
+
+    const { currentUser } = useContext(UserContext)
 
     // set borderLine to orangePeach if not specified
     if (!borderLine) {
         borderLine = 'orangePeach'
     }
 
+    useHamburgerMenu()
+
     return (
         <Fragment>
             <div className="flex items-center justify-between font-bold font-playfairDisplay text-white">
                 {/* Logo */}
                 <Link to="/">
-                    <div className={`text-3xl text-orangePeach ${className}`}>iSchool</div>
+                    <div className={`text-3xl text-orangePeach ${className}`}>
+                        iSchool
+                    </div>
                 </Link>
                 {/* Menu */}
                 <div className="hidden items-center h-10 font-alata md:flex md:space-x-8">
                     <div className="group">
                         <Link to="/">Home</Link>
-                        <div className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}></div>
+                        <div
+                            className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}
+                        ></div>
                     </div>
                     <div className="group">
                         <Link to="/shop">Shop</Link>
-                        <div className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}></div>
+                        <div
+                            className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}
+                        ></div>
                     </div>
-                    <div className="group">
-                        <Link to="/sign-in">Sign In</Link>
-                        <div className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}></div>
-                    </div>
+
+                    {/* if currentUser is true, show Sign Out link */}
+                    {currentUser ? (
+                        <div className="group">
+                            <span onClick={signOutUser}>Sign Out</span>
+                            <div
+                                className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}
+                            ></div>
+                        </div>
+                    ) : (
+                        <div className="group">
+                            <Link to="/sign-in">Sign In</Link>
+                            <div
+                                className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}
+                            ></div>
+                        </div>
+                    )}
                 </div>
 
                 {/* Hamburger Button */}
