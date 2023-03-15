@@ -13,6 +13,9 @@ module.exports = {
         extend: {
             colors: {
                 whitePeach: '#F3F3E3',
+                lightPeach: '#FCA999',
+                lightestPeach: '#FEFCF3',
+                darkPeach: '#E97777',
                 orangePeach: '#FC6C4C',
                 heroPeach: '#e9dad5',
                 buttonPeach: '#E95B42',
