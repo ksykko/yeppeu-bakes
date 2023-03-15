@@ -1,19 +1,21 @@
-import { useState } from 'react'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
+
 import {
     signInWithGooglePopup,
     createUserProfileDocumentFromAuth,
-    signInAuthUserWithEmailAndPassword
+    signInAuthUserWithEmailAndPassword,
 } from '../../utils/firebase/firebase.utils'
 
 import FormInput from '../form-input/form-input.component'
 import Button from '../button/button.component'
 
+
 const defaultFormFields = {
     email: '',
     password: '',
 }
+
 
 const SigninForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields)
@@ -24,19 +26,20 @@ const SigninForm = () => {
     }
 
     const signInWithGoogle = async () => {
-        const { user } = await signInWithGooglePopup()
-        await createUserProfileDocumentFromAuth(user)
+        await signInWithGooglePopup()
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault()
 
         try {
-            const response = await signInAuthUserWithEmailAndPassword(email, password)
-
-            console.log(response)
+            const { user } = await signInAuthUserWithEmailAndPassword(
+                email,
+                password
+            )
 
             resetFormFields()
+
         } catch (error) {
             switch (error.code) {
                 case 'auth/wrong-password':
@@ -49,12 +52,6 @@ const SigninForm = () => {
                     console.log(error)
                     alert('Something went wrong, please try again')
             }
-
-
-            // if (error.code === 'auth/wrong-password') {
-            //     alert('Wrong password')
-            // }
-            console.log(error)
         }
     }
 
@@ -81,7 +78,10 @@ const SigninForm = () => {
                             <Button buttonType="facebook">
                                 Sign in with Facebook
                             </Button>
-                            <Button buttonType="google" onClick={signInWithGoogle}>
+                            <Button
+                                buttonType="google"
+                                onClick={signInWithGoogle}
+                            >
                                 Sign in with Google
                             </Button>
                         </div>
@@ -101,6 +101,7 @@ const SigninForm = () => {
                                     name="email"
                                     className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-darkBlue"
                                     placeholder="example@gmail.com"
+                                    value={email}
                                     onChange={handleChange}
                                 />
                                 <FormInput
@@ -109,6 +110,7 @@ const SigninForm = () => {
                                     name="password"
                                     className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-darkBlue"
                                     placeholder="********"
+                                    value={password}
                                     onChange={handleChange}
                                 />
                                 <div className="flex justify-between">

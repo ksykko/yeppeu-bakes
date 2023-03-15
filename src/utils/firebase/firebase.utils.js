@@ -5,7 +5,10 @@ import {
     signInWithPopup,
     GoogleAuthProvider,
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    FacebookAuthProvider,
+    signOut,
+    onAuthStateChanged
 } from 'firebase/auth'
 import {
     getFirestore,
@@ -31,11 +34,13 @@ const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
 
 
+// Initialize Google Auth Provider
 const provider = new GoogleAuthProvider();
 
 provider.setCustomParameters({
     prompt: 'select_account'
 });
+
 
 // Initialize Auth
 export const auth = getAuth();
@@ -110,3 +115,20 @@ export const signInAuthUserWithEmailAndPassword = async(email, password) => {
 
     return await signInWithEmailAndPassword(auth, email, password)
 }
+
+
+// Initialize Facebook Auth Provider
+const facebookProvider = new FacebookAuthProvider();
+
+
+// Sign in with Facebook
+export const signInWithFacebookPopup = () => signInWithPopup(auth, facebookProvider);
+
+
+// Sign out
+export const signOutUser = async() => await signOut(auth)
+
+
+// Check if user is signed in
+export const onAuthStateChangedListener = (callback) =>
+    onAuthStateChanged(auth, callback)
