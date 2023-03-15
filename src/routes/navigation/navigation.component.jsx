@@ -15,19 +15,24 @@ const Navigation = ({ className, borderLine }) => {
         borderLine = 'orangePeach'
     }
 
+    // set className to empty string if not specified
+    if (!className) {
+        className = 'text-orangePeach'
+    }
+
     useHamburgerMenu()
 
     return (
         <Fragment>
-            <div className="flex items-center justify-between font-bold font-playfairDisplay text-white">
+            <div className="flex items-center justify-between font-bold font-playfairDisplay">
                 {/* Logo */}
                 <Link to="/">
-                    <div className={`text-3xl text-orangePeach ${className}`}>
+                    <div className={`text-xl text-orangePeach ${className}`}>
                         iSchool
                     </div>
                 </Link>
                 {/* Menu */}
-                <div className="hidden items-center h-10 font-alata md:flex md:space-x-8">
+                <div className={`hidden items-center h-10 font-alata text-sm md:flex md:space-x-8 ${className}`}>
                     <div className="group">
                         <Link to="/">Home</Link>
                         <div

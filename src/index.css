@@ -34,7 +34,7 @@ code {
     height: 2px;
     top: 0;
     left: 0;
-    background: #fff;
+    background: #FC6C4C;
     transform: rotate(0);
     transition: all 0.5s;
 }
@@ -94,7 +94,7 @@ code {
 
 /** Hero Section */
 #hero {
-    background-image: url('/src/assets/hero-2.jpg');
+    background-image: url('/src/assets/hero-bg3.jpg');
     background-size: cover;
     background-repeat: no-repeat;
 }
