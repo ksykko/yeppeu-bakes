@@ -80,7 +80,7 @@ code {
 
 /** Buttons */
 .btn-default {
-    @apply w-full p-2 bg-orangePeach text-white rounded-md mt-3 hover:opacity-90;
+    @apply w-full p-2 bg-lightBrown text-white rounded-md mt-3 hover:opacity-90;
 }
 
 .btn-google-signin {

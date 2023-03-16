@@ -1,21 +1,24 @@
-import { Fragment } from 'react'
-import NavigationBar from '../../components/navigation-bar/navigation-bar.component'
+import { Fragment, useContext } from 'react'
 
-import SHOP_DATA from '../../shop-data.json'
+import { BakedGoodsContext } from '../../contexts/baked-goods.context'
+
+import NavigationBar from '../../components/navigation-bar/navigation-bar.component'
+import ProductCard from '../../components/product-card/product-card.component'
+
 
 const Shop = () => {
+    const {bakedGoods} = useContext(BakedGoodsContext)
+
     return (
         <Fragment>
             <NavigationBar />
             <div className="container max-w-6xl mx-auto px-6 py-3">
-                <div className="grid gap-10 lg:grid-cols-3">
-                    {SHOP_DATA.map(({ id, name, imageUrl }) => (
-                        // <div key={id} className="relative overflow-hidden group">
-                        //     {/* <img src={imageUrl} alt="" /> */}
-                        //     <div className="item-gradient"></div>
-                        //     <div className="category-title">{name}</div>
-                        // </div>
-                        <div>{name}</div>
+                <h1 className="text-3xl font-bold text-center text-darkestBrown font-playfairDisplay mb-12 mt-6">
+                    Our Baked Goods
+                </h1>
+                <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                    {bakedGoods.map((bakedGood) => (
+                        <ProductCard key={bakedGood.id} product={bakedGood} />
                     ))}
                 </div>
             </div>
