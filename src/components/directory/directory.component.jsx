@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 
 const Directory = ({ yeppeuCookies }) => {
     return (
-        <div className="grid grid-cols-3 gap-10">
+        <div className="grid gap-10 lg:grid-cols-3">
             {yeppeuCookies.map((cookies) => (
                 <CategoryItem key={cookies.id} category={cookies} />
             ))}

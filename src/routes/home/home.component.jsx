@@ -19,19 +19,19 @@ const Home = () => {
         {
             id: 1,
             title: 'Chocolate Chip Cookie',
-            styling: 'rounded-tl-[4.5rem] mt-16',
+            styling: 'rounded-tl-[4.5rem] lg:mt-16',
             imageUrl: ChocoChip,
         },
         {
             id: 2,
             title: 'White Chocolate Chip Almonds Cookie',
-            midStyling: 'mb-12',
+            midStyling: 'lg:mb-16',
             imageUrl: Almonds,
         },
         {
             id: 3,
             title: 'Red Velvet with Cream Cheese Cookie',
-            styling: 'rounded-br-[4.5rem] mt-16',
+            styling: 'rounded-br-[4.5rem] lg:mt-16',
             imageUrl: RedVelvet,
         },
     ]
@@ -44,7 +44,7 @@ const Home = () => {
                     <div className="relative flex items-center justify-start min-h-screen font-playfairDisplay">
                         <div className="bg-heroPeach bg-opacity-40 max-w-lg rounded-xl p-8 space-y-4 shadow-lg -mt-28">
                             <p className="font-bold text-5xl text-darkestBrown">
-                                Discover Our Newly Fresh Bakes
+                                Homebaked catered to your sweet tooth!
                             </p>
                             <Button className="bg-lightBrown text-white font-bold py-2 px-4 rounded-lg hover:opacity-90">
                                 <Link to="/shop">Shop Now</Link>
@@ -101,8 +101,13 @@ const Home = () => {
                 <div className="py-16">
                     <div className="w-9/12 mx-auto">
                         <div className="text-center mb-12">
-                            <p className="text-2xl font-bold">Our Products</p>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, sapiente?</p>
+                            <p className="text-2xl font-bold font-playfairDisplay">
+                                Our Products
+                            </p>
+                            <p>
+                                Lorem ipsum dolor sit, amet consectetur
+                                adipisicing elit. Ab, sapiente?
+                            </p>
                         </div>
                         <Directory yeppeuCookies={yeppeuCookies} />
                     </div>
