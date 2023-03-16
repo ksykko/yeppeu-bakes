@@ -2,17 +2,20 @@ import { Fragment, useContext } from 'react'
 import { Outlet, Link } from 'react-router-dom'
 
 import { UserContext } from '../../contexts/user.context'
+import { CartContext } from '../../contexts/cart-context'
+
+import BagIcon from '../../components/bag-icon/bag-icon.component'
+import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
 
 import { signOutUser } from '../../utils/firebase/firebase.utils'
-import { useHamburgerMenu } from '../../hooks/script'
 
 const Navigation = ({ className, borderLine }) => {
-
     const { currentUser } = useContext(UserContext)
+    const { isCartOpen } = useContext(CartContext)
 
     // set borderLine to orangePeach if not specified
     if (!borderLine) {
-        borderLine = 'orangePeach'
+        borderLine = 'black'
     }
 
     // set className to empty string if not specified
@@ -20,19 +23,20 @@ const Navigation = ({ className, borderLine }) => {
         className = 'text-darkestBrown'
     }
 
-    useHamburgerMenu()
 
     return (
         <Fragment>
             <div className="flex items-center justify-between font-bold font-playfairDisplay">
                 {/* Logo */}
                 <Link to="/">
-                    <div className={`text-xl font-extrabold text-darkestBrown ${className}`}>
+                    <div className={`text-xl font-extrabold ${className}`}>
                         YEPPEU BAKES
                     </div>
                 </Link>
                 {/* Menu */}
-                <div className={`hidden items-center h-10 font-alata text-md md:flex md:space-x-8 ${className}`}>
+                <div
+                    className={`hidden items-center h-10 font-alata text-md md:flex md:space-x-8 ${className}`}
+                >
                     <div className="group">
                         <Link to="/">Home</Link>
                         <div
@@ -62,6 +66,8 @@ const Navigation = ({ className, borderLine }) => {
                             ></div>
                         </div>
                     )}
+                    <BagIcon />
+                    {isCartOpen && <CartDropdown />}
                 </div>
 
                 {/* Hamburger Button */}

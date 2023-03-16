@@ -5,7 +5,7 @@ const FormInput = ({ label, ...otherProps }) => {
         <Fragment>
             {/* If label exists, render it */}
             {label && (
-                <p className=" text-sm text-darkBlue font-semibold">{label}</p>
+                <p className=" text-sm text-darkestBrown font-semibold">{label}</p>
             )}
             <input {...otherProps}/>
         </Fragment>

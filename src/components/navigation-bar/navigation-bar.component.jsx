@@ -2,9 +2,9 @@ import Navigation from "../../routes/navigation/navigation.component"
 
 const NavigationBar = () => {
     return (
-        <nav className="bg-white shadow-md">
+        <nav className="bg-lightestPeach shadow-md">
             <div className="container max-w-6xl mx-auto px-6 py-3">
-                <Navigation className="text-darkestBrown" borderLine="bg-darkestBrown" />
+                <Navigation borderLine="black" />
             </div>
         </nav>
     )

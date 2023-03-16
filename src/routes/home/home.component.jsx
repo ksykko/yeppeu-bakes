@@ -91,7 +91,7 @@ const Home = () => {
                                     <p className="text-2xl font-bold font-playfairDisplay">
                                         100% Freshly Baked
                                     </p>
-                                    <p>Durable items</p>
+                                    <p>Authentic Homebaked</p>
                                 </div>
                             </div>
                         </div>
