@@ -17,7 +17,7 @@ const Navigation = ({ className, borderLine }) => {
 
     // set className to empty string if not specified
     if (!className) {
-        className = 'text-orangePeach'
+        className = 'text-darkestBrown'
     }
 
     useHamburgerMenu()
@@ -27,12 +27,12 @@ const Navigation = ({ className, borderLine }) => {
             <div className="flex items-center justify-between font-bold font-playfairDisplay">
                 {/* Logo */}
                 <Link to="/">
-                    <div className={`text-xl text-orangePeach ${className}`}>
-                        iSchool
+                    <div className={`text-xl font-extrabold text-darkestBrown ${className}`}>
+                        YEPPEU BAKES
                     </div>
                 </Link>
                 {/* Menu */}
-                <div className={`hidden items-center h-10 font-alata text-sm md:flex md:space-x-8 ${className}`}>
+                <div className={`hidden items-center h-10 font-alata text-md md:flex md:space-x-8 ${className}`}>
                     <div className="group">
                         <Link to="/">Home</Link>
                         <div
