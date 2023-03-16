@@ -22,7 +22,11 @@ module.exports = {
                 darkBlue: '#4D5881',
                 yellowText: '#FAB564',
                 lightblueText: '#8D99C0',
-                facebookBg: '#5271AF'
+                facebookBg: '#5271AF',
+                darkestBrown: '#1A120B',
+                lightBrown: '#895330',
+                lightBeige: '#E5E5CB',
+                Beige: '#D5CEA3'
             },
             fontFamily: {
                 playfairDisplay: ['Playfair Display', 'serif'],
