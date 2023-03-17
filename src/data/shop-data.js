@@ -43,9 +43,8 @@ export const SHOP_DATA = [{
         "id": 4,
         "name": "Assorted Cookies",
         "desc": "Double the flavor, double the fun",
-        "imageUrl1": Chocochip,
-        imageUrl: [{ Chocochip2 }, { Whitechocochip2 }, { Redvelvet2 }, { Assorted }],
-        "imageUrl": Assorted2,
+        "imageUrl1": Assorted2,
+        imageUrl: [{ Chocochip2 }, { Whitechocochip2 }, { Redvelvet2 }, { Assorted }, { Assorted2 }],
         "price": 250
     },
     {
