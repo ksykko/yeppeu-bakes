@@ -1,10 +1,12 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
-import Navigation from '../navigation/navigation.component'
+import { UserContext } from '../../contexts/user.context'
 
+import Navigation from '../navigation/navigation.component'
 import Directory from '../../components/directory/directory.component'
 import Button from '../../components/button/button.component'
+import HamburgerMenu from '../../components/hamburger-menu/hamburger-menu.component'
 
 import ChocoChip from '../../assets/cookies/chocochip.JPG'
 import Almonds from '../../assets/cookies/almond.JPG'
@@ -12,9 +14,12 @@ import RedVelvet from '../../assets/cookies/redvelvet.JPG'
 
 import { ReactComponent as Delivery } from '../../assets/svgs/delivery.svg'
 import { ReactComponent as Support } from '../../assets/svgs/24-7.svg'
-import { ReactComponent as Authentic } from '../../assets/svgs/authentic.svg'
+import { ReactComponent as Oven } from '../../assets/svgs/oven.svg'
+
 
 const Home = () => {
+    const { currentUser } = useContext(UserContext)
+
     const yeppeuCookies = [
         {
             id: 1,
@@ -52,6 +57,9 @@ const Home = () => {
                         </div>
                     </div>
 
+                    <HamburgerMenu currentUser={currentUser} />
+
+
                     {/* <div className="max-w-lg mt-32 mb-32 p-4 font-sans text-4xl text-orangePeach uppercase border-2 border-orangePeach md:p-10 md:m-32 md:mx-0 md:text-6xl">
                         Where Learning Meets Convenience
                     </div> */}
@@ -85,13 +93,13 @@ const Home = () => {
                             </div>
                             <div className="flex gap-6">
                                 <div>
-                                    <Authentic />
+                                    <Oven />
                                 </div>
                                 <div>
                                     <p className="text-2xl font-bold font-playfairDisplay">
                                         100% Freshly Baked
                                     </p>
-                                    <p>Durable items</p>
+                                    <p>Authentic Homebaked</p>
                                 </div>
                             </div>
                         </div>
@@ -102,7 +110,7 @@ const Home = () => {
                     <div className="w-9/12 mx-auto">
                         <div className="text-center mb-12">
                             <p className="text-2xl font-bold font-playfairDisplay">
-                                Our Products
+                                Our Cookies
                             </p>
                             <p>
                                 Lorem ipsum dolor sit, amet consectetur

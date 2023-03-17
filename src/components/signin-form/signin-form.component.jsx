@@ -66,11 +66,11 @@ const SigninForm = () => {
             {/* Global Container */}
             <div className="max-w-lg mx-auto pt-1">
                 {/* Card Container */}
-                <div className="flex-col m-6 space-y-10 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 ">
+                <div className="flex-col m-6 space-y-10 bg-lightestPeach shadow-2xl rounded-2xl md:flex-row md:space-y-0 ">
                     {/* Top Content */}
                     <div className="p-2 px-14">
                         <h1 className="mt-8 mb-5 text-center">Logo Here</h1>
-                        <h1 className="mb-4 text-darkBlue font-extrabold font-playfairDisplay text-center">
+                        <h1 className="mb-4 text-lightBrown font-extrabold font-playfairDisplay text-center">
                             Signin to your account
                         </h1>
                         <div className="space-y-3">
@@ -99,7 +99,7 @@ const SigninForm = () => {
                                     label="Email"
                                     type="email"
                                     name="email"
-                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-darkBlue"
+                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-lightBrown"
                                     placeholder="example@gmail.com"
                                     value={email}
                                     onChange={handleChange}
@@ -108,7 +108,7 @@ const SigninForm = () => {
                                     label="Password"
                                     type="password"
                                     name="password"
-                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-darkBlue"
+                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-lightBrown"
                                     placeholder="********"
                                     value={password}
                                     onChange={handleChange}
@@ -119,16 +119,16 @@ const SigninForm = () => {
                                             id="default-checkbox"
                                             type="checkbox"
                                             value=""
-                                            className="w-4 h-4 text-darkBlue bg-darkBlue border-darkBlue accent-darkBlue rounded focus:ring-1"
+                                            className="w-4 h-4 text-darkestBrown bg-lightBrown border-lightBrown accent-lightBrown rounded focus:ring-1"
                                         />
                                         <label
                                             htmlFor="default-checkbox"
-                                            className="ml-2 text-xs font-semibold text-darkBlue"
+                                            className="ml-2 text-xs font-semibold text-darkestBrown"
                                         >
                                             Remember me
                                         </label>
                                     </div>
-                                    <div className=" text-xs font-semibold text-yellowText">
+                                    <div className=" text-xs font-semibold text-lightBrown hover:underline">
                                         Forgot Password?
                                     </div>
                                 </div>
@@ -138,9 +138,9 @@ const SigninForm = () => {
                             </Button>
                         </form>
 
-                        <div className="text-center my-4 mb-5 text-xs font-semibold text-lightblueText">
+                        <div className="text-center my-4 mb-5 text-xs font-semibold text-darkestBrown">
                             Don't have an account?{' '}
-                            <span className=" text-yellowText">
+                            <span className=" text-lightBrown hover:underline">
                                 <Link to="/sign-up">Sign Up Free!</Link>
                             </span>
                         </div>

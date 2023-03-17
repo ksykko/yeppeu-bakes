@@ -65,7 +65,7 @@ const SignupForm = () => {
                 <div className="flex-col m-6 space-y-10 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 pb-12">
                     {/* Top Content */}
                     <div className="p-2 px-14">
-                        <h1 className="mb-4 mt-10 text-darkBlue font-extrabold font-playfairDisplay text-center">
+                        <h1 className="mb-4 mt-10 text-lightBrown font-extrabold font-playfairDisplay text-center">
                             Sign up with your account
                         </h1>
 
@@ -77,7 +77,7 @@ const SignupForm = () => {
                                     label="Name"
                                     type="text"
                                     name="displayName"
-                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-darkBlue"
+                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-lightBrown"
                                     placeholder="John Doe"
                                     required
                                     value={displayName}
@@ -89,7 +89,7 @@ const SignupForm = () => {
                                     label="Email"
                                     type="email"
                                     name="email"
-                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-darkBlue"
+                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-lightBrown"
                                     placeholder="example@gmail.com"
                                     required
                                     value={email}
@@ -101,7 +101,7 @@ const SignupForm = () => {
                                     label="Password"
                                     type="password"
                                     name="password"
-                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-darkBlue"
+                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-lightBrown"
                                     placeholder="********"
                                     required
                                     value={password}
@@ -113,7 +113,7 @@ const SignupForm = () => {
                                     label="Confirm Password"
                                     type="password"
                                     name="confirmPassword"
-                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-darkBlue"
+                                    className="w-full p-2 border border-gray-300 rounded-md placeholder:font-sans placeholder:font-light focus:outline-lightBrown"
                                     placeholder="********"
                                     required
                                     value={confirmPassword}
@@ -125,14 +125,14 @@ const SignupForm = () => {
                                             id="default-checkbox"
                                             type="checkbox"
                                             value=""
-                                            className="w-4 h-4 text-darkBlue bg-darkBlue border-darkBlue accent-darkBlue rounded focus:ring-1"
+                                            className="w-4 h-4 text-darkBlue bg-lightBrown border-lightBrown accent-lightBrown rounded focus:ring-1"
                                         />
                                         <label
                                             htmlFor="default-checkbox"
                                             className="ml-2 text-xs font-semibold text-darkBlue"
                                         >
                                             I accept the{' '}
-                                            <span className="text-yellowText">
+                                            <span className="text-lightBrown">
                                                 Terms and Conditions
                                             </span>
                                         </label>

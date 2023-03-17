@@ -3,6 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+}
+
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
@@ -34,7 +46,7 @@ code {
     height: 2px;
     top: 0;
     left: 0;
-    background: #FC6C4C;
+    background: #1a120b;
     transform: rotate(0);
     transition: all 0.5s;
 }
@@ -63,6 +75,58 @@ code {
     transform: rotate(-45deg) translateY(6px) translateX(-6px);
 }
 
+/** Shopping Bag */
+.cart-icon-container {
+    height: 45px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.shopping-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.item-count {
+    position: absolute;
+    font-size: 13px;
+    font-weight: bold;
+    bottom: 12px;
+}
+
+/** Cart Dropdown */
+.cart-dropdown-container {
+    position: absolute;
+    width: 240px;
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid black;
+    background-color: white;
+    top: 90px;
+    right: 40px;
+    z-index: 5;
+}
+
+.empty-message {
+    font-size: 18px;
+    margin: 50px auto;
+}
+
+.cart-items {
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+/* button {
+    margin-top: auto;
+  } */
 
 /** Directories */
 .categories-container {
@@ -77,10 +141,9 @@ code {
     @apply absolute px-6 duration-200 w-52 bottom-8 md:bottom-8 md:left-0 md:px-10 text-white font-bold group-hover:scale-110 group-hover:text-black font-playfairDisplay;
 }
 
-
 /** Buttons */
 .btn-default {
-    @apply w-full p-2 bg-orangePeach text-white rounded-md mt-3 hover:opacity-90;
+    @apply w-full p-2 bg-lightBrown text-white rounded-md mt-3 hover:opacity-90;
 }
 
 .btn-google-signin {
@@ -90,7 +153,6 @@ code {
 .btn-facebook-signin {
     @apply w-full p-2 text-sm bg-facebookBg text-white rounded-md uppercase hover:opacity-90;
 }
-
 
 /** Hero Section */
 #hero {
