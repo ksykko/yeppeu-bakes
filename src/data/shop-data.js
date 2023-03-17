@@ -2,6 +2,8 @@ import Chocochip from '../assets/cookies/chocochip-2.JPG'
 import Whitechocochip from '../assets/cookies/almond-2.JPG'
 import Redvelvet from '../assets/cookies/redvelvet-3.JPG'
 import Assorted from '../assets/cookies/assorted-3.JPG'
+import Assorted2 from '../assets/cookies/chocochip-redvelvet.jpg'
+
 
 
 export const SHOP_DATA = [{
@@ -29,7 +31,7 @@ export const SHOP_DATA = [{
         "id": 4,
         "name": "Assorted Cookies",
         "desc": "Double the flavor, double the fun",
-        "imageUrl": Assorted,
+        "imageUrl": Assorted2,
         "price": 250
     },
     {
