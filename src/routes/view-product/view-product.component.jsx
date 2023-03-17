@@ -1,5 +1,5 @@
 import { Fragment } from "react"
-import { useParams, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 import NavigationBar from "../../components/navigation-bar/navigation-bar.component"
 
@@ -14,7 +14,8 @@ const ViewProduct = () => {
         <Fragment>
             <div className="h-screen bg-heroPeach">
                 <NavigationBar />
-                <div className="mx-auto font-3xl"></div>
+                {/* Turn this into Product Component later */}
+
             </div>
         </Fragment>
     )
