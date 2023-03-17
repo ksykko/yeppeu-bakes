@@ -4,6 +4,7 @@ import Home from './routes/home/home.component'
 import SignIn from './routes/sign-in/sign-in.component'
 import Shop from './routes/shop/shop.component'
 import SignUp from './routes/sign-up/sign-up.component'
+import ViewProduct from './routes/view-product/view-product.component'
 
 const App = () => {
     return (
@@ -11,6 +12,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="sign-in" element={<SignIn />} />
             <Route path="shop" element={<Shop />} />
+            <Route path="shop/:id" element={<ViewProduct  />} />
             <Route path="sign-up" element={<SignUp />} />
         </Routes>
     )

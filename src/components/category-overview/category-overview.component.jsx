@@ -12,15 +12,13 @@ const CategoryOverview = ({ product }) => {
                     className="h-full w-full object-cover object-center"
                 />
             </div>
-            <h3 className="mt-6 text-sm text-gray-500">
-                <Link to={`/shop/${id}`}>
+            <h3 className="mt-6 text-lg font-bold font-playfairDisplay text-lightBrown">
+                <Link to={`/shop/${id}`} state={{ from: product }}>
                     <span className="absolute inset-0"></span>
                     {name}
                 </Link>
             </h3>
-            <p className="text-base font-semibold text-gray-900">
-                {desc}
-            </p>
+            <p className="text-base font-medium text-gray-900">{desc}</p>
         </div>
     )
 }

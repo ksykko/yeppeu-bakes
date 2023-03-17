@@ -14,7 +14,8 @@ import RedVelvet from '../../assets/cookies/redvelvet.JPG'
 
 import { ReactComponent as Delivery } from '../../assets/svgs/delivery.svg'
 import { ReactComponent as Support } from '../../assets/svgs/24-7.svg'
-import { ReactComponent as Authentic } from '../../assets/svgs/authentic.svg'
+import { ReactComponent as Oven } from '../../assets/svgs/oven.svg'
+
 
 const Home = () => {
     const { currentUser } = useContext(UserContext)
@@ -92,7 +93,7 @@ const Home = () => {
                             </div>
                             <div className="flex gap-6">
                                 <div>
-                                    <Authentic />
+                                    <Oven />
                                 </div>
                                 <div>
                                     <p className="text-2xl font-bold font-playfairDisplay">
