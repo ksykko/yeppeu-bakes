@@ -19,6 +19,7 @@ const CategoryOverview = ({ product }) => {
                 </Link>
             </h3>
             <p className="text-base font-medium text-gray-900">{desc}</p>
+            
         </div>
     )
 }

@@ -11,6 +11,8 @@ import Redvelvet3 from '../assets/cookies/redvelvet-2.JPG'
 
 import Assorted from '../assets/cookies/assorted-3.JPG'
 import AllFlavors from '../assets/cookies/all-flavors.jpg'
+import Assorted2 from '../assets/cookies/chocochip-redvelvet.jpg'
+
 
 
 export const SHOP_DATA = [{
@@ -43,6 +45,7 @@ export const SHOP_DATA = [{
         "desc": "Double the flavor, double the fun",
         "imageUrl1": Chocochip,
         imageUrl: [{ Chocochip2 }, { Whitechocochip2 }, { Redvelvet2 }, { Assorted }],
+        "imageUrl": Assorted2,
         "price": 250
     },
     {

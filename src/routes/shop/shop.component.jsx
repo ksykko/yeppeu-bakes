@@ -1,3 +1,7 @@
+// import { Fragment } from 'react'
+// import NavigationBar from '../../components/navigation-bar/navigation-bar.component'
+import ShopBG from '../../assets/shop-bg.jpg'
+// import SHOP_DATA from '../../shop-data.json'
 import { Fragment, useContext } from 'react'
 
 import { BakedGoodsContext } from '../../contexts/baked-goods.context'
@@ -12,6 +16,14 @@ const Shop = () => {
     return (
         <Fragment>
             <NavigationBar />
+            <div className="relative isolate min-h-[40vh] overflow-hidden bg-gray-900 py-24 sm:py-32">
+                <img
+                    src={ShopBG}
+                    alt="Shop"
+                    className="item-gradient absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
+                />
+            </div>
+                    
             <div className="container max-w-6xl mx-auto px-6 py-3 mb-20">
                 <h1 className="text-3xl font-bold text-center text-darkestBrown font-playfairDisplay mb-12 mt-6">
                     Our Baked Goods
@@ -22,6 +34,7 @@ const Shop = () => {
                     ))}
                 </div>
             </div>
+
         </Fragment>
     )
 }
