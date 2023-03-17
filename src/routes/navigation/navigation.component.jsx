@@ -5,7 +5,9 @@ import { UserContext } from '../../contexts/user.context'
 import { CartContext } from '../../contexts/cart-context'
 
 import BagIcon from '../../components/bag-icon/bag-icon.component'
+import HamburgerIcon from '../../components/hamburger-icon/hamburger-icon.component'
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
+import HamburgerMenu from '../../components/hamburger-menu/hamburger-menu.component'
 
 import { signOutUser } from '../../utils/firebase/firebase.utils'
 
@@ -71,17 +73,8 @@ const Navigation = ({ className, borderLine }) => {
                 </div>
 
                 {/* Hamburger Button */}
-                <div className="md:hidden items-center">
-                    <button
-                        id="menu-btn"
-                        type="button"
-                        className="z-40 block hamburger md:hidden focus:outline-none"
-                    >
-                        <span className="hamburger-top"></span>
-                        <span className="hamburger-middle"></span>
-                        <span className="hamburger-bottom"></span>
-                    </button>
-                </div>
+                <HamburgerIcon />
+
             </div>
             <Outlet />
         </Fragment>
