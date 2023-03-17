@@ -7,6 +7,7 @@ const HamburgerIcon = () => {
 
     const toggleIsHamburgerOpen = () => setIsHamburgerOpen(!isHamburgerOpen)
 
+    // turn to state
     const handleMenuClick = () => {
         const btn = document.getElementById('menu-btn')
         const menu = document.getElementById('menu')

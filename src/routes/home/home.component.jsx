@@ -25,19 +25,19 @@ const Home = () => {
             id: 1,
             title: 'Chocolate Chip Cookie',
             styling: 'rounded-tl-[4.5rem] lg:mt-16',
-            imageUrl: ChocoChip,
+            imageUrl1: ChocoChip,
         },
         {
             id: 2,
             title: 'White Chocolate Chip Almonds Cookie',
             midStyling: 'lg:mb-16',
-            imageUrl: Almonds,
+            imageUrl1: Almonds,
         },
         {
             id: 3,
             title: 'Red Velvet with Cream Cheese Cookie',
             styling: 'rounded-br-[4.5rem] lg:mt-16',
-            imageUrl: RedVelvet,
+            imageUrl1: RedVelvet,
         },
     ]
 

@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
 
 const CategoryOverview = ({ product }) => {
-    const { id, name, desc, imageUrl } = product
+    const { id, name, desc, imageUrl1 } = product
 
     return (
         <div className="group relative">
             <div className="relative h-80 w-full overflow-hidden rounded-lg bg-white group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:h-96">
                 <img
-                    src={imageUrl}
+                    src={imageUrl1}
                     alt={`${name}`}
                     className="h-full w-full object-cover object-center"
                 />
