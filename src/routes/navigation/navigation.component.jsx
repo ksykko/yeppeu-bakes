@@ -11,44 +11,33 @@ import HamburgerMenu from '../../components/hamburger-menu/hamburger-menu.compon
 
 import { signOutUser } from '../../utils/firebase/firebase.utils'
 
-const Navigation = ({ className, borderLine }) => {
+const Navigation = () => {
     const { currentUser } = useContext(UserContext)
     const { isCartOpen } = useContext(CartContext)
-
-    // set borderLine to orangePeach if not specified
-    if (!borderLine) {
-        borderLine = 'black'
-    }
-
-    // set className to empty string if not specified
-    if (!className) {
-        className = 'text-darkestBrown'
-    }
-
 
     return (
         <Fragment>
             <div className="flex items-center justify-between font-bold font-playfairDisplay">
                 {/* Logo */}
                 <Link to="/">
-                    <div className={`text-xl font-extrabold ${className}`}>
+                    <div className={`text-xl font-extrabold text-darkestBrown`}>
                         YEPPEU BAKES
                     </div>
                 </Link>
                 {/* Menu */}
                 <div
-                    className={`hidden items-center h-10 font-alata text-md md:flex md:space-x-8 ${className}`}
+                    className={`hidden items-center h-10 font-alata text-md md:flex md:space-x-8 text-darkestBrown`}
                 >
                     <div className="group">
                         <Link to="/">Home</Link>
                         <div
-                            className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}
+                            className={`mx-2 group-hover:border-b group-hover:border-lightBrown`}
                         ></div>
                     </div>
                     <div className="group">
                         <Link to="/shop">Shop</Link>
                         <div
-                            className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}
+                            className={`mx-2 group-hover:border-b group-hover:border-lightBrown`}
                         ></div>
                     </div>
 
@@ -57,14 +46,14 @@ const Navigation = ({ className, borderLine }) => {
                         <div className="group">
                             <span onClick={signOutUser}>Sign Out</span>
                             <div
-                                className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}
+                                className={`mx-2 group-hover:border-b group-hover:border-lightBrown`}
                             ></div>
                         </div>
                     ) : (
                         <div className="group">
                             <Link to="/sign-in">Sign In</Link>
                             <div
-                                className={`mx-2 group-hover:border-b group-hover:border-${borderLine}`}
+                                className={`mx-2 group-hover:border-b group-hover:border-lightBrown`}
                             ></div>
                         </div>
                     )}

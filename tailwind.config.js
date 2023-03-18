@@ -24,6 +24,7 @@ module.exports = {
                 lightblueText: '#8D99C0',
                 facebookBg: '#5271AF',
                 darkestBrown: '#1A120B',
+                darkBrown: '#3C2A21',
                 lightBrown: '#895330',
                 lightBeige: '#E5E5CB',
                 Beige: '#D5CEA3'
