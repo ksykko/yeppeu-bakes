@@ -23,12 +23,14 @@ const ProductOverview = () => {
         setCurrentIndex(newIndex)
     }
 
+    const [selectedPriceId, setSelectedPriceId] = useState(price[0].priceId)
+
     return (
-        <div className="max-w-4xl mx-auto pt-14 pb-10 px-4">
+        <div className=" xl:max-w-4xl 2xl:max-w-5xl mx-auto pt-14 pb-10 px-4">
             {/* <div style={{ backgroundImage: imageUrl1 }} className="w-full h-full rounded-2xl bg-center bg-cover duration-500"></div> */}
 
             {/* Container */}
-            <div className="flex flex-col md:flex-row md:space-x-7">
+            <div className="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-7">
                 {/* Left Side */}
                 <div className="relative group md:w-1/2">
                     <img
@@ -58,15 +60,23 @@ const ProductOverview = () => {
                 </div>
 
                 {/* Right Side */}
-                <div className="p-8 md:px-12 md:py-10 bg-whitePeach rounded-2xl md:w-1/2 select-none">
+                <div className="p-8 md:px-12 md:py-10 bg-lightestPeach rounded-2xl md:w-1/2 select-none">
                     <h1 className="text-2xl font-bold font-playfairDisplay text-darkBrown mb-3">
                         {name}
                     </h1>
                     <p className="text-sm text-darkBrown italic">{desc}</p>
                     {/* Price */}
-                    <p className="text-3xl font-playfairDisplay font-bold text-darkBrown mt-5">
-                        ₱{price[0].cost}.00
-                    </p>
+                    {selectedPriceId && (
+                        <p className="text-3xl font-playfairDisplay font-bold text-darkBrown mt-5">
+                            ₱
+                            {
+                                price.find(
+                                    (option) =>
+                                        option.priceId === selectedPriceId
+                                ).cost
+                            }
+                        </p>
+                    )}
                     <hr className="w-full h-px my-4 bg-lightBrown border-0" />
                     {/* Quantity */}
                     <div className="flex flex-col space-y-3">
@@ -75,21 +85,30 @@ const ProductOverview = () => {
                         </p>
 
                         {/* Radio Button */}
-                        {price.map((size) => (
+                        {price.map((option) => (
                             <Fragment>
-                                <div className="flex items-center mb-4">
+                                <div
+                                    key={option.productId}
+                                    className="flex items-center mb-4"
+                                >
                                     <input
-                                        id="default-radio-1"
+                                        id={`price-option-${option.priceId}`}
                                         type="radio"
-                                        value=""
-                                        name="default-radio"
+                                        value={option.priceId}
+                                        name="price-options"
+                                        checked={
+                                            selectedPriceId === option.priceId
+                                        }
                                         className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
+                                        onChange={() =>
+                                            setSelectedPriceId(option.priceId)
+                                        }
                                     />
                                     <label
-                                        htmlFor="default-radio-1"
+                                        htmlFor={`price-option-${option.priceId}`}
                                         className="ml-2 text-sm font-medium text-gray-900"
                                     >
-                                        {size.productName} {size.qty}
+                                        {option.productName} {option.qty}
                                     </label>
                                 </div>
                             </Fragment>
@@ -98,7 +117,7 @@ const ProductOverview = () => {
                     {/* Quantity & Add to Cart */}
                     <div className="flex space-x-4 mt-14">
                         <div className="relative">
-                            <div className="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
+                            <div className="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-lightBrown tracking-wide font-bold">
                                 Qty
                             </div>
                             <select className="cursor-pointer appearance-none bg-lightestPeach rounded-xl border focus:outline-lightBrown border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
