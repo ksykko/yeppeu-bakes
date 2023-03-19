@@ -4,6 +4,7 @@ import BAKED_GOODS_DATA from "../data/shop-data";
 
 export const BakedGoodsContext = createContext({
     bakedGoods: [],
+    priceData: [],
 })
 
 export const BakedGoodsProvider = ({children}) => {

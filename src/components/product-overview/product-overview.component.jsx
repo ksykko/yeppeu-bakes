@@ -1,5 +1,7 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
+
+import { CartContext } from '../../contexts/cart-context'
 
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs'
 import { RxDotFilled } from 'react-icons/rx'
@@ -10,6 +12,7 @@ const ProductOverview = () => {
     const { name, desc, imageUrl, price } = from
 
     const [currentIndex, setCurrentIndex] = useState(1)
+    const { addItemToCart } = useContext(CartContext)
 
     const prevSlide = () => {
         const isFirstSlide = currentIndex === 0
@@ -23,10 +26,23 @@ const ProductOverview = () => {
         setCurrentIndex(newIndex)
     }
 
-    const [selectedPriceId, setSelectedPriceId] = useState(price[0].priceId)
+    const [selectedProduct, setSelectedProduct] = useState(price[0])
+    const [selectedQuantity, setSelectedQuantity] = useState(1)
+    const [additionalInstruction, setAdditionalInstruction] = useState('')
+
+    const handleAddToCart = () => {
+        addItemToCart(
+            selectedProduct,
+            selectedProduct.productName,
+            selectedQuantity,
+            additionalInstruction
+        )
+    }
+
+
 
     return (
-        <div className=" xl:max-w-4xl 2xl:max-w-5xl mx-auto pt-14 pb-10 px-4">
+        <div className=" xl:max-w-5xl 2xl:max-w-6xl mx-auto pt-14 pb-10 px-4">
             {/* <div style={{ backgroundImage: imageUrl1 }} className="w-full h-full rounded-2xl bg-center bg-cover duration-500"></div> */}
 
             {/* Container */}
@@ -34,7 +50,9 @@ const ProductOverview = () => {
                 {/* Left Side */}
                 <div className="relative group md:w-1/2">
                     <img
-                        src={Object.values(imageUrl[currentIndex])}
+                        // src={Object.values(imageUrl[currentIndex])}
+                        key={imageUrl[currentIndex].id}
+                        src={imageUrl[currentIndex].url}
                         alt={name}
                         className="w-full h-full rounded-2xl bg-center bg-cover duration-500 select-none"
                     />
@@ -48,9 +66,9 @@ const ProductOverview = () => {
                     </div>
                     {/* Dots */}
                     <div className="flex top-4 justify-center py-2">
-                        {imageUrl.map((slideIndex) => (
+                        {imageUrl.map((slideIndex, index) => (
                             <div
-                                key={slideIndex}
+                                key={index}
                                 className="text-2xl text-lightBrown"
                             >
                                 <RxDotFilled />
@@ -66,15 +84,9 @@ const ProductOverview = () => {
                     </h1>
                     <p className="text-sm text-darkBrown italic">{desc}</p>
                     {/* Price */}
-                    {selectedPriceId && (
+                    {selectedProduct && (
                         <p className="text-3xl font-playfairDisplay font-bold text-darkBrown mt-5">
-                            ₱
-                            {
-                                price.find(
-                                    (option) =>
-                                        option.priceId === selectedPriceId
-                                ).cost
-                            }
+                            ₱{selectedProduct.cost}.00
                         </p>
                     )}
                     <hr className="w-full h-px my-4 bg-lightBrown border-0" />
@@ -86,51 +98,67 @@ const ProductOverview = () => {
 
                         {/* Radio Button */}
                         {price.map((option) => (
-                            <Fragment>
-                                <div
-                                    key={option.productId}
-                                    className="flex items-center mb-4"
+                            <div
+                                key={option.priceId}
+                                className="flex items-center mb-4"
+                            >
+                                <input
+                                    id={`price-option-${option.priceId}`}
+                                    type="radio"
+                                    value={option.priceId}
+                                    name="price-options"
+                                    checked={
+                                        selectedProduct.priceId ===
+                                        option.priceId
+                                    }
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
+                                    onChange={() => setSelectedProduct(option)}
+                                />
+                                <label
+                                    htmlFor={`price-option-${option.priceId}`}
+                                    className="ml-2 text-sm font-medium text-gray-900"
                                 >
-                                    <input
-                                        id={`price-option-${option.priceId}`}
-                                        type="radio"
-                                        value={option.priceId}
-                                        name="price-options"
-                                        checked={
-                                            selectedPriceId === option.priceId
-                                        }
-                                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300"
-                                        onChange={() =>
-                                            setSelectedPriceId(option.priceId)
-                                        }
-                                    />
-                                    <label
-                                        htmlFor={`price-option-${option.priceId}`}
-                                        className="ml-2 text-sm font-medium text-gray-900"
-                                    >
-                                        {option.productName} {option.qty}
-                                    </label>
-                                </div>
-                            </Fragment>
+                                    {option.qty} {option.productName}
+                                </label>
+                            </div>
                         ))}
                     </div>
+
+                    {/* Additional Instruction */}
+                    <div className="flex flex-col space-y-3 mt-5">
+                        <p className="font-md tracking-widest font-bold text-lightBrown">
+                            Additional Instruction:
+                        </p>
+                        <textarea
+                            className="w-full h-24 px-4 py-2 border text-sm border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lightBrown focus:border-transparent placeholder:text-sm resize-none no-scrollbar"
+                            placeholder="If you order more than one flavor, you can note here the quantity of each flavor. Thank you!"
+                            value={additionalInstruction}
+                            onChange={(e) =>
+                                setAdditionalInstruction(e.target.value)
+                            }
+                        ></textarea>
+                    </div>
+
                     {/* Quantity & Add to Cart */}
-                    <div className="flex space-x-4 mt-14">
+                    <div className="flex space-x-4 mt-5">
                         <div className="relative">
                             <div className="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-lightBrown tracking-wide font-bold">
                                 Qty
                             </div>
-                            <select className="cursor-pointer appearance-none bg-lightestPeach rounded-xl border focus:outline-lightBrown border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                                <option>6</option>
-                                <option>7</option>
-                                <option>8</option>
-                                <option>9</option>
-                                <option>10</option>
+                            <select
+                                className="cursor-pointer appearance-none bg-lightestPeach rounded-xl border focus:outline-lightBrown border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1"
+                                value={selectedQuantity}
+                                onChange={(e) =>
+                                    setSelectedQuantity(
+                                        parseInt(e.target.value)
+                                    )
+                                }
+                            >
+                                {Array.from({ length: 10 }, (_, i) => (
+                                    <option key={i} value={i + 1}>
+                                        {i + 1}
+                                    </option>
+                                ))}
                             </select>
 
                             <svg
@@ -141,9 +169,9 @@ const ProductOverview = () => {
                                 stroke="currentColor"
                             >
                                 <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
                                     d="M8 9l4-4 4 4m0 6l-4 4-4-4"
                                 />
                             </svg>
@@ -152,6 +180,7 @@ const ProductOverview = () => {
                         <button
                             type="button"
                             className="h-14 px-6 py-2 font-semibold bg-lightBrown text-white rounded-xl hover:opacity-90"
+                            onClick={handleAddToCart}
                         >
                             Add to Cart
                         </button>
