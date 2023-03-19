@@ -16,7 +16,6 @@ import { ReactComponent as Delivery } from '../../assets/svgs/delivery.svg'
 import { ReactComponent as Support } from '../../assets/svgs/24-7.svg'
 import { ReactComponent as Oven } from '../../assets/svgs/oven.svg'
 
-
 const Home = () => {
     const { currentUser } = useContext(UserContext)
 
@@ -55,10 +54,16 @@ const Home = () => {
                                 <Link to="/shop">Shop Now</Link>
                             </Button>
                         </div>
+                        <div className="flex item justify-evenly absolute text-center bottom-28 left-0 right-0 text-sm text-white"><p>by</p></div>
+                        <div className="flex item justify-evenly absolute text-center bottom-20 left-0 right-0 text-lg text-white tracking-[0.25em]">
+                            <p>@jaekristinex</p>
+                            <p>@beatrzsofia</p>
+                            <p>@juliaorillaza</p>
+
+                        </div>
                     </div>
 
                     <HamburgerMenu currentUser={currentUser} />
-
 
                     {/* <div className="max-w-lg mt-32 mb-32 p-4 font-sans text-4xl text-orangePeach uppercase border-2 border-orangePeach md:p-10 md:m-32 md:mx-0 md:text-6xl">
                         Where Learning Meets Convenience

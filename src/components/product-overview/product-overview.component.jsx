@@ -40,7 +40,6 @@ const ProductOverview = () => {
     }
 
 
-
     return (
         <div className=" xl:max-w-5xl 2xl:max-w-6xl mx-auto pt-14 pb-10 px-4">
             {/* <div style={{ backgroundImage: imageUrl1 }} className="w-full h-full rounded-2xl bg-center bg-cover duration-500"></div> */}

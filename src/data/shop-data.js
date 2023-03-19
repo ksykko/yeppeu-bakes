@@ -86,7 +86,7 @@ export const SHOP_DATA = [{
             { "id": 3, "url": Assorted },
         ],
         price: [
-            { "priceId": 8, "cost": 250, "qty": "Box of 12" },
+            { "priceId": 8, "productName": "All Flavors", "cost": 250, "qty": "Box of 12" },
         ]
     }
 ]

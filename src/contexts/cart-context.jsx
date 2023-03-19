@@ -25,6 +25,8 @@ const addCartItem = (
         )
     }
 
+    console.log(additionalInstruction)
+
     // If it isn't, add the product to the cart with the selected quantity
     return [
         ...cartItems,
