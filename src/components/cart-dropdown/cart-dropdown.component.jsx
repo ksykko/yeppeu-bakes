@@ -14,7 +14,7 @@ const CartDropdown = () => {
                     <CartItem key={item.priceId} cartItem={item} />
                 )}
             </div>
-            <button className='btn-default font-medium tracking-widest uppercase font-playfairDisplay'>Checkouts</button>
+            <button className='btn-default font-medium tracking-widest uppercase font-playfairDisplay'>Checkout</button>
         </div>
     )
 }
