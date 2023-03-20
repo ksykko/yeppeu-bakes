@@ -1,5 +1,6 @@
 ### Resources
 - [React](https://reactjs.org/)
+- [React Icons](https://react-icons.github.io/react-icons/)
 - [Tailwindcss](https://tailwindcss.com/)
 - [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
 - [Google Firebase](https://firebase.google.com/)
