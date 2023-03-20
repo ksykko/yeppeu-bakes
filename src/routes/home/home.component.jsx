@@ -42,24 +42,46 @@ const Home = () => {
 
     return (
         <Fragment>
-            <section id="hero">
+            <section id="hero" className="select-none">
                 <div className="container max-w-6xl mx-auto px-6 py-3">
                     <Navigation />
                     <div className="relative flex items-center justify-start min-h-screen font-playfairDisplay">
-                        <div className="bg-heroPeach bg-opacity-40 max-w-lg rounded-xl p-8 space-y-4 shadow-lg -mt-28">
+                        <div className="bg-heroPeach bg-opacity-40 max-w-xl rounded-xl p-8 space-y-4 shadow-lg -mt-28">
                             <p className="font-bold text-5xl text-darkestBrown">
-                                Homebaked catered to your sweet tooth!
+                                Home-baked goodies catered to your sweet tooth!
                             </p>
                             <Button className="bg-lightBrown text-white font-bold py-2 px-4 rounded-lg hover:opacity-90">
                                 <Link to="/shop">Shop Now</Link>
                             </Button>
                         </div>
-                        <div className="flex item justify-evenly absolute text-center bottom-28 left-0 right-0 text-sm text-white"><p>by</p></div>
+                        <div className="flex item justify-evenly absolute text-center bottom-28 left-0 right-0 text-sm text-white">
+                            <p>by</p>
+                        </div>
                         <div className="flex item justify-evenly absolute text-center bottom-20 left-0 right-0 text-lg text-white tracking-[0.25em]">
-                            <p>@jaekristinex</p>
-                            <p>@beatrzsofia</p>
-                            <p>@juliaorillaza</p>
-
+                            <a
+                                href="https://www.instagram.com/nadine/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:underline underline-offset-4"
+                            >
+                                @jaekristinex
+                            </a>
+                            <a
+                                href="https://instagram.com/beatrzsofia?igshid=MGU3ZTQzNzY="
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:underline underline-offset-4"
+                            >
+                                @beatrzsofia
+                            </a>
+                            <a
+                                href="https://instagram.com/juliaorillaza?igshid=MGU3ZTQzNzY="
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:underline underline-offset-4"
+                            >
+                                @juliaorillaza
+                            </a>
                         </div>
                     </div>
 
@@ -70,7 +92,7 @@ const Home = () => {
                     </div> */}
                 </div>
             </section>
-            <div>
+            <div className="select-none">
                 <div className="bg-[#f8ceb0] py-16 text-darkestBrown">
                     <div className="w-9/12 mx-auto">
                         <div className="flex justify-between">

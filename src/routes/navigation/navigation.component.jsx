@@ -26,7 +26,7 @@ const Navigation = () => {
                 </Link>
                 {/* Menu */}
                 <div
-                    className={`hidden items-center h-10 font-alata text-md md:flex md:space-x-8 text-darkestBrown`}
+                    className={`hidden items-center h-10 font-alata text-md md:flex md:space-x-8 text-darkestBrown relative`}
                 >
                     <div className="group">
                         <Link to="/">Home</Link>

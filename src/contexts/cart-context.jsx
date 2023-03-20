@@ -1,10 +1,12 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 
 const addCartItem = (
     cartItems,
     productToAdd,
+    productImage,
     productName,
     selectedQuantity,
+    productCost,
     additionalInstruction
 ) => {
     // Check if the product is already in the cart
@@ -25,12 +27,17 @@ const addCartItem = (
         )
     }
 
-    console.log(additionalInstruction)
-
     // If it isn't, add the product to the cart with the selected quantity
     return [
         ...cartItems,
-        { ...productToAdd, productName, quantity: selectedQuantity, additionalInstruction },
+        {
+            ...productToAdd,
+            productImage,
+            productName,
+            quantity: selectedQuantity,
+            productCost,
+            additionalInstruction,
+        },
     ]
 }
 
@@ -40,39 +47,42 @@ export const CartContext = createContext({
     setIsCartOpen: () => {},
     cartItems: [],
     addItemToCart: () => {},
+    cartCount: 0,
 })
 
-// productToAdd must be based on the price
-
-/*
-    price.priceId,
-    price.productName,
-    price.cost,
-    price.qty,
-    additionalInstruction,
-    quantity
-*/
 
 export const CartProvider = ({ children }) => {
     const [isCartOpen, setIsCartOpen] = useState(false)
     const [cartItems, setCartItems] = useState([])
+    const [cartCount, setCartCount] = useState(0)
+
+    useEffect(() => {
+        const newCartCount = cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0)
+        setCartCount(newCartCount)
+    }, [cartItems])
 
     const addItemToCart = (
         productToAdd,
+        productImage,
+        productName,
         selectedQuantity,
+        productCost,
         additionalInstruction
     ) => {
         setCartItems(
             addCartItem(
                 cartItems,
                 productToAdd,
+                productImage,
+                productName,
                 selectedQuantity,
+                productCost,
                 additionalInstruction
             )
         )
     }
 
-    const value = { isCartOpen, setIsCartOpen, addItemToCart, cartItems }
+    const value = { isCartOpen, setIsCartOpen, addItemToCart, cartItems, cartCount }
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }

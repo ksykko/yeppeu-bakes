@@ -9,7 +9,7 @@ import { RxDotFilled } from 'react-icons/rx'
 const ProductOverview = () => {
     const location = useLocation()
     const { from } = location.state || { from: { pathname: '/' } }
-    const { name, desc, imageUrl, price } = from
+    const { name, desc, imageUrl1, imageUrl, price } = from
 
     const [currentIndex, setCurrentIndex] = useState(1)
     const { addItemToCart } = useContext(CartContext)
@@ -33,8 +33,10 @@ const ProductOverview = () => {
     const handleAddToCart = () => {
         addItemToCart(
             selectedProduct,
+            imageUrl1,
             selectedProduct.productName,
             selectedQuantity,
+            selectedProduct.cost,
             additionalInstruction
         )
     }
@@ -126,7 +128,7 @@ const ProductOverview = () => {
                     {/* Additional Instruction */}
                     <div className="flex flex-col space-y-3 mt-5">
                         <p className="font-md tracking-widest font-bold text-lightBrown">
-                            Additional Instruction:
+                            Additional Instructions:
                         </p>
                         <textarea
                             className="w-full h-24 px-4 py-2 border text-sm border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lightBrown focus:border-transparent placeholder:text-sm resize-none no-scrollbar"
