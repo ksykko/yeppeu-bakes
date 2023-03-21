@@ -4,6 +4,7 @@ import { Link, Outlet } from 'react-router-dom'
 import { UserContext } from '../../contexts/user.context'
 
 import Navigation from '../navigation/navigation.component'
+import Footer from '../navigation/footer.component'
 import Directory from '../../components/directory/directory.component'
 import Button from '../../components/button/button.component'
 import HamburgerMenu from '../../components/hamburger-menu/hamburger-menu.component'
@@ -120,7 +121,27 @@ const Home = () => {
                         <Directory yeppeuCookies={yeppeuCookies} />
                     </div>
                 </div>
+
+                <div>
+                    <hr /> <button>Shop All Products</button> <hr />
+                </div>
+
+                <div className="py-16">
+                    <div className="w-9/12 mx-auto">
+                        <div className="text-center mb-12">
+                            <p className="text-2xl font-bold font-playfairDisplay">
+                                What's New?
+                            </p>
+                            <p>
+                                Lorem ipsum dolor sit, amet consectetur
+                                adipisicing elit. Ab, sapiente?
+                            </p>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
+            <Footer />
         </Fragment>
     )
 }
