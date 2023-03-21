@@ -11,7 +11,7 @@ import CategoryOverview from '../../components/category-overview/category-overvi
 
 
 const Shop = () => {
-    const {bakedGoods} = useContext(BakedGoodsContext)
+    const {bakedGoods, priceData} = useContext(BakedGoodsContext)
 
     return (
         <Fragment>
@@ -23,14 +23,14 @@ const Shop = () => {
                     className="item-gradient absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
                 />
             </div>
-                    
+
             <div className="container max-w-6xl mx-auto px-6 py-3 mb-20">
                 <h1 className="text-3xl font-bold text-center text-darkestBrown font-playfairDisplay mb-12 mt-6">
                     Our Baked Goods
                 </h1>
                 <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0 gap-y-10">
                     {bakedGoods.map((bakedGood) => (
-                        <CategoryOverview key={bakedGood.id} product={bakedGood} />
+                        <CategoryOverview key={bakedGood.id} product={bakedGood} price={priceData} />
                     ))}
                 </div>
             </div>
