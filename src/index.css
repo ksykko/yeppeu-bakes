@@ -147,11 +147,11 @@ code {
 }
 
 .btn-google-signin {
-    @apply w-full p-2 text-sm bg-red-500 text-white rounded-md uppercase hover:opacity-90;
+    @apply w-full p-2 text-sm bg-red-500 text-white rounded-md uppercase hover:opacity-90 flex items-center justify-center relative;
 }
 
 .btn-facebook-signin {
-    @apply w-full p-2 text-sm bg-facebookBg text-white rounded-md uppercase hover:opacity-90;
+    @apply w-full p-2 text-sm bg-facebookBg text-white rounded-md uppercase hover:opacity-90 flex items-center justify-center relative;
 }
 
 /** Hero Section */

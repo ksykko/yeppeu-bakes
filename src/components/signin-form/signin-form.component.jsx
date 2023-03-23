@@ -1,6 +1,10 @@
 import { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { ReactComponent as FacebookSVG } from '../../assets/svgs/facebook.svg'
+import { ReactComponent as GoogleSVG } from '../../assets/svgs/google.svg'
+import { ReactComponent as Logo } from '../../assets/svgs/logo-nobg.svg'
+
 import {
     signInWithGooglePopup,
     createUserProfileDocumentFromAuth,
@@ -10,12 +14,10 @@ import {
 import FormInput from '../form-input/form-input.component'
 import Button from '../button/button.component'
 
-
 const defaultFormFields = {
     email: '',
     password: '',
 }
-
 
 const SigninForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields)
@@ -39,7 +41,6 @@ const SigninForm = () => {
             )
 
             resetFormFields()
-
         } catch (error) {
             switch (error.code) {
                 case 'auth/wrong-password':
@@ -69,20 +70,26 @@ const SigninForm = () => {
                 <div className="flex-col m-6 space-y-10 bg-lightestPeach shadow-2xl rounded-2xl md:flex-row md:space-y-0 ">
                     {/* Top Content */}
                     <div className="p-2 px-14">
-                        <h1 className="mt-8 mb-5 text-center">Logo Here</h1>
+                        <Logo className="w-20 h-20 mx-auto" />
                         <h1 className="mb-4 text-lightBrown font-extrabold font-playfairDisplay text-center">
                             Signin to your account
                         </h1>
                         <div className="space-y-3">
                             {/* facebook logo span with button */}
                             <Button buttonType="facebook">
-                                Sign in with Facebook
+                                <div className="bg-[#3A5D9E] h-full w-10 rounded-tl-md rounded-bl-md absolute left-0 top-1/2 transform -translate-y-1/2">
+                                    <FacebookSVG className="w-5 h-5 absolute left-[0.6rem] top-1/2 transform -translate-y-1/2" />
+                                </div>
+                                <span>Sign in with Facebook</span>
                             </Button>
                             <Button
                                 buttonType="google"
                                 onClick={signInWithGoogle}
                             >
-                                Sign in with Google
+                                <div className="bg-red-600 h-full w-10 rounded-tl-md rounded-bl-md absolute left-0 top-1/2 transform -translate-y-1/2">
+                                    <GoogleSVG className="w-5 h-5 absolute left-[0.6rem] top-1/2 transform -translate-y-1/2" />
+                                </div>
+                                <span>Sign in with Google</span>
                             </Button>
                         </div>
                         <div className="inline-flex items-center justify-center w-full">

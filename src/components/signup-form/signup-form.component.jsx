@@ -62,7 +62,7 @@ const SignupForm = () => {
             {/* Global Container */}
             <div className="max-w-lg mx-auto pt-1">
                 {/* Card Container */}
-                <div className="flex-col m-6 space-y-10 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 pb-12">
+                <div className="flex-col m-6 space-y-10 bg-lightestPeach shadow-2xl rounded-2xl md:flex-row md:space-y-0 pb-12">
                     {/* Top Content */}
                     <div className="p-2 px-14">
                         <h1 className="mb-4 mt-10 text-lightBrown font-extrabold font-playfairDisplay text-center">

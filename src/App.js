@@ -5,6 +5,7 @@ import SignIn from './routes/sign-in/sign-in.component'
 import Shop from './routes/shop/shop.component'
 import SignUp from './routes/sign-up/sign-up.component'
 import ViewProduct from './routes/view-product/view-product.component'
+import Checkout from './routes/checkout/checkout.component'
 
 const App = () => {
     return (
@@ -12,8 +13,10 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="sign-in" element={<SignIn />} />
             <Route path="shop" element={<Shop />} />
-            <Route path="shop/:id" element={<ViewProduct  />} />
+            <Route path="shop/:id" element={<ViewProduct />} />
+            <Route path="shop/check-out" element={<Checkout />} />
             <Route path="sign-up" element={<SignUp />} />
+            <Route path="*" element={<h1>404 Not Found</h1>} />
         </Routes>
     )
 }

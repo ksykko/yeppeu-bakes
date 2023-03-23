@@ -4,6 +4,7 @@ import { Outlet, Link } from 'react-router-dom'
 import { UserContext } from '../../contexts/user.context'
 import { CartContext } from '../../contexts/cart-context'
 
+
 import BagIcon from '../../components/bag-icon/bag-icon.component'
 import HamburgerIcon from '../../components/hamburger-icon/hamburger-icon.component'
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
@@ -20,7 +21,7 @@ const Navigation = () => {
             <div className="flex items-center justify-between font-bold font-playfairDisplay">
                 {/* Logo */}
                 <Link to="/">
-                    <div className={`text-xl font-extrabold text-darkestBrown`}>
+                    <div className={`text-xl font-extrabold text-darkestBrown inline-flex justify-center`}>
                         YEPPEU BAKES
                     </div>
                 </Link>
