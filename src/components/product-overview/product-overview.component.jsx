@@ -11,8 +11,6 @@ const ProductOverview = () => {
     const { from } = location.state || { from: { pathname: '/' } }
     const { name, desc, imageUrl1, imageUrl, price } = from
 
-    console.log(from)
-
     const [currentIndex, setCurrentIndex] = useState(1)
     const { addItemToCart } = useContext(CartContext)
 
