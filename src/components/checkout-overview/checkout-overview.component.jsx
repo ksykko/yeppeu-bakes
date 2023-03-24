@@ -1,17 +1,38 @@
 import { useContext } from 'react'
 
 import { CartContext } from '../../contexts/cart-context'
+import { useNavigate } from 'react-router-dom'
+
+import { Link } from 'react-router-dom'
+
+import { MdPayments } from 'react-icons/md'
 
 import CheckoutItem from '../checkout-item/checkout-item.component'
 
 export const CheckoutOverview = () => {
     const { cartItems, cartTotal } = useContext(CartContext)
+    const navigate = useNavigate()
 
+    const goToPaymentHandler = () => {
+        navigate('/shop/payment')
+    }
 
     return (
-        <div className="max-w-7xl mx-auto pt-1">
-            <div className="flex-col m-6 space-y-10 shadow-2xl rounded-2xl md:flex-row md:space-y-0 ">
-                <div className="relative overflow-x-auto shadow-md rounded-2xl">
+        <div className="max-w-7xl mx-auto pt-1 pb-10">
+            <div className="flex-col m-6 space-y-10 rounded-2xl md:flex-row md:space-y-0 bg-opacity-0">
+                <div className="flex justify-between mb-5">
+                    <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
+                        <Link to="/shop">Back</Link>
+                    </button>
+                    <button
+                        className="px-8 py-2 text-white bg-emerald-400 rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90"
+                        onClick={goToPaymentHandler}
+                    >
+                        Proceed to Payment{' '}
+                        <MdPayments className=" inline-flex " />
+                    </button>
+                </div>
+                <div className="relative overflow-x-auto shadow-lg rounded-2xl">
                     <table className="w-full text-sm text-left text-white bg-lightBrown">
                         <thead className="text-md uppercase tracking-widest">
                             <tr className=" font-playfairDisplay text-center">
@@ -37,7 +58,11 @@ export const CheckoutOverview = () => {
                         </thead>
                         <tbody>
                             {cartItems.map((item, index) => (
-                                <CheckoutItem key={index} cartItem={item} index={index} />
+                                <CheckoutItem
+                                    key={index}
+                                    cartItem={item}
+                                    index={index}
+                                />
                             ))}
                         </tbody>
                         {/* Total */}
