@@ -19,7 +19,6 @@ export const SHOP_DATA = [{
         "id": 1,
         "name": "Chocolate Chip Cookie",
         "desc": "Chocolatey, buttery, deliciousness in every bite",
-        "imageUrl1": Chocochip,
         imageUrl: [
             { "id": 1, "url": Chocochip },
             { "id": 2, "url": Chocochip2 },
@@ -33,7 +32,6 @@ export const SHOP_DATA = [{
         "id": 2,
         "name": "White Chocolate Chip Almonds Cookie",
         "desc": "Indulge in pure decadence with our white chocolate almond chip cookies",
-        "imageUrl1": Whitechocochip,
         imageUrl: [
             { "id": 1, "url": Whitechocochip },
             { "id": 2, "url": Whitechocochip2 },
@@ -46,7 +44,6 @@ export const SHOP_DATA = [{
         "id": 3,
         "name": "Red Velvet with Cream Cheese Cookie",
         "desc": "Experience velvety bliss with our red velvet cream cheese cookies",
-        "imageUrl1": Redvelvet,
         imageUrl: [
             { "id": 1, "url": Redvelvet },
             { "id": 2, "url": Redvelvet2 },
@@ -61,7 +58,6 @@ export const SHOP_DATA = [{
         "id": 4,
         "name": "Assorted Cookies",
         "desc": "Double the flavor, double the fun",
-        "imageUrl1": Assorted2,
         imageUrl: [
             { "id": 1, "url": Assorted },
             { "id": 2, "url": Assorted2 },
@@ -79,7 +75,6 @@ export const SHOP_DATA = [{
         "id": 5,
         "name": "All Flavors",
         "desc": "Variety is the spice of life",
-        "imageUrl1": Assorted,
         imageUrl: [
             { "id": 1, "url": AllFlavors },
             { "id": 2, "url": Assorted2 },
