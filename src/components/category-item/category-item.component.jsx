@@ -1,9 +1,11 @@
 const CategoryItem = ({ category }) => {
-    const { title, imageUrl1, id, styling, midStyling } = category
+    const { title, imageUrl, id, styling, midStyling } = category
+
+    console.log(imageUrl)
 
     return (
         <div className={`relative overflow-hidden group ${styling}`}>
-            <img src={imageUrl1} alt="" />
+            <img src={imageUrl} alt="" />
             <div className={`item-gradient ${midStyling}`}></div>
             <div className={`category-title ${midStyling}`}>{title}</div>
         </div>

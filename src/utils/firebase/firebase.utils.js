@@ -81,8 +81,8 @@ export const getBakedGoodsDocuments = async() => {
 
     const querySnapshot = await getDocs(q)
     const bakedGoodsMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-        const { id, name, desc, imageUrl1, imageUrl, price } = docSnapshot.data()
-        acc[id] = { id, name, desc, imageUrl1, imageUrl, price }
+        const { id, name, desc, imageUrl, price } = docSnapshot.data()
+        acc[id] = { id, name, desc, imageUrl, price }
         return acc
 
     }, {})

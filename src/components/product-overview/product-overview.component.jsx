@@ -9,7 +9,7 @@ import { RxDotFilled } from 'react-icons/rx'
 const ProductOverview = () => {
     const location = useLocation()
     const { from } = location.state || { from: { pathname: '/' } }
-    const { name, desc, imageUrl1, imageUrl, price } = from
+    const { name, desc, imageUrl, price } = from
 
     const [currentIndex, setCurrentIndex] = useState(1)
     const { addItemToCart } = useContext(CartContext)
@@ -33,7 +33,7 @@ const ProductOverview = () => {
     const handleAddToCart = () => {
         addItemToCart(
             selectedProduct,
-            imageUrl1,
+            imageUrl[currentIndex].url,
             selectedProduct.productName,
             selectedQuantity,
             selectedProduct.cost,
@@ -44,8 +44,6 @@ const ProductOverview = () => {
 
     return (
         <div className=" xl:max-w-5xl 2xl:max-w-6xl mx-auto pt-14 pb-10 px-4">
-            {/* <div style={{ backgroundImage: imageUrl1 }} className="w-full h-full rounded-2xl bg-center bg-cover duration-500"></div> */}
-
             {/* Container */}
             <div className="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-7">
                 {/* Left Side */}

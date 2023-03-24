@@ -15,6 +15,7 @@ export const BakedGoodsProvider = ({children}) => {
         const getBakedGoodsMap = async () => {
             const bakedGoodMap = await getBakedGoodsDocuments()
             setbakedGoodsMap(bakedGoodMap)
+            console.log(bakedGoodMap)
         }
 
         getBakedGoodsMap()
