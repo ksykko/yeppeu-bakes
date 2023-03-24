@@ -15,18 +15,22 @@ import {
     doc,
     getDoc,
     setDoc,
+    collection,
+    writeBatch,
+    query,
+    getDocs
 } from 'firebase/firestore'
 
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCXk1LKFJNIu2NXWkTN0mHPf-Fml9u26aw",
-    authDomain: "ischool-fb1ba.firebaseapp.com",
-    projectId: "ischool-fb1ba",
-    storageBucket: "ischool-fb1ba.appspot.com",
-    messagingSenderId: "970554853632",
-    appId: "1:970554853632:web:d708c34657c4ea9ed88be5",
-    measurementId: "G-5RF7C6HHS7"
+    apiKey: "AIzaSyBGKXfZUPCLjbPU75wzg-y1fXV14XsTLuA",
+    authDomain: "yeppeu-bakes.firebaseapp.com",
+    projectId: "yeppeu-bakes",
+    storageBucket: "yeppeu-bakes.appspot.com",
+    messagingSenderId: "410729700077",
+    appId: "1:410729700077:web:bca98795fb3e7eca5e0ae4",
+    measurementId: "G-JJX0GLE8NW"
 };
 
 
@@ -52,6 +56,39 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider)
 
 // Initialize Firestore
 export const db = getFirestore();
+
+
+// Add collection and documents
+export const addCollectionandDocuments = async(collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey)
+    const batch = writeBatch(db)
+
+    objectsToAdd.forEach((object) => {
+        const docRef = doc(collectionRef, object.name.toLowerCase())
+        batch.set(docRef, object)
+    })
+
+    await batch.commit()
+    console.log('Documents added to collection')
+
+}
+
+
+
+export const getBakedGoodsDocuments = async() => {
+    const collectionRef = collection(db, 'bakedGoods')
+    const q = query(collectionRef)
+
+    const querySnapshot = await getDocs(q)
+    const bakedGoodsMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { id, name, desc, imageUrl1, imageUrl, price } = docSnapshot.data()
+        acc[id] = { id, name, desc, imageUrl1, imageUrl, price }
+        return acc
+
+    }, {})
+
+    return bakedGoodsMap
+}
 
 
 // Create user profile document

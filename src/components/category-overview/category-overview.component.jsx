@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 const CategoryOverview = ({ product, price }) => {
-    const { id, name, desc, imageUrl1 } = product
+    const { name, desc, imageUrl1 } = product
 
 
     return (
@@ -14,7 +14,7 @@ const CategoryOverview = ({ product, price }) => {
                 />
             </div>
             <h3 className="mt-6 text-lg font-bold font-playfairDisplay text-lightBrown">
-                <Link to={`/shop/${id}`} state={{ from: product, prices:price }}>
+                <Link to={`/shop/${name}`} state={{ from: product, prices:price }}>
                     <span className="absolute inset-0"></span>
                     {name}
                 </Link>

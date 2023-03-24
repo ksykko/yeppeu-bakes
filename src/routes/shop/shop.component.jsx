@@ -1,7 +1,5 @@
-// import { Fragment } from 'react'
-// import NavigationBar from '../../components/navigation-bar/navigation-bar.component'
 import ShopBG from '../../assets/shop-bg.jpg'
-// import SHOP_DATA from '../../shop-data.json'
+
 import { Fragment, useContext } from 'react'
 
 import { BakedGoodsContext } from '../../contexts/baked-goods.context'
@@ -9,9 +7,8 @@ import { BakedGoodsContext } from '../../contexts/baked-goods.context'
 import NavigationBar from '../../components/navigation-bar/navigation-bar.component'
 import CategoryOverview from '../../components/category-overview/category-overview.component'
 
-
 const Shop = () => {
-    const {bakedGoods, priceData} = useContext(BakedGoodsContext)
+    const { bakedGoodsMap } = useContext(BakedGoodsContext)
 
     return (
         <Fragment>
@@ -29,12 +26,19 @@ const Shop = () => {
                     Our Baked Goods
                 </h1>
                 <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0 gap-y-10">
-                    {bakedGoods.map((bakedGood) => (
+                    {/* {bakedGoods.map((bakedGood) => (
                         <CategoryOverview key={bakedGood.id} product={bakedGood} price={priceData} />
-                    ))}
+                    ))} */}
+                    {Object.keys(bakedGoodsMap).map((key) => {
+                        return (
+                            <CategoryOverview
+                                key={key}
+                                product={bakedGoodsMap[key]}
+                            />
+                        )
+                    })}
                 </div>
             </div>
-
         </Fragment>
     )
 }
