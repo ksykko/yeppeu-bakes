@@ -9,7 +9,7 @@ import Redvelvet from '../assets/cookies/redvelvet-3.JPG'
 import Redvelvet2 from '../assets/cookies/redvelvet.JPG'
 import Redvelvet3 from '../assets/cookies/redvelvet-2.JPG'
 
-import Assorted from '../assets/cookies/assorted-3.JPG'
+import Assorted from '../assets/cookies/assorted.JPG'
 import AllFlavors from '../assets/cookies/all-flavors.jpg'
 import Assorted2 from '../assets/cookies/chocochip-redvelvet.jpg'
 
@@ -77,8 +77,9 @@ export const SHOP_DATA = [{
         "desc": "Variety is the spice of life",
         imageUrl: [
             { "id": 1, "url": AllFlavors },
-            { "id": 2, "url": Assorted2 },
-            { "id": 3, "url": Assorted },
+            { "id": 2, "url": Assorted },
+            { "id": 3, "url": Assorted2 },
+
         ],
         price: [
             { "priceId": 8, "productName": "All Flavors", "cost": 250, "qty": "Box of 12" },

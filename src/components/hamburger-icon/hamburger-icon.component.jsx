@@ -20,7 +20,6 @@ const HamburgerIcon = () => {
             menu.classList.toggle('hidden')
         }
 
-        console.log('clicked')
     }
 
     return (

@@ -10,6 +10,7 @@ import CategoryOverview from '../../components/category-overview/category-overvi
 const Shop = () => {
     const { bakedGoodsMap } = useContext(BakedGoodsContext)
 
+
     return (
         <Fragment>
             <NavigationBar />

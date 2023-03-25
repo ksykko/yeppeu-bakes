@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 
 import { addCollectionandDocuments, getBakedGoodsDocuments } from "../utils/firebase/firebase.utils";
 
- //import BAKED_GOODS_DATA from "../data/shop-data";
+ import BAKED_GOODS_DATA from "../data/shop-data";
 
 export const BakedGoodsContext = createContext({
     bakedGoodsMap: {},
@@ -15,12 +15,15 @@ export const BakedGoodsProvider = ({children}) => {
         const getBakedGoodsMap = async () => {
             const bakedGoodMap = await getBakedGoodsDocuments()
             setbakedGoodsMap(bakedGoodMap)
-            console.log(bakedGoodMap)
         }
 
         getBakedGoodsMap()
 
     }, [])
+
+    // useEffect(() => {
+    //     addCollectionandDocuments('bakedGoods', BAKED_GOODS_DATA)
+    // }, [])
 
     const value = { bakedGoodsMap }
 

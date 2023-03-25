@@ -1,11 +1,13 @@
 import { useContext } from 'react'
 
 import { CartContext } from '../../contexts/cart-context'
+import { UserContext } from '../../contexts/user.context'
 
 import { Link } from 'react-router-dom'
 
 const PaymentOverview = () => {
     const { cartItems, cartTotal } = useContext(CartContext)
+    const { currentUser } = useContext(UserContext)
 
     return (
         <div className="max-w-5xl mx-auto pt-5 pb-10">
@@ -160,7 +162,7 @@ const PaymentOverview = () => {
                                         </span>
                                     </div>
                                     <div className="flex-grow pl-3">
-                                        <span>Scott Windon</span>
+                                        <span>{currentUser.displayName} {currentUser.email}</span>
                                     </div>
                                 </div>
                                 <div className="w-full flex items-center">
