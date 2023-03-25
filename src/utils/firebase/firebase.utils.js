@@ -13,12 +13,16 @@ import {
 import {
     getFirestore,
     doc,
+    addDoc,
     getDoc,
     setDoc,
     collection,
     writeBatch,
     query,
-    getDocs
+    getDocs,
+    serverTimestamp,
+    orderBy,
+    limit
 } from 'firebase/firestore'
 
 import { getAnalytics } from "firebase/analytics";
@@ -95,20 +99,12 @@ export const getBakedGoodsDocuments = async() => {
 export const createUserProfileDocumentFromAuth = async(
     userAuth,
     additionalInfo = {}
-
 ) => {
-
     // Check if userAuth is valid
     if (!userAuth) return;
 
     const userDocRef = doc(db, 'users', userAuth.uid);
-
-    console.log(userDocRef);
-
     const userSnapshot = await getDoc(userDocRef);
-    console.log(userSnapshot);
-    console.log(userSnapshot.exists());
-
 
     // If user does not exist, create user
     if (!userSnapshot.exists()) {
@@ -120,6 +116,7 @@ export const createUserProfileDocumentFromAuth = async(
                 displayName,
                 email,
                 createdAt,
+                role: 'user',
                 ...additionalInfo
             });
         } catch (error) {
@@ -127,7 +124,7 @@ export const createUserProfileDocumentFromAuth = async(
         }
     }
 
-    return userDocRef;
+    return userSnapshot;
 }
 
 
@@ -154,6 +151,13 @@ export const signInAuthUserWithEmailAndPassword = async(email, password) => {
 }
 
 
+// Get User Document Reference
+export const getUserDocument = async(userId) => {
+    const userRef = doc(db, `users/${userId}`);
+    const userSnapshot = await userRef.get();
+    return userSnapshot.data();
+}
+
 // Initialize Facebook Auth Provider
 const facebookProvider = new FacebookAuthProvider();
 
@@ -169,3 +173,38 @@ export const signOutUser = async() => await signOut(auth)
 // Check if user is signed in
 export const onAuthStateChangedListener = (callback) =>
     onAuthStateChanged(auth, callback)
+
+
+// Store cart items in Firestore
+export const storeCartItems = async(currentUser, cartItems) => {
+    if (!currentUser) return;
+
+    const userRef = doc(db, 'users', currentUser.uid);
+    const ordersRef = collection(db, 'orders');
+
+    // Get the next order ID
+    const orderRef = doc(ordersRef);
+    const orderSnapshot = await getDocs(query(ordersRef, orderBy('orderId', 'desc'), limit(1)));
+    const lastOrder = orderSnapshot.docs[0];
+    const nextOrderId = lastOrder ? lastOrder.data().orderId + 1 : 1;
+
+    const orderData = {
+        orderId: nextOrderId,
+        userId: currentUser.uid,
+        createdAt: serverTimestamp(),
+    };
+    await setDoc(orderRef, orderData);
+
+    const itemsRef = collection(orderRef, 'items');
+    const batch = writeBatch(db);
+
+    console.log('Cart items:', cartItems);
+    cartItems.forEach((cartItem) => {
+        const { priceId, productName, productImage, cost, qty, quantity, additionalInstruction } = cartItem;
+        const itemRef = doc(itemsRef);
+        batch.set(itemRef, { priceId, productName, productImage, cost, qty, quantity, additionalInstruction });
+    });
+
+    await batch.commit();
+    console.log('Cart items added as an order to Firestore');
+};

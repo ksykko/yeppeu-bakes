@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 
 
 const addCartItem = (
@@ -68,6 +69,12 @@ export const CartProvider = ({ children }) => {
     const [cartItems, setCartItems] = useState([])
     const [cartCount, setCartCount] = useState(0)
     const [cartTotal, setCartTotal] = useState(0)
+    const location = useLocation()
+
+    useEffect(() => {
+      setIsCartOpen(false)
+    }, [location.pathname])
+
 
     useEffect(() => {
         const newCartCount = cartItems.reduce(

@@ -5,6 +5,8 @@ import { ReactComponent as FacebookSVG } from '../../assets/svgs/facebook.svg'
 import { ReactComponent as GoogleSVG } from '../../assets/svgs/google.svg'
 import { ReactComponent as Logo } from '../../assets/svgs/logo-nobg.svg'
 
+import { useNavigate } from 'react-router-dom'
+
 import {
     signInWithGooglePopup,
     createUserProfileDocumentFromAuth,
@@ -22,13 +24,29 @@ const defaultFormFields = {
 const SigninForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields)
     const { email, password } = formFields
+    const navigate = useNavigate()
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields)
     }
 
+    // const signInWithGoogle = async () => {
+    //     await signInWithGooglePopup()
+    // }
     const signInWithGoogle = async () => {
-        await signInWithGooglePopup()
+        try {
+            const { user } = await signInWithGooglePopup()
+            const userSnapshot = await createUserProfileDocumentFromAuth(user)
+
+            const { role } = userSnapshot.data()
+            if (role === 'admin') {
+                navigate('/admin')
+            } else {
+                navigate('/user')
+            }
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const handleSubmit = async (event) => {
@@ -39,6 +57,14 @@ const SigninForm = () => {
                 email,
                 password
             )
+
+            const userSnapshot = await createUserProfileDocumentFromAuth(user)
+            const { role } = userSnapshot.data()
+            if (role === 'admin') {
+                navigate('/admin')
+            } else {
+                navigate('/')
+            }
 
             resetFormFields()
         } catch (error) {
