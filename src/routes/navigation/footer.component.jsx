@@ -41,12 +41,6 @@ const Footer = () => {
                 <h3 className="text-lg mb-4 font-bold text-white">Contact Us</h3>
                 <ul className="list-none">
                     <li className="mb-2">
-                    <a href="mailto:hello@example.com" className="hover:text-white">hello@example.com</a>
-                    </li>
-                    <li className="mb-2">
-                    <a href="tel:+1-555-555-5555" className="hover:text-white">+1 (555) 555-5555</a>
-                    </li>
-                    <li className="mb-2">
                     <a href="/" className="hover:text-white">Privacy Policy</a>
                     </li>
                     <li className="mb-2">
