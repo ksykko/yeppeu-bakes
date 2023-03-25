@@ -1,12 +1,13 @@
 import { Routes, Route } from 'react-router-dom'
 
-import Home from './routes/home/home.component'
-import SignIn from './routes/sign-in/sign-in.component'
-import Shop from './routes/shop/shop.component'
-import SignUp from './routes/sign-up/sign-up.component'
-import ViewProduct from './routes/view-product/view-product.component'
-import Checkout from './routes/checkout/checkout.component'
-import Payment from './routes/payment/payment.component'
+import Home from './routes/home/home.route'
+import SignIn from './routes/sign-in/sign-in.route'
+import Shop from './routes/shop/shop.route'
+import SignUp from './routes/sign-up/sign-up.route'
+import ViewProduct from './routes/view-product/view-product.route'
+import Checkout from './routes/checkout/checkout.route'
+import Payment from './routes/payment/payment.route'
+import OrderTracking from './routes/order-tracking/order-tracking.route'
 
 const App = () => {
     return (
@@ -17,6 +18,7 @@ const App = () => {
             <Route path="shop/:name" element={<ViewProduct />} />
             <Route path="shop/check-out" element={<Checkout />} />
             <Route path="shop/payment" element={<Payment />} />
+            <Route path="shop/order-tracking" element={<OrderTracking />} />
             <Route path="sign-up" element={<SignUp />} />
             <Route path="*" element={<h1> 404 Not Found </h1>} />
         </Routes>

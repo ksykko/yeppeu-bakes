@@ -28,6 +28,14 @@ const CartDropdown = () => {
         }
     }
 
+    const goToOrderTrackingHandler = () => {
+        if (currentUser) {
+            navigate('/shop/order-tracking')
+        } else {
+            setShowSignInModal(true)
+        }
+    }
+
     const closeModalHandler = () => {
         setShowSignInModal(false)
         setShowCartEmptyModal(false)
@@ -46,6 +54,15 @@ const CartDropdown = () => {
             >
                 Checkout
             </Button>
+            <div className="inline-flex items-center justify-center w-full -mb-3">
+                <hr className="w-64 h-px my-3 bg-lightBrown border-0" />
+                <button
+                    className="absolute px-3 font-extrabold text-lightBrown uppercase text-xs -translate-x-1/2 bg-lightestPeach left-1/2 font-playfairDisplay hover:underline hover:underline-offset-4 tracking-widest"
+                    onClick={goToOrderTrackingHandler}
+                >
+                    Orders
+                </button>
+            </div>
             {showSignInModal && (
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center">
                     <div className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 opacity-50"></div>
