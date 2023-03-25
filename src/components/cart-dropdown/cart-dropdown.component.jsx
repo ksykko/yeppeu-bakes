@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
 import { CartContext } from '../../contexts/cart-context'
 import { UserContext } from '../../contexts/user.context'
@@ -13,9 +13,24 @@ const CartDropdown = () => {
     const { currentUser } = useContext(UserContext)
 
     const navigate = useNavigate()
+    const [showSignInModal, setShowSignInModal] = useState(false)
+    const [showCartEmptyModal, setShowCartEmptyModal] = useState(false)
 
     const goToCheckoutHandler = () => {
-        navigate('/shop/check-out')
+        if (currentUser) {
+            if (cartItems.length === 0) {
+                setShowCartEmptyModal(true)
+            } else {
+                navigate('/shop/check-out')
+            }
+        } else {
+            setShowSignInModal(true)
+        }
+    }
+
+    const closeModalHandler = () => {
+        setShowSignInModal(false)
+        setShowCartEmptyModal(false)
     }
 
     return (
@@ -25,31 +40,65 @@ const CartDropdown = () => {
                     <CartItem key={item.priceId} cartItem={item} />
                 ))}
             </div>
-
-            {/* if no user is signed in, direct button checkout to sign */}
-            {currentUser ? (
-                <Button
-                    className="btn-default font-medium tracking-widest text-center uppercase font-playfairDisplay"
-                    onClick={goToCheckoutHandler}
-                >
-                    Checkout
-                </Button>
-            ) : (
-                <Button
-                    className="btn-default font-medium tracking-widest text-center uppercase font-playfairDisplay"
-                    onClick={() => navigate('/sign-in')}
-                >
-                    Checkout
-                </Button>
-            )}
-            {/* if user is signed in, direct button checkout to checkout */}
-
-            {/* <Button
+            <Button
                 className="btn-default font-medium tracking-widest text-center uppercase font-playfairDisplay"
                 onClick={goToCheckoutHandler}
             >
                 Checkout
-            </Button> */}
+            </Button>
+            {showSignInModal && (
+                <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+                    <div className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 opacity-50"></div>
+                    <div className="relative bg-white p-5 rounded-lg shadow-lg z-10">
+                        <h3 className="font-bold text-lg mb-3">
+                            Please sign in to continue
+                        </h3>
+                        <p className="mb-3 font-sans font-normal">
+                            You need to sign in to your account to complete your
+                            order.
+                        </p>
+                        <div className="mt-6">
+                            <Button
+                                className="bg-gray-300 hover:bg-gray-400 py-2 px-4 font-sans font-normal rounded-md"
+                                onClick={closeModalHandler}
+                            >
+                                Close
+                            </Button>
+                            <Button
+                                className="bg-lightBrown hover:opacity-90 text-white py-2 px-4 font-sans font-normal rounded-md ml-3"
+                                onClick={() => {
+                                    navigate('/sign-in')
+                                    closeModalHandler()
+                                }}
+                            >
+                                Sign in
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {showCartEmptyModal && (
+                <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+                    <div className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 opacity-50"></div>
+                    <div className="relative bg-white p-5 rounded-lg shadow-lg z-10">
+                        <h3 className="font-bold text-lg mb-3">
+                            Your cart is empty
+                        </h3>
+                        <p className="mb-3 font-sans font-normal">
+                            Please add items to your cart before proceeding to
+                            checkout.
+                        </p>
+                        <div className="mt-6">
+                            <Button
+                                className="bg-gray-300 hover:bg-gray-400 py-2 px-4 font-sans font-normal rounded-md"
+                                onClick={closeModalHandler}
+                            >
+                                Close
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

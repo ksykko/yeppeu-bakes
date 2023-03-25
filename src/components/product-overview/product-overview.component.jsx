@@ -1,5 +1,6 @@
 import { Fragment, useState, useContext } from 'react'
 import { useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { CartContext } from '../../contexts/cart-context'
 
@@ -41,9 +42,14 @@ const ProductOverview = () => {
         )
     }
 
-
     return (
-        <div className=" xl:max-w-5xl 2xl:max-w-6xl mx-auto pt-14 pb-10 px-4">
+        <div className=" xl:max-w-5xl 2xl:max-w-6xl mx-auto pt-5 pb-10 px-4">
+            {/* Back Button */}
+            <div className="flex justify-between mb-5">
+                <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
+                    <Link to="/shop">Back</Link>
+                </button>
+            </div>
             {/* Container */}
             <div className="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-7">
                 {/* Left Side */}
@@ -77,7 +83,8 @@ const ProductOverview = () => {
                 </div>
 
                 {/* Right Side */}
-                <div className="p-8 md:px-12 md:py-10 bg-lightestPeach rounded-2xl md:w-1/2 select-none">
+                <div className="p-8 md:px-12 md:py-10 bg-lightestPeach rounded-2xl md:w-1/2 select-none relative">
+                    {/* Product Name */}
                     <h1 className="text-2xl font-bold font-playfairDisplay text-darkBrown mb-3">
                         {name}
                     </h1>

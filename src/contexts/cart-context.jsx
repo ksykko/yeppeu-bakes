@@ -59,6 +59,7 @@ export const CartContext = createContext({
     clearItemFromCart: () => {},
     cartCount: 0,
     cartTotal: 0,
+    clearAllCartItems: () => {},
 })
 
 
@@ -113,6 +114,11 @@ export const CartProvider = ({ children }) => {
     }
 
 
+    const clearAllCartItems = () => {
+        setCartItems([]);
+    };
+
+
     const value = {
         isCartOpen,
         setIsCartOpen,
@@ -120,7 +126,8 @@ export const CartProvider = ({ children }) => {
         clearItemFromCart,
         cartItems,
         cartCount,
-        cartTotal
+        cartTotal,
+        clearAllCartItems,
     }
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>

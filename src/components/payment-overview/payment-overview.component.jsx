@@ -1,13 +1,37 @@
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 
 import { CartContext } from '../../contexts/cart-context'
 import { UserContext } from '../../contexts/user.context'
 
 import { Link } from 'react-router-dom'
+import ModalGcash from '../modal-gcash/modal-gcash.component'
 
 const PaymentOverview = () => {
     const { cartItems, cartTotal } = useContext(CartContext)
     const { currentUser } = useContext(UserContext)
+
+    const [showModal, setShowModal] = useState(false)
+    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('')
+
+    console.log(selectedPaymentMethod)
+    console.log(showModal)
+
+    const handlePaymentMethodChange = (e) => {
+        setSelectedPaymentMethod(e.target.value)
+    }
+
+    const startYear = 2020
+    const numYears = 10
+
+    const yearOptions = []
+    for (let i = 0; i < numYears; i++) {
+        const year = startYear + i
+        yearOptions.push(
+            <option key={year} value={year}>
+                {year}
+            </option>
+        )
+    }
 
     return (
         <div className="max-w-5xl mx-auto pt-5 pb-10">
@@ -140,7 +164,9 @@ const PaymentOverview = () => {
                             <div className="mb-6 pb-6 border-b border-gray-200 md:border-none text-gray-800 text-xl">
                                 <div className="w-full flex items-center">
                                     <div className="flex-grow">
-                                        <span className="text-darkestBrown">Total</span>
+                                        <span className="text-darkestBrown">
+                                            Total
+                                        </span>
                                     </div>
                                     <div className="pl-3">
                                         <span className="font-semibold text-gray-400 text-sm">
@@ -162,7 +188,10 @@ const PaymentOverview = () => {
                                         </span>
                                     </div>
                                     <div className="flex-grow pl-3">
-                                        <span>{currentUser.displayName} {currentUser.email}</span>
+                                        <span>
+                                            {currentUser.displayName}{' '}
+                                            {currentUser.email}
+                                        </span>
                                     </div>
                                 </div>
                                 <div className="w-full flex items-center">
@@ -191,7 +220,10 @@ const PaymentOverview = () => {
                                                 className="form-radio h-5 w-5 text-indigo-500"
                                                 name="type"
                                                 id="type1"
-                                                checked
+                                                value="card"
+                                                onChange={
+                                                    handlePaymentMethodChange
+                                                }
                                             />
                                             <img
                                                 src="https://leadershipmemphis.org/wp-content/uploads/2020/08/780370.png"
@@ -232,77 +264,49 @@ const PaymentOverview = () => {
                                                 </label>
                                                 <div>
                                                     <select className="form-select w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors cursor-pointer">
-                                                        <option value="01">
-                                                            01 - Jan
-                                                        </option>
-                                                        <option value="02">
-                                                            02 - Feb
-                                                        </option>
-                                                        <option value="03">
-                                                            03 - Mar
-                                                        </option>
-                                                        <option value="04">
-                                                            04 - Apr
-                                                        </option>
-                                                        <option value="05">
-                                                            05 - May
-                                                        </option>
-                                                        <option value="06">
-                                                            06 - Jun
-                                                        </option>
-                                                        <option value="07">
-                                                            07 - Jul
-                                                        </option>
-                                                        <option value="08">
-                                                            08 - Aug
-                                                        </option>
-                                                        <option value="09">
-                                                            09 - Sep
-                                                        </option>
-                                                        <option value="10">
-                                                            10 - Oct
-                                                        </option>
-                                                        <option value="11">
-                                                            11 - Nov
-                                                        </option>
-                                                        <option value="12">
-                                                            12 - Dec
-                                                        </option>
+                                                        {Array.from(
+                                                            { length: 12 },
+                                                            (_, i) => {
+                                                                const month =
+                                                                    String(
+                                                                        i + 1
+                                                                    ).padStart(
+                                                                        2,
+                                                                        '0'
+                                                                    )
+                                                                const monthName =
+                                                                    new Date(
+                                                                        Date.UTC(
+                                                                            2022,
+                                                                            i,
+                                                                            1
+                                                                        )
+                                                                    ).toLocaleString(
+                                                                        'default',
+                                                                        {
+                                                                            month: 'short',
+                                                                        }
+                                                                    )
+                                                                return (
+                                                                    <option
+                                                                        key={
+                                                                            month
+                                                                        }
+                                                                        value={
+                                                                            month
+                                                                        }
+                                                                    >
+                                                                        {`${month} - ${monthName}`}
+                                                                    </option>
+                                                                )
+                                                            }
+                                                        )}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div className="px-2 w-1/4">
                                                 <select className="form-select w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors cursor-pointer">
-                                                    <option value="2020">
-                                                        2020
-                                                    </option>
-                                                    <option value="2021">
-                                                        2021
-                                                    </option>
-                                                    <option value="2022">
-                                                        2022
-                                                    </option>
-                                                    <option value="2023">
-                                                        2023
-                                                    </option>
-                                                    <option value="2024">
-                                                        2024
-                                                    </option>
-                                                    <option value="2025">
-                                                        2025
-                                                    </option>
-                                                    <option value="2026">
-                                                        2026
-                                                    </option>
-                                                    <option value="2027">
-                                                        2027
-                                                    </option>
-                                                    <option value="2028">
-                                                        2028
-                                                    </option>
-                                                    <option value="2029">
-                                                        2029
-                                                    </option>
+                                                    {yearOptions}
                                                 </select>
                                             </div>
                                             <div className="px-2 w-1/3">
@@ -329,7 +333,9 @@ const PaymentOverview = () => {
                                             type="radio"
                                             className="form-radio h-5 w-5 text-indigo-500"
                                             name="type"
-                                            id="type2"
+                                            id="gcash"
+                                            value="gcash"
+                                            onChange={handlePaymentMethodChange}
                                         />
                                         <img
                                             src="https://ww1.freelogovectors.net/wp-content/uploads/2023/01/gcash-logo-freelogovectors.net_.png?lossy=1&w=2560&ssl=1"
@@ -341,10 +347,17 @@ const PaymentOverview = () => {
                                 </div>
                             </div>
                             <div>
-                                <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold font-playfairDisplay">
+                                <button
+                                    className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold font-playfairDisplay"
+                                    onClick={() => setShowModal(true)}
+                                >
                                     <i className="mdi mdi-lock-outline mr-1"></i>{' '}
                                     PAY NOW
                                 </button>
+                                {showModal &&
+                                    selectedPaymentMethod === 'gcash' && (
+                                        <ModalGcash isOpen={showModal} onClose={() => setShowModal(false)} />
+                                    )}
                             </div>
                         </div>
                     </div>
