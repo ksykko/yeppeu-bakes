@@ -150,7 +150,7 @@ const Home = () => {
                 </div>
 
                 <div>
-                    <hr /> <button>Shop All Products</button> <hr />
+                    <hr /> <hr />
                 </div>
 
                 <div className="py-16">
