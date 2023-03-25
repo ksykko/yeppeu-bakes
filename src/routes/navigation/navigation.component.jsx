@@ -14,7 +14,17 @@ import { signOutUser } from '../../utils/firebase/firebase.utils'
 
 const Navigation = () => {
     const { currentUser } = useContext(UserContext)
-    const { isCartOpen } = useContext(CartContext)
+    const { isCartOpen, clearAllCartItems } = useContext(CartContext)
+
+    const handleSignout = async () => {
+        try {
+            await signOutUser
+            clearAllCartItems()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <Fragment>
@@ -45,7 +55,7 @@ const Navigation = () => {
                     {/* if currentUser is true, show Sign Out link */}
                     {currentUser ? (
                         <div className="group">
-                            <span onClick={signOutUser}>Sign Out</span>
+                            <Link to="/sign-in" onClick={handleSignout}>Sign Out</Link>
                             <div
                                 className={`mx-2 group-hover:border-b group-hover:border-lightBrown`}
                             ></div>
