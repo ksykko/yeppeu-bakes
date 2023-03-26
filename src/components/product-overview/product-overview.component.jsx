@@ -18,13 +18,25 @@ const ProductOverview = () => {
     const prevSlide = () => {
         const isFirstSlide = currentIndex === 0
         const newIndex = isFirstSlide ? imageUrl.length - 1 : currentIndex - 1
-        setCurrentIndex(newIndex)
+        const img = document.querySelector('.slide-image')
+        img.style.opacity = 0
+        setTimeout(() => {
+            setCurrentIndex(newIndex)
+            img.src = imageUrl[newIndex].url
+            img.style.opacity = 1
+        }, 250)
     }
 
     const nextSlide = () => {
         const isLastSlide = currentIndex === imageUrl.length - 1
         const newIndex = isLastSlide ? 0 : currentIndex + 1
-        setCurrentIndex(newIndex)
+        const img = document.querySelector('.slide-image')
+        img.style.opacity = 0
+        setTimeout(() => {
+            setCurrentIndex(newIndex)
+            img.src = imageUrl[newIndex].url
+            img.style.opacity = 1
+        }, 250)
     }
 
     const [selectedProduct, setSelectedProduct] = useState(price[0])
@@ -59,7 +71,7 @@ const ProductOverview = () => {
                         key={imageUrl[currentIndex].id}
                         src={imageUrl[currentIndex].url}
                         alt={name}
-                        className="w-full h-full rounded-2xl bg-center bg-cover duration-500 select-none"
+                        className="w-full h-full rounded-2xl bg-center bg-cover duration-500 select-none slide-image"
                     />
                     {/* Left arrow */}
                     <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 -translate-y-8 left-5 text-4xl rounded-full p-2 bg-black/20 text-white cursor-pointer">

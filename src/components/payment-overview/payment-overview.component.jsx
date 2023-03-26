@@ -1,4 +1,8 @@
-import { useContext, useState, useEffect } from 'react'
+import { useContext, useState } from 'react'
+
+import { storeCartItems } from '../../utils/firebase/firebase.utils'
+
+import { useNavigate } from 'react-router-dom'
 
 import { CartContext } from '../../contexts/cart-context'
 import { UserContext } from '../../contexts/user.context'
@@ -7,17 +11,42 @@ import { Link } from 'react-router-dom'
 import ModalGcash from '../modal-gcash/modal-gcash.component'
 
 const PaymentOverview = () => {
-    const { cartItems, cartTotal } = useContext(CartContext)
+    const { cartItems, cartTotal, clearAllCartItems } = useContext(CartContext)
     const { currentUser } = useContext(UserContext)
+    const navigate = useNavigate()
 
     const [showModal, setShowModal] = useState(false)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('')
-
-    console.log(selectedPaymentMethod)
-    console.log(showModal)
+    const [isLoading, setIsLoading] = useState(false)
 
     const handlePaymentMethodChange = (e) => {
         setSelectedPaymentMethod(e.target.value)
+    }
+
+    const handlePayNowClick = async () => {
+        if (!currentUser) {
+            console.log('User is not logged in')
+            return
+        }
+
+        if (selectedPaymentMethod === 'card') {
+            setIsLoading(true)
+
+            // Simulate payment processing
+            setTimeout(async () => {
+                if (cartItems.length > 0) {
+                    await storeCartItems(currentUser, cartItems)
+                    setIsLoading(false)
+                    clearAllCartItems()
+                    navigate('/shop/order-tracking')
+                } else {
+                    console.log('Cart is empty')
+                    setIsLoading(false)
+                }
+            }, 3000)
+        } else if (selectedPaymentMethod === 'gcash') {
+            setShowModal(true)
+        }
     }
 
     const startYear = 2020
@@ -44,6 +73,7 @@ const PaymentOverview = () => {
 
             <div className="w-full bg-lightestPeach rounded-2xl border-t border-b border-gray-200 px-5 py-10 text-gray-800">
                 <div className="w-full">
+                    {/* Left Side */}
                     <div className="-mx-3 md:flex items-start">
                         <div className="px-3 md:w-7/12 lg:pr-10">
                             <div className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6">
@@ -240,7 +270,9 @@ const PaymentOverview = () => {
                                             <div>
                                                 <input
                                                     className="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors"
-                                                    placeholder="John Smith"
+                                                    placeholder={
+                                                        currentUser.displayName
+                                                    }
                                                     type="text"
                                                 />
                                             </div>
@@ -348,15 +380,30 @@ const PaymentOverview = () => {
                             </div>
                             <div>
                                 <button
-                                    className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold font-playfairDisplay"
-                                    onClick={() => setShowModal(true)}
+                                    className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 text-white rounded-lg px-3 py-2 font-semibold font-playfairDisplay"
+                                    onClick={() => handlePayNowClick()}
+                                    disabled={isLoading}
                                 >
-                                    <i className="mdi mdi-lock-outline mr-1"></i>{' '}
-                                    PAY NOW
+                                    {isLoading ? (
+                                        <div className="flex items-center justify-center">
+                                            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                                            <span className="ml-2">
+                                                Processing...
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <i className="mdi mdi-lock-outline mr-1"></i>{' '}
+                                            PAY NOW
+                                        </>
+                                    )}
                                 </button>
                                 {showModal &&
                                     selectedPaymentMethod === 'gcash' && (
-                                        <ModalGcash isOpen={showModal} onClose={() => setShowModal(false)} />
+                                        <ModalGcash
+                                            isOpen={showModal}
+                                            onClose={() => setShowModal(false)}
+                                        />
                                     )}
                             </div>
                         </div>

@@ -3,8 +3,8 @@ import { Link, Outlet } from 'react-router-dom'
 
 import { UserContext } from '../../contexts/user.context'
 
-import Navigation from '../navigation/navigation.component'
-import Footer from '../navigation/footer.component'
+import Navigation from '../navigation/navigation.route'
+import Footer from '../navigation/footer.route'
 import Directory from '../../components/directory/directory.component'
 import Button from '../../components/button/button.component'
 import HamburgerMenu from '../../components/hamburger-menu/hamburger-menu.component'
@@ -95,7 +95,7 @@ const Home = () => {
                     </div> */}
                 </div>
             </section>
-            
+
             <div className="select-none">
                 <div className="bg-[#f8ceb0] py-16 text-darkestBrown">
                     <div className="w-9/12 mx-auto">
@@ -163,30 +163,30 @@ const Home = () => {
                                 <p className="text-6xl font-bold text-heroPeach font-playfairDisplay">
                                     Red Velvet with Cream Cheese Cookie
                                 </p>
-                                
+
                                 <p className='pt-6 text-[#F8CEB0]'>
-                                Indulge in the irresistible richness of our red velvet cookie with a 
-                                luscious cream cheese filling. Perfectly baked to perfection, this cookie 
+                                Indulge in the irresistible richness of our red velvet cookie with a
+                                luscious cream cheese filling. Perfectly baked to perfection, this cookie
                                 is a heavenly treat you won't want to miss!
-                                </p>  
+                                </p>
 
                                 <Button className="bg-darkestBrown text-white font-playfairDisplay font-bold lg:mt-6 py-2 px-4 rounded-lg hover:opacity-90">
                                     <Link to="/shop">Shop Now</Link>
-                                </Button> 
+                                </Button>
                             </div>
-                            
+
 
                             <div className='w-full mx-auto pt-10 '>
                                 <img
                                     src={RedVelvet2}
                                     alt="Shop"
                                     className="object-cover w-full h-full rounded-tl-[100px] shadow-lg"
-                                />    
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
             <Footer />
         </Fragment>

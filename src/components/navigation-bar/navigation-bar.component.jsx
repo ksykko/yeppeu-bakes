@@ -1,4 +1,4 @@
-import Navigation from "../../routes/navigation/navigation.component"
+import Navigation from "../../routes/navigation/navigation.route"
 
 const NavigationBar = () => {
     return (

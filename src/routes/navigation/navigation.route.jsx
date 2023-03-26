@@ -18,7 +18,7 @@ const Navigation = () => {
 
     const handleSignout = async () => {
         try {
-            await signOutUser
+            await signOutUser()
             clearAllCartItems()
         } catch (error) {
             console.log(error)
