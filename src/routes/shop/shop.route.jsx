@@ -4,6 +4,7 @@ import { Fragment, useContext } from 'react'
 
 import { BakedGoodsContext } from '../../contexts/baked-goods.context'
 
+import Footer from '../navigation/footer.component'
 import NavigationBar from '../../components/navigation-bar/navigation-bar.component'
 import CategoryOverview from '../../components/category-overview/category-overview.component'
 
@@ -40,6 +41,7 @@ const Shop = () => {
                     })}
                 </div>
             </div>
+            <Footer />
         </Fragment>
     )
 }

@@ -12,7 +12,7 @@ import HamburgerMenu from '../../components/hamburger-menu/hamburger-menu.compon
 import ChocoChip from '../../assets/cookies/chocochip.JPG'
 import Almonds from '../../assets/cookies/almond.JPG'
 import RedVelvet from '../../assets/cookies/redvelvet.JPG'
-import RedVelvet2 from '../../assets/cookies/redvelvet-3.JPG'
+import RedVelvet2 from '../../assets/cookies/redvelvet-4.jpg'
 
 
 import { ReactComponent as Delivery } from '../../assets/svgs/delivery.svg'
