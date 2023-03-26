@@ -38,7 +38,7 @@ const PaymentOverview = () => {
                     await storeCartItems(currentUser, cartItems)
                     setIsLoading(false)
                     clearAllCartItems()
-                    navigate('/shop/order-tracking')
+                    navigate(`/profile/${currentUser.displayName}/order-tracking`)
                 } else {
                     console.log('Cart is empty')
                     setIsLoading(false)

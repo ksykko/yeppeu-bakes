@@ -30,7 +30,7 @@ const CartDropdown = () => {
 
     const goToOrderTrackingHandler = () => {
         if (currentUser) {
-            navigate('/shop/order-tracking')
+            navigate(`/profile/${currentUser.displayName}/order-tracking`)
         } else {
             setShowSignInModal(true)
         }

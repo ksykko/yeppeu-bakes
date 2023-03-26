@@ -40,7 +40,7 @@ const SigninForm = () => {
             if (role === 'admin') {
                 navigate('/admin')
             } else {
-                navigate('/shop/order-tracking')
+                navigate(`/profile/${user.displayName}`)
             }
         } catch (error) {
             console.log(error)
@@ -56,7 +56,7 @@ const SigninForm = () => {
             if (role === 'admin') {
                 navigate('/admin')
             } else {
-                navigate('/shop/order-tracking')
+                navigate(`/profile/${user.displayName}`)
             }
         } catch (error) {
             console.error(error)
@@ -77,7 +77,7 @@ const SigninForm = () => {
             if (role === 'admin') {
                 navigate('/admin')
             } else {
-                navigate('/shop/order-tracking')
+                navigate(`/profile/${user.displayName}`)
             }
 
             resetFormFields()

@@ -14,7 +14,7 @@ const Shop = () => {
     return (
         <Fragment>
             <NavigationBar />
-            <div className="relative isolate min-h-[40vh] overflow-hidden bg-gray-900 py-24 sm:py-32">
+            <div className="relative isolate min-h-[40vh] overflow-hidden bg-gray-900 py-24 sm:py-32 select-none">
                 <img
                     src={ShopBG}
                     alt="Shop"
@@ -23,7 +23,7 @@ const Shop = () => {
             </div>
 
             <div className="container max-w-6xl mx-auto px-6 py-3 mb-20">
-                <h1 className="text-3xl font-bold text-center text-darkestBrown font-playfairDisplay mb-12 mt-6">
+                <h1 className="text-3xl font-bold text-center text-darkestBrown font-playfairDisplay mb-12 mt-6 select-none">
                     Our Baked Goods
                 </h1>
                 <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0 gap-y-10">

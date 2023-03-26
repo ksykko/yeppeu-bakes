@@ -8,6 +8,7 @@ import {
     signInWithEmailAndPassword,
     FacebookAuthProvider,
     signOut,
+    updateProfile,
     onAuthStateChanged
 } from 'firebase/auth'
 import {
@@ -20,6 +21,7 @@ import {
     writeBatch,
     query,
     getDocs,
+    updateDoc,
     serverTimestamp,
     orderBy,
     where,
@@ -109,13 +111,14 @@ export const createUserProfileDocumentFromAuth = async(
 
     // If user does not exist, create user
     if (!userSnapshot.exists()) {
-        const { displayName, email } = userAuth;
+        const { displayName, email, photoURL } = userAuth;
         const createdAt = new Date();
 
         try {
             await setDoc(userDocRef, {
                 displayName,
                 email,
+                photoUrl: photoURL,
                 createdAt,
                 role: 'user',
                 ...additionalInfo
@@ -123,20 +126,38 @@ export const createUserProfileDocumentFromAuth = async(
         } catch (error) {
             console.log('Error creating user', error.message);
         }
+    } else if (!userSnapshot.data().role) {
+        // If user document exists but does not have a role property, set it to the default value
+        try {
+            await updateDoc(userDocRef, {
+                role: 'user'
+            });
+        } catch (error) {
+            console.log('Error updating user', error.message);
+        }
     }
 
     return userSnapshot;
 }
 
 
-// Create user with email and password
-export const createAuthUserWithEmailAndPassword = async(email, password) => {
 
+// Create user with email and password
+export const createAuthUserWithEmailAndPassword = async(email, password, displayName) => {
     // Check if email and password have been provided
     if (!email || !password) return;
 
-    return await createUserWithEmailAndPassword(auth, email, password)
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+    if (displayName) {
+        await updateProfile(user, { displayName });
+    }
+
+    await createUserProfileDocumentFromAuth(user);
+
+    return { user };
 }
+
 
 
 // Signin with email and password
