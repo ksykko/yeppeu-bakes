@@ -7,7 +7,7 @@ import SignUp from './routes/sign-up/sign-up.route'
 import ViewProduct from './routes/view-product/view-product.route'
 import Checkout from './routes/checkout/checkout.route'
 import Payment from './routes/payment/payment.route'
-import OrderTracking from './routes/order-tracking/order-tracking.route'
+import UserDashBoard from './routes/user-dashboard/user-dashboard.route'
 
 const App = () => {
     return (
@@ -18,7 +18,7 @@ const App = () => {
             <Route path="shop/:name" element={<ViewProduct />} />
             <Route path="shop/check-out" element={<Checkout />} />
             <Route path="shop/payment" element={<Payment />} />
-            <Route path="shop/order-tracking" element={<OrderTracking />} />
+            <Route path="shop/order-tracking" element={<UserDashBoard />} />
             <Route path="sign-up" element={<SignUp />} />
             <Route path="*" element={<h1> 404 Not Found </h1>} />
         </Routes>

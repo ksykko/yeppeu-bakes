@@ -22,6 +22,7 @@ import {
     getDocs,
     serverTimestamp,
     orderBy,
+    where,
     limit
 } from 'firebase/firestore'
 
@@ -186,12 +187,21 @@ export const storeCartItems = async(currentUser, cartItems) => {
     const orderRef = doc(ordersRef);
     const orderSnapshot = await getDocs(query(ordersRef, orderBy('orderId', 'desc'), limit(1)));
     const lastOrder = orderSnapshot.docs[0];
-    const nextOrderId = lastOrder ? lastOrder.data().orderId + 1 : 1;
+    const nextOrderId = lastOrder ? String(Number(lastOrder.data().orderId) + 1).padStart(4, '0') : '0001';
+
+
+
+    // Calculate total cost of cart items
+    const totalCost = cartItems.reduce((acc, cartItem) => {
+        return acc + (cartItem.cost * cartItem.quantity);
+    }, 0) + 50;
 
     const orderData = {
         orderId: nextOrderId,
         userId: currentUser.uid,
         createdAt: serverTimestamp(),
+        status: 'baking',
+        totalCost: totalCost // Add totalCost field to orderData object
     };
     await setDoc(orderRef, orderData);
 
@@ -207,4 +217,31 @@ export const storeCartItems = async(currentUser, cartItems) => {
 
     await batch.commit();
     console.log('Cart items added as an order to Firestore');
+};
+
+
+
+// Retrieve cart items from Firestore
+export const getCartItems = async(currentUser) => {
+    if (!currentUser) return [];
+
+    const ordersRef = collection(db, 'orders');
+    const querySnapshot = await getDocs(query(ordersRef, where('userId', '==', currentUser.uid)));
+
+    const orders = [];
+    for (const doc of querySnapshot.docs) {
+        const itemsRef = collection(doc.ref, 'items');
+        const itemsSnapshot = await getDocs(itemsRef);
+        const cartItems = itemsSnapshot.docs.map((doc) => doc.data());
+        const order = {
+            orderId: doc.data().orderId,
+            createdAt: doc.data().createdAt,
+            status: doc.data().status,
+            totalCost: doc.data().totalCost, // Add totalCost field to order object
+            cartItems,
+        };
+        orders.push(order);
+    }
+
+    return orders;
 };

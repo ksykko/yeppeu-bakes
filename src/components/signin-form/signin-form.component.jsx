@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 import {
     signInWithGooglePopup,
+    signInWithFacebookPopup,
     createUserProfileDocumentFromAuth,
     signInAuthUserWithEmailAndPassword,
 } from '../../utils/firebase/firebase.utils'
@@ -30,9 +31,6 @@ const SigninForm = () => {
         setFormFields(defaultFormFields)
     }
 
-    // const signInWithGoogle = async () => {
-    //     await signInWithGooglePopup()
-    // }
     const signInWithGoogle = async () => {
         try {
             const { user } = await signInWithGooglePopup()
@@ -42,10 +40,26 @@ const SigninForm = () => {
             if (role === 'admin') {
                 navigate('/admin')
             } else {
-                navigate('/user')
+                navigate('/shop/order-tracking')
             }
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    const handleFacebookSignIn = async () => {
+        try {
+            const { user } = await signInWithFacebookPopup()
+            const userSnapshot = await createUserProfileDocumentFromAuth(user)
+
+            const { role } = userSnapshot.data()
+            if (role === 'admin') {
+                navigate('/admin')
+            } else {
+                navigate('/shop/order-tracking')
+            }
+        } catch (error) {
+            console.error(error)
         }
     }
 
@@ -63,7 +77,7 @@ const SigninForm = () => {
             if (role === 'admin') {
                 navigate('/admin')
             } else {
-                navigate('/')
+                navigate('/shop/order-tracking')
             }
 
             resetFormFields()
@@ -102,7 +116,10 @@ const SigninForm = () => {
                         </h1>
                         <div className="space-y-3">
                             {/* facebook logo span with button */}
-                            <Button buttonType="facebook">
+                            <Button
+                                buttonType="facebook"
+                                onClick={handleFacebookSignIn}
+                            >
                                 <div className="bg-[#3A5D9E] h-full w-10 rounded-tl-md rounded-bl-md absolute left-0 top-1/2 transform -translate-y-1/2">
                                     <FacebookSVG className="w-5 h-5 absolute left-[0.6rem] top-1/2 transform -translate-y-1/2" />
                                 </div>
