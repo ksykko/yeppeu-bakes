@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 import { CartContext } from '../../contexts/cart-context'
+import { AlertMessageContext } from '../../contexts/alert-message.context'
 
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs'
 import { RxDotFilled } from 'react-icons/rx'
@@ -17,6 +18,7 @@ const ProductOverview = () => {
     const { name, desc, imageUrl, price } = from
 
     const [currentIndex, setCurrentIndex] = useState(1)
+    const { alertMessage, showAlertMessage } = useContext(AlertMessageContext)
     const { addItemToCart } = useContext(CartContext)
 
     const prevSlide = () => {
@@ -56,6 +58,8 @@ const ProductOverview = () => {
             selectedProduct.cost,
             additionalInstruction
         )
+
+        showAlertMessage('Item added to cart', 'success')
     }
 
     const handleProceedToCheckout = () => {

@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 
 import { CartContext } from '../../contexts/cart-context'
+import { AlertMessageContext } from '../../contexts/alert-message.context'
 
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md'
 
@@ -17,6 +18,8 @@ const CheckoutItem = ({ cartItem, index }) => {
 
     const { cartItems, addItemToCart, clearItemFromCart } =
         useContext(CartContext)
+
+    const { alertMessage, showAlertMessage } = useContext(AlertMessageContext)
 
     const [selectedQuantities, setSelectedQuantities] = useState(
         cartItems.map((item) => item.quantity)
@@ -38,7 +41,10 @@ const CheckoutItem = ({ cartItem, index }) => {
         )
     }
 
-    const clearItemHandler = () => clearItemFromCart(cartItem)
+    const clearItemHandler = () => {
+        clearItemFromCart(cartItem)
+        showAlertMessage('Item removed from cart', 'success')
+    }
 
     return (
         <tr
