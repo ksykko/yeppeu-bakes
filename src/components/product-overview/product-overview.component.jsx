@@ -19,7 +19,7 @@ const ProductOverview = () => {
 
     const [currentIndex, setCurrentIndex] = useState(1)
     const { alertMessage, showAlertMessage } = useContext(AlertMessageContext)
-    const { addItemToCart } = useContext(CartContext)
+    const { addItemToCart, cartItems } = useContext(CartContext)
 
     const prevSlide = () => {
         const isFirstSlide = currentIndex === 0
@@ -63,7 +63,11 @@ const ProductOverview = () => {
     }
 
     const handleProceedToCheckout = () => {
-        navigate('/shop/payment')
+        if (cartItems.length === 0) {
+            showAlertMessage('Your cart is empty', 'error')
+        } else {
+            navigate('/shop/payment')
+        }
     }
 
     return (

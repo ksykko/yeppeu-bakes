@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { CartContext } from '../../contexts/cart-context'
 import { UserContext } from '../../contexts/user.context'
+import { AlertMessageContext } from '../../contexts/alert-message.context'
 
 import ModalForm from '../modal-form/modal-form.component'
 
@@ -13,16 +14,27 @@ import { Link } from 'react-router-dom'
 import ModalGcash from '../modal-gcash/modal-gcash.component'
 import { FaEdit } from 'react-icons/fa'
 import { MdArrowBackIosNew } from 'react-icons/md'
+import FormInput from '../form-input/form-input.component'
+
+const paymentFields = {
+    cardholderName: '',
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+}
 
 const PaymentOverview = () => {
     const { cartItems, cartTotal, clearAllCartItems } = useContext(CartContext)
     const { currentUser, currentUserDetails, setCurrentUserDetails } =
         useContext(UserContext)
+    const { alertMessage, showAlertMessage } = useContext(AlertMessageContext)
+
     const { deliveryAddress, contactNum } = currentUserDetails
     const navigate = useNavigate()
 
     const [showModal, setShowModal] = useState(false)
     const [showEditModal, setShowEditModal] = useState(false)
+    const [formFields, setFormFields] = useState(paymentFields)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('')
     const [currentContactNum, setCurrentContactNum] = useState(contactNum)
     const [currentDeliveryAddress, setCurrentDeliveryAddress] =
@@ -51,8 +63,10 @@ const PaymentOverview = () => {
                     navigate(
                         `/profile/${currentUser.displayName}/order-tracking`
                     )
+                    showAlertMessage('Payment successful', 'success')
                 } else {
                     console.log('Cart is empty')
+                    showAlertMessage('Cart is empty', 'error')
                     setIsLoading(false)
                 }
             }, 3000)
@@ -65,6 +79,12 @@ const PaymentOverview = () => {
         setCurrentContactNum(contactNum)
         setCurrentDeliveryAddress(deliveryAddress)
         setShowEditModal(true)
+    }
+
+    const handleChange = (event) => {
+        const { name, value } = event.target
+
+        setFormFields({ ...formFields, [name]: value })
     }
 
     const handleUserDetailsUpdate = (newContactNum, newDeliveryAddress) => {
@@ -88,6 +108,30 @@ const PaymentOverview = () => {
                 {year}
             </option>
         )
+    }
+
+    const formatCardNumber = (value) => {
+        // Remove all non-digits
+        const cleanedValue = value.replace(/\D/g, '')
+
+        // Split into groups of 4 digits
+        const groups = cleanedValue.match(/.{1,4}/g) || []
+
+        // Join groups with a space
+        return groups.join(' ')
+    }
+
+    const handleCardNumberChange = (event) => {
+        const { name, value } = event.target
+
+        // Format the input value
+        const formattedValue = formatCardNumber(value)
+
+        // Set the state with the unformatted value
+        setFormFields({ ...formFields, [name]: value })
+
+        // Update the input value with the formatted value
+        event.target.value = formattedValue
     }
 
     return (
@@ -302,11 +346,12 @@ const PaymentOverview = () => {
                                     </div>
                                     <div>
                                         <div className="mb-3">
-                                            <label className="text-darkestBrown font-semibold text-sm mb-2 ml-1">
-                                                Name on card
-                                            </label>
                                             <div>
-                                                <input
+                                                <FormInput
+                                                    label="Name on card"
+                                                    name="cardholderName"
+                                                    required
+                                                    onChange={handleChange}
                                                     className="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors"
                                                     placeholder={
                                                         currentUser.displayName
@@ -316,14 +361,18 @@ const PaymentOverview = () => {
                                             </div>
                                         </div>
                                         <div className="mb-3">
-                                            <label className="text-darkestBrown font-semibold text-sm mb-2 ml-1">
-                                                Card number
-                                            </label>
                                             <div>
-                                                <input
+                                                <FormInput
+                                                    label="Card number"
+                                                    name="cardNumber"
+                                                    required
+                                                    onChange={
+                                                        handleCardNumberChange
+                                                    }
                                                     className="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors"
                                                     placeholder="0000 0000 0000 0000"
                                                     type="text"
+                                                    maxlength="19"
                                                 />
                                             </div>
                                         </div>
@@ -380,14 +429,26 @@ const PaymentOverview = () => {
                                                 </select>
                                             </div>
                                             <div className="px-2 w-1/3">
-                                                <label className="text-darkestBrown font-semibold text-sm mb-2 ml-1">
-                                                    Security code
-                                                </label>
                                                 <div>
-                                                    <input
+                                                    <FormInput
+                                                        label="Security code"
+                                                        name="cvv"
+                                                        required
+                                                        onChange={handleChange}
+                                                        onKeyPress={(event) => {
+                                                            // Allow only numbers
+                                                            if (
+                                                                !/^\d+$/.test(
+                                                                    event.key
+                                                                )
+                                                            ) {
+                                                                event.preventDefault()
+                                                            }
+                                                        }}
                                                         className="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors"
                                                         placeholder="000"
                                                         type="text"
+                                                        maxlength="3"
                                                     />
                                                 </div>
                                             </div>

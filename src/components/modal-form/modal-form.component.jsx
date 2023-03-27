@@ -60,7 +60,7 @@ const ModalForm = ({ onClose, userId }) => {
             >
                 <div className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 opacity-50"></div>
                 <div
-                    className="relative bg-white p-5 rounded-lg shadow-lg z-10"
+                    className="relative bg-white p-5 rounded-lg shadow-lg z-10 w-96"
                     style={{
                         position: 'fixed',
                         top: '50%',
@@ -102,7 +102,7 @@ const ModalForm = ({ onClose, userId }) => {
                                 Close
                             </Button>
                             <Button
-                                className="bg-gray-300 hover:bg-gray-400 py-2 px-4 font-sans font-normal rounded-md ml-3"
+                                className=" bg-emerald-300 hover:bg-emerald-400 text-white py-2 px-4 font-sans font-normal rounded-md ml-3"
                                 buttonType="submit"
                             >
                                 Save

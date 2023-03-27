@@ -27,7 +27,7 @@ const NavigationBar = () => {
             <div className="container max-w-6xl mx-auto px-6 py-3 relative">
                 {alertMessage && (
                     <div
-                        className={`absolute z-50 right-5 border-t-4 px-4 py-3 rounded-sm shadow-md ${
+                        className={`absolute z-50 right-5 border-l-4 px-4 py-3 rounded-sm shadow-md ${
                             alertMessage.type === 'success'
                                 ? ' bg-green-100 border-teal-500 text-green-900 w-[22rem]'
                                 : ' bg-red-100 border-red-500 text-red-900 w-64'

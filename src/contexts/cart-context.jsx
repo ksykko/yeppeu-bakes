@@ -85,9 +85,14 @@ export const CartProvider = ({ children }) => {
         }
     }, [cartRef, setIsCartOpen, isCartOpen])
 
-    const toggleCart = () => {
+    const toggleCart = (event) => {
+        event.stopPropagation()
         setIsCartOpen(!isCartOpen)
     }
+
+    useEffect(() => {
+        setIsCartOpen(false)
+    }, [location.pathname])
 
     useEffect(() => {
         setIsCartOpen(false)

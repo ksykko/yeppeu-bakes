@@ -1,6 +1,6 @@
 import { Fragment, useContext, useState } from 'react'
 import { Outlet, Link } from 'react-router-dom'
-import { FaUserCircle } from 'react-icons/fa'
+
 import { AiOutlineUser } from 'react-icons/ai'
 import { CgProfile } from 'react-icons/cg'
 import { FiLogOut } from 'react-icons/fi'
@@ -123,7 +123,7 @@ const Navigation = () => {
                         </div>
                     )}
                     <div className="relative">
-                        <BagIcon onClick={() => toggleCart()} />
+                        <BagIcon onClick={(event) => toggleCart(event)} />
                         <div ref={cartRef}>
                             {isCartOpen && <CartDropdown />}
                         </div>

@@ -1,6 +1,7 @@
 import { useContext, useState, useEffect } from 'react'
 
 import { CartContext } from '../../contexts/cart-context'
+import { AlertMessageContext } from '../../contexts/alert-message.context'
 import { useNavigate } from 'react-router-dom'
 
 import { Link } from 'react-router-dom'
@@ -9,14 +10,14 @@ import { MdPayments } from 'react-icons/md'
 import { MdArrowBackIosNew } from 'react-icons/md'
 
 import CheckoutItem from '../checkout-item/checkout-item.component'
-import AlertModal from '../alert-modal/alert-modal.component'
 
 export const CheckoutOverview = () => {
     const { cartItems, cartTotal } = useContext(CartContext)
+    const { alertMessage, showAlertMessage } = useContext(AlertMessageContext)
+
     const navigate = useNavigate()
 
     const [loading, setIsLoading] = useState(true)
-    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         setIsLoading(true)
@@ -28,27 +29,15 @@ export const CheckoutOverview = () => {
 
     const goToPaymentHandler = () => {
         if (cartItems.length === 0) {
-            setShowModal(true)
+            showAlertMessage('Your cart is empty', 'error')
+
         } else {
             navigate('/shop/payment')
         }
     }
 
-    const closeModalHandler = () => {
-        setShowModal(false)
-    }
-
     return (
         <div className="max-w-5xl mx-auto pt-5 pb-10 relative">
-            {showModal && (
-                <div className="z-50" style={{ zIndex: 9999 }}>
-                    <AlertModal
-                        heading="Your cart is empty!"
-                        message="Please add items to your cart before proceeding to checkout."
-                        onClose={closeModalHandler}
-                    />
-                </div>
-            )}
             <div className="flex-col space-y-10 rounded-2xl md:flex-row md:space-y-0 bg-opacity-0">
                 <div className="flex justify-between mb-5">
                     <Link to="/shop">
