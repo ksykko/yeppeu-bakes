@@ -39,12 +39,12 @@ const MyOrders = () => {
                     <div className="flex items-center justify-center">
                         <div
                             className={`h-2.5 w-2.5 rounded-full ${
-                                status === 'baking'
+                                status === 'preparing'
                                     ? 'bg-yellow-500'
                                     : 'bg-green-500'
                             } mr-2`}
                         ></div>{' '}
-                        {status === 'baking' ? 'Baking' : 'Delivered'}
+                        {status === 'preparing' ? 'Preparing' : 'Delivered'}
                     </div>
                 </td>
                 <td className="px-6 py-4">{`₱${totalCost.toFixed(2)}`}</td>
@@ -102,7 +102,7 @@ const MyOrders = () => {
                                 <tr className="bg-lightestPeach border-b text-center hover:bg-whitePeach text-darkestBrown font-semibold">
                                     <td
                                         colSpan="5"
-                                        className="px-6 py-4 text-center"
+                                        className="px-6 py-10 text-center"
                                     >
                                         No orders yet.{' '}
                                         <Link
@@ -116,7 +116,6 @@ const MyOrders = () => {
                             )
                             // orders.map((order) => renderOrderRow(order))
                         }
-                        {orders.map((order) => renderOrderRow(order))}
                     </tbody>
                 </table>
             </div>

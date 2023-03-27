@@ -73,6 +73,7 @@ const SigninForm = () => {
             )
 
             const userSnapshot = await createUserProfileDocumentFromAuth(user)
+
             const { role } = userSnapshot.data()
             if (role === 'admin') {
                 navigate('/admin')

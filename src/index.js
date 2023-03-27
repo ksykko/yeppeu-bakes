@@ -7,6 +7,7 @@ import { UserProvider } from './contexts/user.context'
 import { BakedGoodsProvider } from './contexts/baked-goods.context'
 import { CartProvider } from './contexts/cart-context'
 import { HamburgerProvider } from './contexts/hamburger.context'
+import { AlertMessageProvider } from './contexts/alert-message.context'
 
 import './index.css'
 import reportWebVitals from './reportWebVitals'
@@ -14,17 +15,19 @@ import reportWebVitals from './reportWebVitals'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <UserProvider>
-                <BakedGoodsProvider>
-                    <CartProvider>
-                        <HamburgerProvider>
-                            <App />
-                        </HamburgerProvider>
-                    </CartProvider>
-                </BakedGoodsProvider>
-            </UserProvider>
-        </BrowserRouter>
+        <AlertMessageProvider>
+            <BrowserRouter>
+                <UserProvider>
+                    <BakedGoodsProvider>
+                        <CartProvider>
+                            <HamburgerProvider>
+                                <App />
+                            </HamburgerProvider>
+                        </CartProvider>
+                    </BakedGoodsProvider>
+                </UserProvider>
+            </BrowserRouter>
+        </AlertMessageProvider>
     </React.StrictMode>
 )
 

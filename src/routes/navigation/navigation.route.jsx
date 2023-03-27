@@ -2,6 +2,7 @@ import { Fragment, useContext, useState } from 'react'
 import { Outlet, Link } from 'react-router-dom'
 import { FaUserCircle } from 'react-icons/fa'
 import { AiOutlineUser } from 'react-icons/ai'
+import { CgProfile } from 'react-icons/cg'
 import { FiLogOut } from 'react-icons/fi'
 
 import { UserContext } from '../../contexts/user.context'
@@ -12,11 +13,14 @@ import HamburgerIcon from '../../components/hamburger-icon/hamburger-icon.compon
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
 import HamburgerMenu from '../../components/hamburger-menu/hamburger-menu.component'
 
+import Logo from '../../assets/logo.png'
+
 import { signOutUser } from '../../utils/firebase/firebase.utils'
 
 const Navigation = () => {
     const { currentUser } = useContext(UserContext)
-    const { isCartOpen, clearAllCartItems } = useContext(CartContext)
+    const { isCartOpen, clearAllCartItems, cartRef, toggleCart } =
+        useContext(CartContext)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
     const handleDropdownToggle = () => {
@@ -37,10 +41,17 @@ const Navigation = () => {
             <div className="flex items-center justify-between font-bold font-playfairDisplay">
                 {/* Logo */}
                 <Link to="/">
-                    <div
-                        className={`text-xl font-extrabold text-darkestBrown inline-flex justify-center`}
-                    >
-                        YEPPEU BAKES
+                    <div className="flex items-center justify-center">
+                        <div
+                            className={`text-xl font-extrabold text-darkestBrown inline-flex justify-center`}
+                        >
+                            <img
+                                src={Logo}
+                                alt=""
+                                className="mr-2 w-8 rounded-full"
+                            />
+                            YEPPEU BAKES
+                        </div>
                     </div>
                 </Link>
                 {/* Menu */}
@@ -67,7 +78,7 @@ const Navigation = () => {
                                 className="group cursor-pointer"
                                 onClick={handleDropdownToggle}
                             >
-                                <FaUserCircle
+                                <CgProfile
                                     size={24}
                                     className="hover:text-darkBrown"
                                 />
@@ -111,8 +122,12 @@ const Navigation = () => {
                             ></div>
                         </div>
                     )}
-                    <BagIcon />
-                    {isCartOpen && <CartDropdown />}
+                    <div className="relative">
+                        <BagIcon onClick={() => toggleCart()} />
+                        <div ref={cartRef}>
+                            {isCartOpen && <CartDropdown />}
+                        </div>
+                    </div>
                 </div>
 
                 {/* Hamburger Button */}

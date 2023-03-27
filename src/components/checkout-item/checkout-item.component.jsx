@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 
 import { CartContext } from '../../contexts/cart-context'
 
-import { MdOutlineRemoveCircle } from 'react-icons/md'
+import { MdOutlineRemoveShoppingCart } from 'react-icons/md'
 
 const CheckoutItem = ({ cartItem, index }) => {
     const {
@@ -90,7 +90,7 @@ const CheckoutItem = ({ cartItem, index }) => {
             <td className="px-6 py-4">
                 {/* Textarea */}
                 <textarea
-                    className="w-full h-24 px-4 py-2 border text-darkestBrown text-sm border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lightBrown focus:border-transparent placeholder:text-sm resize-none no-scrollbar"
+                    className="w-full text-justify h-24 px-4 py-2 border text-darkestBrown text-sm border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-lightBrown focus:border-transparent placeholder:text-xs resize-none no-scrollbar"
                     placeholder="If you order more than one flavor, you can note here the quantity of each flavor. Thank you!"
                     defaultValue={additionalInstruction}
                     onChange={(e) => {
@@ -111,9 +111,9 @@ const CheckoutItem = ({ cartItem, index }) => {
             <td className="px-6 py-4">
                 <div className="flex items-cente justify-center">
                     <span>
-                        <MdOutlineRemoveCircle
-                            size={35}
-                            className="text-red-500 cursor-pointer hover:opacity-90"
+                        <MdOutlineRemoveShoppingCart
+                            size={25}
+                            className="text-red-500 cursor-pointer hover:opacity-80"
                             onClick={clearItemHandler}
                         />
                     </span>

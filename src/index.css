@@ -6,12 +6,12 @@
 @layer utilities {
     /* Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
-      display: none;
+        display: none;
     }
 
     .no-scrollbar {
-      -ms-overflow-style: none; /* IE and Edge */
-      scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
     }
 }
 
@@ -164,4 +164,98 @@ code {
 /** Image Slider */
 .slide-image {
     transition: opacity 0.5s ease-out;
+}
+
+/** Order Tracking progress bar */
+.progress-bar {
+    list-style: none;
+    counter-reset: step;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+    position: relative;
+    padding: 0;
+}
+
+.progress-bar::before {
+    content: '';
+    height: 0.25rem;
+    width: 100%;
+    background-color: #d1d5db;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: -1;
+}
+
+.progress-bar li {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.progress-bar li::before {
+    content: counter(step);
+    counter-increment: step;
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    line-height: 2rem;
+    border: 0.125rem solid #d1d5db;
+    border-radius: 50%;
+    background-color: #fff;
+    position: relative;
+    z-index: 1;
+}
+
+.progress-bar li:not(:last-child)::after {
+    content: '';
+    height: 0.25rem;
+    width: calc(100% - 2rem);
+    background-color: #d1d5db;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(1rem);
+    z-index: -1;
+}
+
+.progress-bar li.active {
+    color: #047857;
+}
+
+.progress-bar li.active::before {
+    border-color: #047857;
+    background-color: #047857;
+    color: #fff;
+}
+
+.progress-bar li.active ~ li::before {
+    background-color: #047857;
+    border-color: #047857;
+    color: #fff;
+    animation: progress-bar 2s forwards;
+}
+
+@keyframes progress-bar {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+/** Wave bg */
+.wave-bg {
+    background-image: url('/src/assets/shapes/wave.svg');
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
 }

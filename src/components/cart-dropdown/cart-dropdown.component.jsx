@@ -42,7 +42,7 @@ const CartDropdown = () => {
     }
 
     return (
-        <div className="absolute h-80 w-80 p-5 flex flex-col z-10 top-10 right-0 bg-lightestPeach rounded-b-xl shadow-2xl">
+        <div className="absolute h-80 w-80 p-5 flex flex-col z-10 top-10 right-0 bg-lightestPeach rounded-xl shadow-2xl">
             <div className=" h-60 flex flex-col overflow-scroll no-scrollbar">
                 {cartItems.map((item) => (
                     <CartItem key={item.priceId} cartItem={item} />
@@ -71,8 +71,7 @@ const CartDropdown = () => {
                             Please sign in to continue
                         </h3>
                         <p className="mb-3 font-sans font-normal">
-                            You need to sign in to your account to complete your
-                            order.
+                            You need to sign in to your account first before you can checkout.
                         </p>
                         <div className="mt-6">
                             <Button
@@ -98,7 +97,7 @@ const CartDropdown = () => {
                 <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center">
                     <div className="absolute top-0 left-0 right-0 bottom-0 bg-gray-900 opacity-50"></div>
                     <div className="relative bg-white p-5 rounded-lg shadow-lg z-10">
-                        <h3 className="font-bold text-lg mb-3">
+                        <h3 className="font-extrabold text-lg mb-3">
                             Your cart is empty
                         </h3>
                         <p className="mb-3 font-sans font-normal">
