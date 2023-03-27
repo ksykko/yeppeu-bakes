@@ -1,13 +1,19 @@
 import { Fragment, useContext } from 'react'
-
 import { UserContext } from '../../contexts/user.context'
+import { useLocation, Link } from 'react-router-dom'
 
-import { useLocation } from 'react-router-dom'
+import html2pdf from 'html2pdf.js'
+
 import Logo from '../../assets/logo-nobg.png'
 
+import { ReactComponent as Location } from '../../assets/svgs/location.svg'
+import { ReactComponent as Globe } from '../../assets/svgs/globe.svg'
+
+import { MdArrowBackIosNew } from 'react-icons/md'
+
 const Invoice = () => {
-    const { currentUser } = useContext(UserContext)
-    const { displayName, email } = currentUser || { displayName: '', email: '' }
+    const { currentUser, currentUserDetails } = useContext(UserContext)
+    const { displayName, contactNum, deliveryAddress } = currentUserDetails
 
     const location = useLocation()
 
@@ -27,10 +33,41 @@ const Invoice = () => {
 
     const total = subtotal + 50
 
+    const handlePrint = () => {
+        const invoiceDocument = document.getElementById('invoice-document')
+        const printContents = invoiceDocument.innerHTML
+        const originalContents = document.body.innerHTML
+        document.body.innerHTML = printContents
+        window.print()
+        document.body.innerHTML = originalContents
+    }
+
+    const handleSave = () => {
+        const element = document.getElementById('invoice-document')
+        const options = {
+            orientation: 'landscape',
+        }
+        html2pdf().set(options).from(element).save(`invoice-${orderId}.pdf`)
+    }
+
     return (
         <Fragment>
-            <div className="flex items-center justify-center min-h-screen bg-gray-100 text-darkestBrown">
-                <div className="max-w-lg md:max-w-5xl bg-white shadow-lg">
+            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-darkestBrown">
+                <Link to={`/profile/${displayName}/order-tracking`}>
+                    <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
+                        <div className="flex items-center justify-center">
+                            <MdArrowBackIosNew
+                                size={20}
+                                className="-ml-3 mr-1"
+                            />
+                            Back
+                        </div>
+                    </button>
+                </Link>
+                <div
+                    id="invoice-document"
+                    className="max-w-lg md:max-w-5xl bg-white shadow-lg"
+                >
                     <div className="flex justify-between p-4">
                         <div>
                             <div className=" inline-flex">
@@ -44,20 +81,7 @@ const Invoice = () => {
                         <div className="p-2">
                             <ul className="flex">
                                 <li className="flex flex-col items-center p-2 border-l-2 border-lightBrown border-opacity-50">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6 text-lightBrown mb-2"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                                        />
-                                    </svg>
+                                    <Globe />
                                     <span className="text-xs">
                                         https://yeppeubakes.netlify.app/
                                     </span>
@@ -66,26 +90,7 @@ const Invoice = () => {
                                     </span>
                                 </li>
                                 <li className="flex flex-col items-center p-2 border-l-2 border-lightBrown border-opacity-50">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        className="w-6 h-6 text-lightBrown mb-2"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke="currentColor"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                        />
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                        />
-                                    </svg>
+                                    <Location />
                                     <span className="text-sm">
                                         Manila, Philippines
                                     </span>
@@ -116,15 +121,15 @@ const Invoice = () => {
                         <div className="w-40">
                             <address className="text-sm">
                                 <span className="font-bold"> Billed To : </span>
-                                {displayName} 795 Folsom Ave San Francisco, CA
-                                94107 P: (123) 456-7890
+                                <br />
+                                {displayName} {deliveryAddress} {contactNum}
                             </address>
                         </div>
                         <div className="w-40">
                             <address className="text-sm">
                                 <span className="font-bold">Ship To :</span>
-                                {displayName} 800 Folsom Ave San Francisco, CA
-                                94107 P: + 111-456-7890
+                                <br />
+                                {displayName} {deliveryAddress} {contactNum}
                             </address>
                         </div>
                         <div></div>
@@ -203,31 +208,6 @@ const Invoice = () => {
                             </table>
                         </div>
                     </div>
-                    {/* <div className="flex justify-between p-4">
-                        <div>
-                            <h3 className="text-xl">Terms And Condition :</h3>
-                            <ul className="text-xs list-disc list-inside">
-                                <li>
-                                    All accounts are to be paid within 7 days
-                                    from receipt of invoice.
-                                </li>
-                                <li>
-                                    To be paid by cheque or credit card or
-                                    direct payment online.
-                                </li>
-                                <li>
-                                    If account is not paid within 7 days the
-                                    credits details supplied.
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="p-4">
-                            <h3>Signature</h3>
-                            <div className="text-4xl italic text-indigo-500">
-                                AAA
-                            </div>
-                        </div>
-                    </div> */}
                     <div className="w-full h-0.5 bg-lightBrown"></div>
 
                     <div className="p-4">
@@ -235,10 +215,16 @@ const Invoice = () => {
                             Thank you very much for buying our baked goods!
                         </div>
                         <div className="flex items-end justify-end space-x-3">
-                            <button className="px-4 py-2 text-sm text-green-600 bg-green-100">
+                            <button
+                                className="px-4 py-2 text-sm text-green-600 bg-green-100"
+                                onClick={handlePrint}
+                            >
                                 Print
                             </button>
-                            <button className="px-4 py-2 text-sm text-blue-600 bg-blue-100">
+                            <button
+                                className="px-4 py-2 text-sm text-blue-600 bg-blue-100"
+                                onClick={handleSave}
+                            >
                                 Save
                             </button>
                         </div>

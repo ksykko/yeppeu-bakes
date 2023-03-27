@@ -1,147 +1,177 @@
-import { Fragment } from 'react'
+import { Fragment, useState, useContext, useEffect } from 'react'
+
+import { getCartItems } from '../../utils/firebase/firebase.utils'
+
+import { UserContext } from '../../contexts/user.context'
+
+import { MdOutlinePayments } from 'react-icons/md'
+import { FiPackage } from 'react-icons/fi'
+import { MdOutlineDeliveryDining } from 'react-icons/md'
+import { BsCheckCircle } from 'react-icons/bs'
+import { css } from '@emotion/react'
+import { BeatLoader } from 'react-spinners'
 
 const TrackOrders = () => {
+    const { currentUser } = useContext(UserContext)
+    const [orders, setOrders] = useState([])
+    const [loading, setIsLoading] = useState(true)
+
+    const override = css`
+        display: block;
+        margin: 0 auto;
+        border-color: red;
+    `
+
+    useEffect(() => {
+        setIsLoading(true)
+
+        // get last order
+        getCartItems(currentUser).then((orders) => {
+            orders.sort((a, b) => b.orderId - a.orderId)
+            const lastOrder = orders[0]
+            setOrders([lastOrder])
+            setIsLoading(false)
+        })
+    }, [currentUser])
+
+    console.log(orders)
+
+    const { orderId, createdAt, status, totalCost } = orders.length
+        ? orders[0]
+        : {}
+
     return (
         <Fragment>
-            <div className="max-w-lg mx-auto my-10">
+            <div className="max-w-xl mx-auto my-10">
                 <h2 className="sr-only">Steps</h2>
 
-                <div className="after:mt-4 after:block after:h-1 after:w-full after:rounded-lg after:bg-gray-200">
-                    <ol className="grid grid-cols-4 text-sm font-medium text-gray-500">
-                        <li className="relative text-left text-emerald-500">
-                            <span className="absolute left-0 -bottom-[1.75rem] rounded-full bg-emerald-500 text-white">
-                                <svg
-                                    className="h-5 w-5"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
+                {/* OrderID */}
+                <div className="flex">
+                    <div className="w-1/2">
+                        <div className="text-md font-medium text-gray-500">
+                            Order ID <br />
+                        </div>
+                        <span className="text-sm text-darkestBrown font-medium">
+                            {loading ? (
+                                <BeatLoader
+                                    color={'#FCA999'}
+                                    loading={loading}
+                                    css={override}
+                                    size={10}
+                                />
+                            ) : (
+                                `#${orderId}`
+                            )}
+                        </span>
+                    </div>
+                </div>
+
+                <div className="max-w-lg mx-auto py-6 text-darkestBrown">
+                    <div className="flex">
+                        <div className="w-1/4">
+                            <div className="relative mb-2">
+                                <div className="w-10 h-10 mx-auto bg-green-500 rounded-full text-lg text-white flex items-center">
+                                    <span className="flex justify-center text-white w-full">
+                                        <MdOutlinePayments size={24} />
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div className="text-xs text-center md:text-base font-medium">
+                                Payment
+                            </div>
+                        </div>
+
+                        <div className="w-1/4">
+                            <div className="relative mb-2">
+                                <div
+                                    className="absolute flex align-center items-center align-middle content-center"
+                                    style={{
+                                        width: 'calc(100% - 2.5rem - 1rem)',
+                                        top: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                    }}
                                 >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                            </span>
+                                    <div className="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
+                                        <div
+                                            className="w-0 bg-green-300 py-1 rounded"
+                                            style={{ width: '100%' }}
+                                        ></div>
+                                    </div>
+                                </div>
 
-                            <span className="hidden sm:block"> Payment </span>
+                                <div className="w-10 h-10 mx-auto bg-green-500 rounded-full text-lg text-white flex items-center">
+                                    <span className="flex justify-center text-white w-full">
+                                        <FiPackage size={24} />
+                                    </span>
+                                </div>
+                            </div>
 
-                            <svg
-                                className="ml-0 h-6 w-6 sm:hidden"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"
-                                />
-                            </svg>
-                        </li>
+                            <div className="text-xs text-center md:text-base font-medium">
+                                Preparing
+                            </div>
+                        </div>
 
-                        <li className="relative text-center text-emerald-500">
-                            <span className="absolute left-1/2 -bottom-[1.75rem] -translate-x-1/2 rounded-full bg-emerald-500 text-white">
-                                <svg
-                                    className="h-5 w-5"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
+                        <div className="w-1/4">
+                            <div className="relative mb-2">
+                                <div
+                                    className="absolute flex align-center items-center align-middle content-center"
+                                    style={{
+                                        width: 'calc(100% - 2.5rem - 1rem)',
+                                        top: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                    }}
                                 >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                            </span>
+                                    <div className="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
+                                        <div
+                                            className="w-0 bg-green-300 py-1 rounded"
+                                            style={{ width: '0%' }}
+                                        ></div>
+                                    </div>
+                                </div>
 
-                            <span className="hidden sm:block"> Preparing </span>
+                                <div className="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center">
+                                    <span className="flex justify-center text-gray-600 w-full">
+                                        <MdOutlineDeliveryDining size={24} />
+                                    </span>
+                                </div>
+                            </div>
 
-                            <svg
-                                className="mx-auto h-6 w-6 sm:hidden"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    stroke-linejoin="round"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                />
-                                <path
-                                    strokeLinecap="round"
-                                    strokeJoin="round"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                />
-                            </svg>
-                        </li>
+                            <div className="text-xs text-center md:text-base font-medium">
+                                In Transit
+                            </div>
+                        </div>
 
-                        <li className="relative text-center text-emerald-500">
-                            <span className="absolute left-1/2 -bottom-[1.75rem] -translate-x-1/2 rounded-full bg-emerald-500 text-white">
-                                <svg
-                                    className="h-5 w-5"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20"
-                                    fill="currentColor"
+                        <div className="w-1/4">
+                            <div className="relative mb-2">
+                                <div
+                                    className="absolute flex align-center items-center align-middle content-center"
+                                    style={{
+                                        width: 'calc(100% - 2.5rem - 1rem)',
+                                        top: '50%',
+                                        transform: 'translate(-50%, -50%)',
+                                    }}
                                 >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                            </span>
+                                    <div className="w-full bg-gray-200 rounded items-center align-middle align-center flex-1">
+                                        <div
+                                            className="w-0 bg-green-300 py-1 rounded"
+                                            style={{ width: '0%' }}
+                                        ></div>
+                                    </div>
+                                </div>
 
-                            <span className="hidden sm:block">
-                                {' '}
-                                In Transit{' '}
-                            </span>
+                                <div className="w-10 h-10 mx-auto bg-white border-2 border-gray-200 rounded-full text-lg text-white flex items-center">
+                                    <span className="flex justify-center text-gray-600 w-full">
+                                        <BsCheckCircle size={24} />
+                                    </span>
+                                </div>
+                            </div>
 
-                            <svg
-                                className="mx-auto h-6 w-6 sm:hidden"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    stroke-linejoin="round"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                />
-                                <path
-                                    strokeLinecap="round"
-                                    strokeJoin="round"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                />
-                            </svg>
-                        </li>
-
-                        <li className="relative text-right">
-                            <span className="hidden sm:block"> Received </span>
-
-                            <svg
-                                className="ml-auto h-6 w-6 sm:hidden"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeJoin="round"
-                                    d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
-                                />
-                            </svg>
-                        </li>
-                    </ol>
+                            <div className="text-xs text-center md:text-base font-medium">
+                                Received
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </Fragment>

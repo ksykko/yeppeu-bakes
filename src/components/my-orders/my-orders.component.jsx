@@ -7,10 +7,19 @@ import { IoReceipt } from 'react-icons/io5'
 
 import { Link } from 'react-router-dom'
 
+import { css } from '@emotion/react'
+import { BeatLoader } from 'react-spinners'
+
 const MyOrders = () => {
     const { currentUser } = useContext(UserContext)
     const [orders, setOrders] = useState([])
     const [loading, setIsLoading] = useState(true)
+
+    const override = css`
+        display: block;
+        margin: 0 auto;
+        border-color: red;
+    `
 
     useEffect(() => {
         setIsLoading(true)
@@ -86,36 +95,40 @@ const MyOrders = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            loading ? (
-                                <tr className="bg-lightestPeach border-b text-center hover:bg-whitePeach text-darkestBrown font-semibold">
-                                    <td
-                                        colSpan="5"
-                                        className="px-6 py-4 text-center"
+                        {loading ? (
+                            <tr className="bg-lightestPeach border-b text-center hover:bg-whitePeach text-darkestBrown font-semibold">
+                                <td
+                                    colSpan="5"
+                                    className="px-6 py-4 text-center"
+                                >
+                                    <div className="mx-auto">
+                                        <BeatLoader
+                                            color={'#FCA999'}
+                                            loading={loading}
+                                            css={override}
+                                            size={10}
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                        ) : orders.length > 0 ? (
+                            orders.map((order) => renderOrderRow(order))
+                        ) : (
+                            <tr className="bg-lightestPeach border-b text-center hover:bg-whitePeach text-darkestBrown font-semibold">
+                                <td
+                                    colSpan="5"
+                                    className="px-6 py-10 text-center"
+                                >
+                                    No orders yet.{' '}
+                                    <Link
+                                        to="/shop"
+                                        className=" text-buttonPeach hover:underline underline-offset-4"
                                     >
-                                        Loading...
-                                    </td>
-                                </tr>
-                            ) : orders.length > 0 ? (
-                                orders.map((order) => renderOrderRow(order))
-                            ) : (
-                                <tr className="bg-lightestPeach border-b text-center hover:bg-whitePeach text-darkestBrown font-semibold">
-                                    <td
-                                        colSpan="5"
-                                        className="px-6 py-10 text-center"
-                                    >
-                                        No orders yet.{' '}
-                                        <Link
-                                            to="/shop"
-                                            className=" text-buttonPeach hover:underline underline-offset-4"
-                                        >
-                                            Check our baked goods!
-                                        </Link>
-                                    </td>
-                                </tr>
-                            )
-                            // orders.map((order) => renderOrderRow(order))
-                        }
+                                        Check our baked goods!
+                                    </Link>
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </div>

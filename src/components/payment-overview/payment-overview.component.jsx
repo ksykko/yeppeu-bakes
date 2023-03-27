@@ -12,6 +12,7 @@ import ModalForm from '../modal-form/modal-form.component'
 import { Link } from 'react-router-dom'
 import ModalGcash from '../modal-gcash/modal-gcash.component'
 import { FaEdit } from 'react-icons/fa'
+import { MdArrowBackIosNew } from 'react-icons/md'
 
 const PaymentOverview = () => {
     const { cartItems, cartTotal, clearAllCartItems } = useContext(CartContext)
@@ -27,8 +28,6 @@ const PaymentOverview = () => {
     const [currentDeliveryAddress, setCurrentDeliveryAddress] =
         useState(deliveryAddress)
     const [isLoading, setIsLoading] = useState(false)
-
-
 
     const handlePaymentMethodChange = (e) => {
         setSelectedPaymentMethod(e.target.value)
@@ -102,9 +101,17 @@ const PaymentOverview = () => {
             )}
             {/* Back Button */}
             <div className="flex justify-start mb-5">
-                <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
-                    <Link to="/shop/check-out">Back</Link>
-                </button>
+                <Link to="/shop/check-out">
+                    <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
+                        <div className="flex items-center justify-center">
+                            <MdArrowBackIosNew
+                                size={20}
+                                className="-ml-3 mr-1"
+                            />
+                            Back
+                        </div>
+                    </button>
+                </Link>
             </div>
 
             <div className="w-full bg-lightestPeach rounded-2xl border-t border-b border-gray-200 px-10 py-10 text-gray-800">

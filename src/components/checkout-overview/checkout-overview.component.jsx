@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 import { MdPayments } from 'react-icons/md'
+import { MdArrowBackIosNew } from 'react-icons/md'
 
 import CheckoutItem from '../checkout-item/checkout-item.component'
 import AlertModal from '../alert-modal/alert-modal.component'
@@ -50,9 +51,17 @@ export const CheckoutOverview = () => {
             )}
             <div className="flex-col space-y-10 rounded-2xl md:flex-row md:space-y-0 bg-opacity-0">
                 <div className="flex justify-between mb-5">
-                    <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
-                        <Link to="/shop">Back</Link>
-                    </button>
+                    <Link to="/shop">
+                        <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
+                            <div className="flex items-center justify-center">
+                                <MdArrowBackIosNew
+                                    size={20}
+                                    className="-ml-3 mr-1"
+                                />
+                                Back
+                            </div>
+                        </button>
+                    </Link>
                     <button
                         className="px-8 py-2 text-white bg-emerald-400 rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90"
                         onClick={goToPaymentHandler}
