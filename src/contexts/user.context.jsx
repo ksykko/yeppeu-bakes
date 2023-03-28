@@ -4,6 +4,7 @@ import {
     onAuthStateChangedListener,
     createUserProfileDocumentFromAuth,
     getUserProfileDocument,
+    getAllUserDocuments,
 } from '../utils/firebase/firebase.utils'
 
 // as the actual value of the context is an object, we need to pass an object as the default value
@@ -12,17 +13,22 @@ export const UserContext = createContext({
     currentUserDetails: null,
     setCurrentUserDetails: () => null,
     setCurrentUser: () => null,
+    usersMap: {},
 })
 
 export const UserProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null)
     const [currentUserDetails, setCurrentUserDetails] = useState(null)
-    const value = {
-        currentUser,
-        setCurrentUser,
-        currentUserDetails,
-        setCurrentUserDetails,
-    }
+    const [usersMap, setUsersMap] = useState({})
+
+    useEffect(() => {
+        const getUsersMap = async () => {
+            const userMap = await getAllUserDocuments()
+            setUsersMap(userMap)
+        }
+
+        getUsersMap()
+    }, [])
 
     useEffect(() => {
         const unsubscribe = onAuthStateChangedListener(async (user) => {
@@ -36,26 +42,18 @@ export const UserProvider = ({ children }) => {
             }
 
             setCurrentUser(user)
-
         })
 
         return unsubscribe
     }, [])
 
-    // useEffect(() => {
-    //     const unsubscribe = onAuthStateChangedListener(async (user) => {
-    //         if (user) {
-    //             setCurrentUser(user)
-    //             const userProfile = await getUserProfileDocument(user.uid)
-    //             setCurrentUserDetails(userProfile)
-    //         } else {
-    //             setCurrentUser(null)
-    //             setCurrentUserDetails(null)
-    //         }
-    //     })
-
-    //     return unsubscribe
-    // }, [])
+    const value = {
+        currentUser,
+        setCurrentUser,
+        currentUserDetails,
+        setCurrentUserDetails,
+        usersMap,
+    }
 
     return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }

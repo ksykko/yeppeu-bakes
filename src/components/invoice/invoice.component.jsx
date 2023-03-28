@@ -26,6 +26,8 @@ const Invoice = () => {
         cartItems: [],
     }
 
+    console.log(order)
+
     const subtotal = cartItems.reduce((accumulator, currentItem) => {
         const itemTotal = currentItem.cost * currentItem.quantity
         return accumulator + itemTotal

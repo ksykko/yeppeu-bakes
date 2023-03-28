@@ -142,7 +142,7 @@ const TrackOrders = () => {
                                     </div>
 
                                     <div className="text-xs text-center md:text-base font-medium">
-                                        In Transit
+                                        In-Transit
                                     </div>
                                 </div>
 

@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
-import { addCollectionandDocuments, getBakedGoodsDocuments } from "../utils/firebase/firebase.utils";
+import { getBakedGoodsDocuments, addCollectionandDocuments } from "../utils/firebase/firebase.utils";
 
  import BAKED_GOODS_DATA from "../data/shop-data";
 

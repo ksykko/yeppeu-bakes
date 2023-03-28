@@ -94,6 +94,7 @@ const SigninForm = () => {
             switch (error.code) {
                 case 'auth/wrong-password':
                     showAlertMessage('Wrong password', 'error')
+                    resetFormFields()
                     break
                 case 'auth/user-not-found':
                     showAlertMessage('User not found', 'error')
@@ -146,7 +147,7 @@ const SigninForm = () => {
                         </div>
                         <div className="inline-flex items-center justify-center w-full">
                             <hr className="w-64 h-px my-6 bg-gray-300 border-0" />
-                            <span className="absolute px-3 font-medium text-slate-400 uppercase text-xs -translate-x-1/2 bg-white left-1/2 font-playfairDisplay">
+                            <span className="absolute px-3 font-medium text-slate-400 uppercase text-xs -translate-x-1/2 bg-lightestPeach left-1/2 font-playfairDisplay">
                                 or
                             </span>
                         </div>

@@ -9,7 +9,8 @@ import Checkout from './routes/checkout/checkout.route'
 import Payment from './routes/payment/payment.route'
 import UserDashBoard from './routes/user-dashboard/user-dashboard.route'
 import Invoice from './components/invoice/invoice.component'
-import AdminDashboard from './routes/admin-dashboard/admin-dashboard.route'
+import AdminDashboard from './routes/new-admin-dashboard/admin-dashboard.route'
+// import AdminDashboard from './routes/admin-dashboard/admin-dashboard.route'
 
 const App = () => {
     return (

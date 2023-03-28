@@ -252,7 +252,7 @@ export const storeCartItems = async(currentUser, cartItems) => {
         orderId: nextOrderId,
         userId: currentUser.uid,
         createdAt: serverTimestamp(),
-        status: 'preparing',
+        status: 'Preparing',
         totalCost: totalCost // Add totalCost field to orderData object
     };
     await setDoc(orderRef, orderData);
@@ -299,6 +299,29 @@ export const getCartItems = async(currentUser) => {
 };
 
 
+export const getAllCartItems = async() => {
+    const ordersRef = collection(db, 'orders');
+    const querySnapshot = await getDocs(query(ordersRef));
+
+    const orders = [];
+    for (const doc of querySnapshot.docs) {
+        const itemsRef = collection(doc.ref, 'items');
+        const itemsSnapshot = await getDocs(itemsRef);
+        const cartItems = itemsSnapshot.docs.map((doc) => doc.data());
+        const order = {
+            orderId: doc.data().orderId,
+            createdAt: doc.data().createdAt,
+            status: doc.data().status,
+            totalCost: doc.data().totalCost, // Add totalCost field to order object
+            cartItems,
+        };
+        orders.push(order);
+    }
+
+    return orders;
+}
+
+
 export const getUserAvatarURL = async(userId) => {
     const userRef = doc(db, 'users', userId);
     const userSnapshot = await getDoc(userRef);
@@ -326,4 +349,34 @@ export const updateUserDetailsDocument = async(userId, newContactNum, newDeliver
         }
 
     );
+}
+
+export const getAllUserDocuments = async() => {
+    const collectionRef = collection(db, 'users')
+    const q = query(collectionRef)
+
+    const querySnapshot = await getDocs(q)
+    const usersMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { id, displayName, email, role, contactNum, deliveryAddress, createdAt } = docSnapshot.data()
+        acc[id] = { id, displayName, email, role, contactNum, deliveryAddress, createdAt }
+        return acc
+
+    }, {})
+
+    return usersMap
+}
+
+export const getAllOrderDocuments = async() => {
+    const collectionRef = collection(db, 'orders')
+    const q = query(collectionRef)
+
+    const querySnapshot = await getDocs(q)
+    const ordersMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+        const { orderId, userId, createdAt, status, totalCost, items } = docSnapshot.data()
+        acc[orderId] = { orderId, userId, createdAt, status, totalCost, items }
+        return acc
+
+    }, {})
+
+    return ordersMap
 }

@@ -16,7 +16,7 @@ const AdminDashboard = () => {
     const { currentUser } = useContext(UserContext)
     const [bakedGoods, setbakedGoods] = useState([])
     const [users, setUsers] = useState([])
-    
+
 
     useEffect(() => {
         // Call the function to retrieve cart items
@@ -26,18 +26,13 @@ const AdminDashboard = () => {
         })
     }, [currentUser])
 
-    // useEffect(() => { 
-    //     getUserAccounts().then((users) => {
-    //       setUsers(users);
-    //     });
-    //   }, []);
 
     const renderOrderRow = (bakedGood) => {
         const { id, name, desc, price, imageUrl } = bakedGood;
-      
+
         // Check if price is an array and contains a productName, priceId and cost value
         const priceWithProductData = Array.isArray(price) && price.filter(p => p.productName && p.priceId && p.cost && p.qty);
-      
+
         // Create a row for each priceWithProductData object
         const rows = priceWithProductData.map(p => (
           <tr
@@ -53,8 +48,7 @@ const AdminDashboard = () => {
             <td className="px-6 py-4"></td>
           </tr>
         ));
-      
-        // If priceWithProductData is empty, create a single row with the original name and price
+
         if (priceWithProductData.length === 0) {
           return (
             <tr
@@ -70,28 +64,11 @@ const AdminDashboard = () => {
             </tr>
           );
         }
-      
-        // Otherwise, return the generated rows
+
         return rows;
     };
 
-    // const renderUserRow = (user, index) => {
-    //     const { displayName, email, role, createdAt, contactNum } = user;
-    //     return (
-    //       <tr
-    //         key={index}
-    //         className="bg-lightestPeach border-b text-center hover:bg-whitePeach text-darkestBrown font-semibold"
-    //       >
-    //         <td className="px-6 py-4">{displayName}</td>
-    //         <td className="px-6 py-4">{email}</td>
-    //         <td className="px-6 py-4">{role}</td>
-    //         <td className="px-6 py-4">{contactNum}</td>
-    //         <td className="px-6 py-4">{new Date(createdAt.seconds * 1000).toLocaleString()}</td>
-            
-    //       </tr>
-    //     );
-    // };
-      
+
     const tabs = [
         {
           name: 'Profile',
@@ -186,7 +163,7 @@ const AdminDashboard = () => {
     ]
 
     const tabs3 = [
-        
+
         {
             name: 'Sales Analytics',
             content: (

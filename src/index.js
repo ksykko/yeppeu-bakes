@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { UserProvider } from './contexts/user.context'
 import { BakedGoodsProvider } from './contexts/baked-goods.context'
+import { OrdersProvider } from './contexts/orders-context'
 import { CartProvider } from './contexts/cart-context'
 import { HamburgerProvider } from './contexts/hamburger.context'
 import { AlertMessageProvider } from './contexts/alert-message.context'
@@ -18,13 +19,15 @@ root.render(
         <AlertMessageProvider>
             <BrowserRouter>
                 <UserProvider>
-                    <BakedGoodsProvider>
-                        <CartProvider>
-                            <HamburgerProvider>
-                                <App />
-                            </HamburgerProvider>
-                        </CartProvider>
-                    </BakedGoodsProvider>
+                    <OrdersProvider>
+                        <BakedGoodsProvider>
+                            <CartProvider>
+                                <HamburgerProvider>
+                                    <App />
+                                </HamburgerProvider>
+                            </CartProvider>
+                        </BakedGoodsProvider>
+                    </OrdersProvider>
                 </UserProvider>
             </BrowserRouter>
         </AlertMessageProvider>

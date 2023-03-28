@@ -1,7 +1,10 @@
 import { useState, useEffect, useContext, Fragment } from 'react'
 
 import { UserContext } from '../../contexts/user.context'
-import { getCartItems } from '../../utils/firebase/firebase.utils'
+import {
+    getCartItems,
+    getAllCartItems,
+} from '../../utils/firebase/firebase.utils'
 
 import { IoReceipt } from 'react-icons/io5'
 
@@ -35,6 +38,8 @@ const MyOrders = () => {
     const renderOrderRow = (order) => {
         const { orderId, createdAt, status, totalCost } = order
 
+        console.log('order: ', order)
+
         return (
             <tr
                 key={orderId}
@@ -48,12 +53,26 @@ const MyOrders = () => {
                     <div className="flex items-center justify-center">
                         <div
                             className={`h-2.5 w-2.5 rounded-full ${
-                                status === 'preparing'
+                                status === 'Pending'
+                                    ? 'bg-orange-500'
+                                    : status === 'Preparing'
                                     ? 'bg-yellow-500'
-                                    : 'bg-green-500'
+                                    : status === 'In-Transit'
+                                    ? 'bg-blue-500'
+                                    : status === 'Delivered'
+                                    ? 'bg-green-500'
+                                    : 'bg-red-500'
                             } mr-2`}
                         ></div>{' '}
-                        {status === 'preparing' ? 'Preparing' : 'Delivered'}
+                        {status === 'Pending'
+                            ? 'Pending'
+                            : status === 'Preparing'
+                            ? 'Preparing'
+                            : status === 'In-Transit'
+                            ? 'In-Transit'
+                            : status === 'Delivered'
+                            ? 'Delivered'
+                            : 'Cancelled'}
                     </div>
                 </td>
                 <td className="px-6 py-4">{`₱${totalCost.toFixed(2)}`}</td>
