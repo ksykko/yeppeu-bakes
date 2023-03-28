@@ -7,29 +7,31 @@ import CardBarChart from '../../cards/CardBarChart'
 
 const AdminDashboard = () => {
     return (
-        <div className="flex-1 flex-col">
-            <div className=" ml-[15.5rem] mr-5">
-                <HeaderStats />
-            </div>
-            <div className="flex-1 mx-72 mr-16">
-                <div className="flex flex-wrap">
-                    <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-                        <CardLines />
+        <Fragment>
+            <div className="flex-1 flex-col">
+                <div className=" ml-[15.5rem] mr-5">
+                    <HeaderStats />
+                </div>
+                <div className="flex-1 mx-72 mr-16">
+                    <div className="flex flex-wrap">
+                        <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+                            <CardLines />
+                        </div>
+                        <div className="w-full xl:w-4/12 px-4">
+                            <CardBarChart />
+                        </div>
                     </div>
-                    <div className="w-full xl:w-4/12 px-4">
-                        <CardBarChart />
+                    <div className="flex flex-wrap mt-4">
+                        <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
+                            <CardPageVisits />
+                        </div>
+                        <div className="w-full xl:w-4/12 px-4">
+                            <CardSocialTraffic />
+                        </div>
                     </div>
                 </div>
-                <div className="flex flex-wrap mt-4">
-                    <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-                        <CardPageVisits />
-                    </div>
-                    <div className="w-full xl:w-4/12 px-4">
-                        <CardSocialTraffic />
-                    </div>
-                </div>
             </div>
-        </div>
+        </Fragment>
     )
 }
 export default AdminDashboard

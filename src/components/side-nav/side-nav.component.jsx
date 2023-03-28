@@ -6,7 +6,6 @@ import { CartContext } from '../../contexts/cart-context'
 
 import { Link } from 'react-router-dom'
 
-import NavigationBar from '../navigation-bar/navigation-bar.component'
 import AdminDashboard from '../admin/admin-dashboard/admin-dashboard.component'
 import AdminProfile from '../admin/admin-profile/admin-profile.component'
 import AdminProducts from '../admin/admin-products/admin-products.component'
@@ -161,7 +160,7 @@ const SideNav = () => {
 
                 <nav
                     id="main-navbar"
-                    class="fixed top-0 right-0 left-0 flex w-full flex-nowrap items-center justify-between bg-lightestPeach py-[0.6rem] text-gray-500 shadow-lg hover:text-gray-700 focus:text-gray-700 lg:flex-wrap lg:justify-start xl:pl-60"
+                    class="fixed z-50 top-0 right-0 left-0 flex w-full flex-nowrap items-center justify-between bg-lightestPeach py-[0.6rem] text-gray-500 shadow-lg hover:text-gray-700 focus:text-gray-700 lg:flex-wrap lg:justify-start xl:pl-60"
                     data-te-navbar-ref
                 >
                     <div class="flex w-full flex-wrap items-center justify-end px-4 py-3">
