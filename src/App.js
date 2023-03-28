@@ -8,11 +8,13 @@ import ViewProduct from './routes/view-product/view-product.route'
 import Checkout from './routes/checkout/checkout.route'
 import Payment from './routes/payment/payment.route'
 import UserDashBoard from './routes/user-dashboard/user-dashboard.route'
+import AdminDashboard from './routes/admin-dashboard/admin-dashboard.route'
 
 const App = () => {
     return (
         <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="admin-dashboard" element={<AdminDashboard />} />
             <Route path="sign-in" element={<SignIn />} />
             <Route path="shop" element={<Shop />} />
             <Route path="shop/:name" element={<ViewProduct />} />

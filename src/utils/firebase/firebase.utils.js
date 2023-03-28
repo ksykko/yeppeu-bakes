@@ -78,6 +78,11 @@ export const addCollectionandDocuments = async(collectionKey, objectsToAdd) => {
 
 }
 
+export const getUserAccounts = async() => {
+    const querySnapshot = await getDocs(collection(db, 'users'));
+    return querySnapshot.docs.map(doc => doc.data());
+}
+
 
 
 export const getBakedGoodsDocuments = async() => {

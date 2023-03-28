@@ -38,7 +38,7 @@ const SigninForm = () => {
 
             const { role } = userSnapshot.data()
             if (role === 'admin') {
-                navigate('/admin')
+                navigate('/admin-dashboard')
             } else {
                 navigate('/shop/order-tracking')
             }
@@ -54,7 +54,7 @@ const SigninForm = () => {
 
             const { role } = userSnapshot.data()
             if (role === 'admin') {
-                navigate('/admin')
+                navigate('/admin-dashboard')
             } else {
                 navigate('/shop/order-tracking')
             }
@@ -75,7 +75,7 @@ const SigninForm = () => {
             const userSnapshot = await createUserProfileDocumentFromAuth(user)
             const { role } = userSnapshot.data()
             if (role === 'admin') {
-                navigate('/admin')
+                navigate('/admin-dashboard')
             } else {
                 navigate('/shop/order-tracking')
             }
