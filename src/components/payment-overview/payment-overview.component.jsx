@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { Fragment, useContext, useState } from 'react'
 
 import { storeCartItems } from '../../utils/firebase/firebase.utils'
 
@@ -6,17 +6,39 @@ import { useNavigate } from 'react-router-dom'
 
 import { CartContext } from '../../contexts/cart-context'
 import { UserContext } from '../../contexts/user.context'
+import { AlertMessageContext } from '../../contexts/alert-message.context'
+
+import ModalForm from '../modal-form/modal-form.component'
 
 import { Link } from 'react-router-dom'
 import ModalGcash from '../modal-gcash/modal-gcash.component'
+import { FaEdit } from 'react-icons/fa'
+import { MdArrowBackIosNew } from 'react-icons/md'
+import FormInput from '../form-input/form-input.component'
+
+const paymentFields = {
+    cardholderName: '',
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+}
 
 const PaymentOverview = () => {
     const { cartItems, cartTotal, clearAllCartItems } = useContext(CartContext)
-    const { currentUser } = useContext(UserContext)
+    const { currentUser, currentUserDetails, setCurrentUserDetails } =
+        useContext(UserContext)
+    const { alertMessage, showAlertMessage } = useContext(AlertMessageContext)
+
+    const { deliveryAddress, contactNum } = currentUserDetails
     const navigate = useNavigate()
 
     const [showModal, setShowModal] = useState(false)
+    const [showEditModal, setShowEditModal] = useState(false)
+    const [formFields, setFormFields] = useState(paymentFields)
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('')
+    const [currentContactNum, setCurrentContactNum] = useState(contactNum)
+    const [currentDeliveryAddress, setCurrentDeliveryAddress] =
+        useState(deliveryAddress)
     const [isLoading, setIsLoading] = useState(false)
 
     const handlePaymentMethodChange = (e) => {
@@ -38,15 +60,41 @@ const PaymentOverview = () => {
                     await storeCartItems(currentUser, cartItems)
                     setIsLoading(false)
                     clearAllCartItems()
-                    navigate('/shop/order-tracking')
+                    navigate(
+                        `/profile/${currentUser.displayName}/order-tracking`
+                    )
+                    showAlertMessage('Payment successful', 'success')
                 } else {
                     console.log('Cart is empty')
+                    showAlertMessage('Cart is empty', 'error')
                     setIsLoading(false)
                 }
             }, 3000)
         } else if (selectedPaymentMethod === 'gcash') {
             setShowModal(true)
         }
+    }
+
+    const handleEditClick = () => {
+        setCurrentContactNum(contactNum)
+        setCurrentDeliveryAddress(deliveryAddress)
+        setShowEditModal(true)
+    }
+
+    const handleChange = (event) => {
+        const { name, value } = event.target
+
+        setFormFields({ ...formFields, [name]: value })
+    }
+
+    const handleUserDetailsUpdate = (newContactNum, newDeliveryAddress) => {
+        setCurrentContactNum(newContactNum)
+        setCurrentDeliveryAddress(newDeliveryAddress)
+        setCurrentUserDetails((prevState) => ({
+            ...prevState,
+            contactNum: newContactNum,
+            deliveryAddress: newDeliveryAddress,
+        }))
     }
 
     const startYear = 2020
@@ -62,43 +110,60 @@ const PaymentOverview = () => {
         )
     }
 
+    const formatCardNumber = (value) => {
+        // Remove all non-digits
+        const cleanedValue = value.replace(/\D/g, '')
+
+        // Split into groups of 4 digits
+        const groups = cleanedValue.match(/.{1,4}/g) || []
+
+        // Join groups with a space
+        return groups.join(' ')
+    }
+
+    const handleCardNumberChange = (event) => {
+        const { name, value } = event.target
+
+        // Format the input value
+        const formattedValue = formatCardNumber(value)
+
+        // Set the state with the unformatted value
+        setFormFields({ ...formFields, [name]: value })
+
+        // Update the input value with the formatted value
+        event.target.value = formattedValue
+    }
+
     return (
         <div className="max-w-5xl mx-auto pt-5 pb-10">
+            {showEditModal && (
+                <ModalForm
+                    onClose={() => setShowEditModal(false)}
+                    userId={currentUser.uid}
+                    handleUserDetailsUpdate={handleUserDetailsUpdate}
+                />
+            )}
             {/* Back Button */}
             <div className="flex justify-start mb-5">
-                <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
-                    <Link to="/shop/check-out">Back</Link>
-                </button>
+                <Link to="/shop/check-out">
+                    <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
+                        <div className="flex items-center justify-center">
+                            <MdArrowBackIosNew
+                                size={20}
+                                className="-ml-3 mr-1"
+                            />
+                            Back
+                        </div>
+                    </button>
+                </Link>
             </div>
 
-            <div className="w-full bg-lightestPeach rounded-2xl border-t border-b border-gray-200 px-5 py-10 text-gray-800">
+            <div className="w-full bg-lightestPeach rounded-2xl border-t border-b border-gray-200 px-10 py-10 text-gray-800">
                 <div className="w-full">
                     {/* Left Side */}
                     <div className="-mx-3 md:flex items-start">
                         <div className="px-3 md:w-7/12 lg:pr-10">
                             <div className="w-full mx-auto text-gray-800 font-light mb-6 border-b border-gray-200 pb-6">
-                                {/* <div className="w-full flex items-center">
-                                    <div className="overflow-hidden rounded-lg w-16 h-16 bg-gray-50 border border-gray-200">
-                                        <img
-                                            src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1160&q=80"
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="flex-grow pl-3">
-                                        <h6 className="font-semibold uppercase text-darkestBrown">
-                                            Ray Ban Sunglasses.
-                                        </h6>
-                                        <p className="text-gray-400">x 1</p>
-                                    </div>
-                                    <div>
-                                        <span className="font-semibold text-darkestBrown text-xl">
-                                            $210
-                                        </span>
-                                        <span className="font-semibold text-darkestBrown text-sm">
-                                            .00
-                                        </span>
-                                    </div>
-                                </div> */}
                                 {cartItems.map((item, index) => {
                                     const {
                                         priceId,
@@ -210,31 +275,48 @@ const PaymentOverview = () => {
                             </div>
                         </div>
                         <div className="px-3 md:w-5/12">
-                            <div className="w-full mx-auto rounded-lg bg-white border border-gray-200 p-3 text-gray-800 font-light mb-6">
-                                <div className="w-full flex mb-3 items-center">
-                                    <div className="w-32">
-                                        <span className="text-darkestBrown font-semibold">
-                                            Contact
-                                        </span>
+                            <div className="w-full mx-auto rounded-lg space-y-3 bg-white border border-gray-200 p-4 text-gray-800 font-light mb-6 relative">
+                                <FaEdit
+                                    size={20}
+                                    className="absolute top-2 right-2 text-lightBrown cursor-pointer"
+                                    onClick={handleEditClick}
+                                />
+
+                                <div className="flex">
+                                    <div className="w-32 text-darkestBrown font-semibold">
+                                        Contact
                                     </div>
-                                    <div className="flex-grow pl-3">
-                                        <span>
-                                            {currentUser.displayName}{' '}
-                                            {currentUser.email}
-                                        </span>
+                                    <div className=" flex-grow">
+                                        <div>{currentUser.displayName}</div>
+                                        <div>{currentUser.email}</div>
+                                        <div>
+                                            {contactNum == null ? (
+                                                <div className="text-sm text-yellow-500 font-medium">
+                                                    Please add your contact
+                                                    number.
+                                                </div>
+                                            ) : (
+                                                contactNum
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
-                                <div className="w-full flex items-center">
-                                    <div className="w-32">
-                                        <span className="text-darkestBrown font-semibold">
-                                            Billing Address
-                                        </span>
+                                <div className="flex">
+                                    <div className="w-32 text-darkestBrown font-semibold">
+                                        Delivery <br />
+                                        Address
                                     </div>
-                                    <div className="flex-grow pl-3">
-                                        <span>
-                                            123 George Street, Sydney, NSW 2000
-                                            Australia
-                                        </span>
+                                    <div className=" flex-grow">
+                                        <div>
+                                            {deliveryAddress == null ? (
+                                                <div className="text-sm mt-1 text-yellow-500 font-medium">
+                                                    Please add your delivery
+                                                    address.
+                                                </div>
+                                            ) : (
+                                                deliveryAddress
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -264,11 +346,12 @@ const PaymentOverview = () => {
                                     </div>
                                     <div>
                                         <div className="mb-3">
-                                            <label className="text-darkestBrown font-semibold text-sm mb-2 ml-1">
-                                                Name on card
-                                            </label>
                                             <div>
-                                                <input
+                                                <FormInput
+                                                    label="Name on card"
+                                                    name="cardholderName"
+                                                    required
+                                                    onChange={handleChange}
                                                     className="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors"
                                                     placeholder={
                                                         currentUser.displayName
@@ -278,14 +361,18 @@ const PaymentOverview = () => {
                                             </div>
                                         </div>
                                         <div className="mb-3">
-                                            <label className="text-darkestBrown font-semibold text-sm mb-2 ml-1">
-                                                Card number
-                                            </label>
                                             <div>
-                                                <input
+                                                <FormInput
+                                                    label="Card number"
+                                                    name="cardNumber"
+                                                    required
+                                                    onChange={
+                                                        handleCardNumberChange
+                                                    }
                                                     className="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors"
                                                     placeholder="0000 0000 0000 0000"
                                                     type="text"
+                                                    maxlength="19"
                                                 />
                                             </div>
                                         </div>
@@ -336,20 +423,32 @@ const PaymentOverview = () => {
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div className="px-2 w-1/4">
+                                            <div className="px-2 w-1/3">
                                                 <select className="form-select w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors cursor-pointer">
                                                     {yearOptions}
                                                 </select>
                                             </div>
                                             <div className="px-2 w-1/3">
-                                                <label className="text-darkestBrown font-semibold text-sm mb-2 ml-1">
-                                                    Security code
-                                                </label>
                                                 <div>
-                                                    <input
+                                                    <FormInput
+                                                        label="Security code"
+                                                        name="cvv"
+                                                        required
+                                                        onChange={handleChange}
+                                                        onKeyPress={(event) => {
+                                                            // Allow only numbers
+                                                            if (
+                                                                !/^\d+$/.test(
+                                                                    event.key
+                                                                )
+                                                            ) {
+                                                                event.preventDefault()
+                                                            }
+                                                        }}
                                                         className="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors"
                                                         placeholder="000"
                                                         type="text"
+                                                        maxlength="3"
                                                     />
                                                 </div>
                                             </div>

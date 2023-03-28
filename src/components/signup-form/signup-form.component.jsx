@@ -1,10 +1,11 @@
 import { Fragment, useState } from 'react'
 
+import { useNavigate } from 'react-router-dom'
+
 import {
     createAuthUserWithEmailAndPassword,
     createUserProfileDocumentFromAuth,
 } from '../../utils/firebase/firebase.utils'
-
 
 import FormInput from '../form-input/form-input.component'
 import Button from '../button/button.component'
@@ -19,7 +20,8 @@ const defaultFormFields = {
 const SignupForm = () => {
     const [formFields, setFormFields] = useState(defaultFormFields)
     const { displayName, email, password, confirmPassword } = formFields
-    const role = 'user'
+
+    const navigate = useNavigate()
 
     const resetFormFields = () => {
         setFormFields(defaultFormFields)
@@ -36,18 +38,15 @@ const SignupForm = () => {
         try {
             const { user } = await createAuthUserWithEmailAndPassword(
                 email,
-                password
+                password,
+                displayName
             )
 
-            await createUserProfileDocumentFromAuth(user, { displayName, role })
             resetFormFields()
+            navigate(`/profile/${user.displayName}`)
 
         } catch (error) {
-            if (error.code === 'auth/email-already-in-use') {
-                alert('Cannot create user, email already in use')
-            } else {
-                alert('Something went wrong, please try again')
-            }
+            console.error(error)
         }
     }
 
@@ -139,10 +138,7 @@ const SignupForm = () => {
                                     </div>
                                 </div>
                             </div>
-                            <Button
-                                buttonType="default"
-                                type="submit"
-                            >
+                            <Button buttonType="default" type="submit">
                                 Create an Account
                             </Button>
                         </form>

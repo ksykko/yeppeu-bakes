@@ -14,7 +14,6 @@ import Almonds from '../../assets/cookies/almond.JPG'
 import RedVelvet from '../../assets/cookies/redvelvet.JPG'
 import RedVelvet2 from '../../assets/cookies/redvelvet-4.jpg'
 
-
 import { ReactComponent as Delivery } from '../../assets/svgs/delivery.svg'
 import { ReactComponent as Support } from '../../assets/svgs/24-7.svg'
 import { ReactComponent as Oven } from '../../assets/svgs/oven.svg'
@@ -143,9 +142,11 @@ const Home = () => {
                             <p className="text-2xl font-bold font-playfairDisplay">
                                 Our Cookies
                             </p>
-                            <p>
-                                Lorem ipsum dolor sit, amet consectetur
-                                adipisicing elit. Ab, sapiente?
+                            <p className='mx-auto max-w-3xl mt-3 text-darkestBrown'>
+                                Indulge in our deliciously baked cookies! Our
+                                cookies are freshly made with high-quality
+                                ingredients and come in a variety of flavors
+                                that are sure to satisfy your sweet tooth.
                             </p>
                         </div>
                         <Directory yeppeuCookies={yeppeuCookies} />
@@ -155,8 +156,7 @@ const Home = () => {
                 <div className="bg-lightBrown">
                     <div className=" w-9/12 mx-auto">
                         <div className="grid lg:grid-cols-2 ">
-
-                            <div className='text-center pt-16 lg:text-left lg:py-16 lg:pr-16'>
+                            <div className="text-center pt-16 lg:text-left lg:py-16 lg:pr-16">
                                 <p className="text-2xl text-[#F8CEB0] font-bold">
                                     Check out our bestseller!
                                 </p>
@@ -164,10 +164,12 @@ const Home = () => {
                                     Red Velvet with Cream Cheese Cookie
                                 </p>
 
-                                <p className='pt-6 text-[#F8CEB0]'>
-                                Indulge in the irresistible richness of our red velvet cookie with a
-                                luscious cream cheese filling. Perfectly baked to perfection, this cookie
-                                is a heavenly treat you won't want to miss!
+                                <p className="pt-6 text-[#F8CEB0]">
+                                    Indulge in the irresistible richness of our
+                                    red velvet cookie with a luscious cream
+                                    cheese filling. Perfectly baked to
+                                    perfection, this cookie is a heavenly treat
+                                    you won't want to miss!
                                 </p>
 
                                 <Button className="bg-darkestBrown text-white font-playfairDisplay font-bold lg:mt-6 py-2 px-4 rounded-lg hover:opacity-90">
@@ -175,8 +177,7 @@ const Home = () => {
                                 </Button>
                             </div>
 
-
-                            <div className='w-full mx-auto pt-10 '>
+                            <div className="w-full mx-auto pt-10 ">
                                 <img
                                     src={RedVelvet2}
                                     alt="Shop"
@@ -186,7 +187,6 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
             <Footer />
         </Fragment>

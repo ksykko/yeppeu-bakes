@@ -1,6 +1,5 @@
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
-
 
 const addCartItem = (
     cartItems,
@@ -43,13 +42,11 @@ const addCartItem = (
     ]
 }
 
-
 const clearCartItem = (cartItems, cartItemToClear) => {
     return cartItems.filter(
         (cartItem) => cartItem.priceId !== cartItemToClear.priceId
     )
 }
-
 
 export const CartContext = createContext({
     isCartOpen: false,
@@ -61,8 +58,8 @@ export const CartContext = createContext({
     cartCount: 0,
     cartTotal: 0,
     clearAllCartItems: () => {},
+    cartRef: null,
 })
-
 
 export const CartProvider = ({ children }) => {
     const [isCartOpen, setIsCartOpen] = useState(false)
@@ -70,11 +67,36 @@ export const CartProvider = ({ children }) => {
     const [cartCount, setCartCount] = useState(0)
     const [cartTotal, setCartTotal] = useState(0)
     const location = useLocation()
+    const cartRef = useRef(null)
 
     useEffect(() => {
-      setIsCartOpen(false)
+        const handleOutsideClick = (event) => {
+            if (cartRef.current && !cartRef.current.contains(event.target)) {
+                const isCartButton = event.target.closest('.cart-button')
+                if (!isCartButton && isCartOpen) {
+                    setIsCartOpen(false)
+                }
+            }
+        }
+        document.addEventListener('mousedown', handleOutsideClick)
+
+        return () => {
+            document.removeEventListener('mousedown', handleOutsideClick)
+        }
+    }, [cartRef, setIsCartOpen, isCartOpen])
+
+    const toggleCart = (event) => {
+        event.stopPropagation()
+        setIsCartOpen(!isCartOpen)
+    }
+
+    useEffect(() => {
+        setIsCartOpen(false)
     }, [location.pathname])
 
+    useEffect(() => {
+        setIsCartOpen(false)
+    }, [location.pathname])
 
     useEffect(() => {
         const newCartCount = cartItems.reduce(
@@ -84,15 +106,14 @@ export const CartProvider = ({ children }) => {
         setCartCount(newCartCount)
     }, [cartItems])
 
-
     useEffect(() => {
         const newCartTotal = cartItems.reduce(
-            (total, cartItem) => total + cartItem.quantity * cartItem.productCost,
+            (total, cartItem) =>
+                total + cartItem.quantity * cartItem.productCost,
             0
         )
         setCartTotal(newCartTotal)
     }, [cartItems])
-
 
     const addItemToCart = (
         productToAdd,
@@ -115,19 +136,17 @@ export const CartProvider = ({ children }) => {
         )
     }
 
-
     const clearItemFromCart = (cartItemToClear) => {
         setCartItems(clearCartItem(cartItems, cartItemToClear))
     }
 
-
     const clearAllCartItems = () => {
-        setCartItems([]);
-    };
-
+        setCartItems([])
+    }
 
     const value = {
         isCartOpen,
+        toggleCart,
         setIsCartOpen,
         addItemToCart,
         clearItemFromCart,
@@ -135,6 +154,7 @@ export const CartProvider = ({ children }) => {
         cartCount,
         cartTotal,
         clearAllCartItems,
+        cartRef,
     }
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>

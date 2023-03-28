@@ -1,19 +1,25 @@
-import { Fragment, useState, useContext } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useState, useContext } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 import { CartContext } from '../../contexts/cart-context'
+import { AlertMessageContext } from '../../contexts/alert-message.context'
 
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs'
 import { RxDotFilled } from 'react-icons/rx'
+import { MdArrowBackIosNew } from 'react-icons/md'
+
+import Button from '../button/button.component'
 
 const ProductOverview = () => {
     const location = useLocation()
+    const navigate = useNavigate()
     const { from } = location.state || { from: { pathname: '/' } }
     const { name, desc, imageUrl, price } = from
 
     const [currentIndex, setCurrentIndex] = useState(1)
-    const { addItemToCart } = useContext(CartContext)
+    const { alertMessage, showAlertMessage } = useContext(AlertMessageContext)
+    const { addItemToCart, cartItems } = useContext(CartContext)
 
     const prevSlide = () => {
         const isFirstSlide = currentIndex === 0
@@ -52,15 +58,33 @@ const ProductOverview = () => {
             selectedProduct.cost,
             additionalInstruction
         )
+
+        showAlertMessage('Item added to cart', 'success')
+    }
+
+    const handleProceedToCheckout = () => {
+        if (cartItems.length === 0) {
+            showAlertMessage('Your cart is empty', 'error')
+        } else {
+            navigate('/shop/payment')
+        }
     }
 
     return (
         <div className=" xl:max-w-5xl 2xl:max-w-6xl mx-auto pt-5 pb-10 px-4">
             {/* Back Button */}
             <div className="flex justify-between mb-5">
-                <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
-                    <Link to="/shop">Back</Link>
-                </button>
+                <Link to="/shop">
+                    <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
+                        <div className="flex items-center justify-center">
+                            <MdArrowBackIosNew
+                                size={20}
+                                className="-ml-3 mr-1"
+                            />
+                            Back
+                        </div>
+                    </button>
+                </Link>
             </div>
             {/* Container */}
             <div className="flex flex-col space-y-6 md:flex-row md:space-y-0 md:space-x-7">
@@ -195,13 +219,22 @@ const ProductOverview = () => {
                             </svg>
                         </div>
 
-                        <button
+                        <Button
                             type="button"
                             className="h-14 px-6 py-2 font-semibold bg-lightBrown text-white rounded-xl hover:opacity-90"
                             onClick={handleAddToCart}
                         >
                             Add to Cart
-                        </button>
+                        </Button>
+                        <Button
+                            type="button"
+                            className="h-14 px-4 py-2 font-semibold bg-emerald-400 text-white rounded-xl hover:opacity-90"
+                            onClick={handleProceedToCheckout}
+                        >
+                            <div className="flex items-center justify-center">
+                                Pay Now
+                            </div>
+                        </Button>
                     </div>
                 </div>
             </div>

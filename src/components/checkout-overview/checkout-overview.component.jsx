@@ -1,29 +1,56 @@
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 
 import { CartContext } from '../../contexts/cart-context'
+import { AlertMessageContext } from '../../contexts/alert-message.context'
 import { useNavigate } from 'react-router-dom'
 
 import { Link } from 'react-router-dom'
 
 import { MdPayments } from 'react-icons/md'
+import { MdArrowBackIosNew } from 'react-icons/md'
 
 import CheckoutItem from '../checkout-item/checkout-item.component'
 
 export const CheckoutOverview = () => {
     const { cartItems, cartTotal } = useContext(CartContext)
+    const { alertMessage, showAlertMessage } = useContext(AlertMessageContext)
+
     const navigate = useNavigate()
 
+    const [loading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        setIsLoading(true)
+        // simulate loading time
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 2000)
+    }, [])
+
     const goToPaymentHandler = () => {
-        navigate('/shop/payment')
+        if (cartItems.length === 0) {
+            showAlertMessage('Your cart is empty', 'error')
+
+        } else {
+            navigate('/shop/payment')
+        }
     }
 
     return (
-        <div className="max-w-7xl mx-auto pt-1 pb-10">
-            <div className="flex-col m-6 space-y-10 rounded-2xl md:flex-row md:space-y-0 bg-opacity-0">
+        <div className="max-w-5xl mx-auto pt-5 pb-10 relative">
+            <div className="flex-col space-y-10 rounded-2xl md:flex-row md:space-y-0 bg-opacity-0">
                 <div className="flex justify-between mb-5">
-                    <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
-                        <Link to="/shop">Back</Link>
-                    </button>
+                    <Link to="/shop">
+                        <button className="px-8 py-2 text-white bg-lightBrown rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90">
+                            <div className="flex items-center justify-center">
+                                <MdArrowBackIosNew
+                                    size={20}
+                                    className="-ml-3 mr-1"
+                                />
+                                Back
+                            </div>
+                        </button>
+                    </Link>
                     <button
                         className="px-8 py-2 text-white bg-emerald-400 rounded-2xl font-playfairDisplay font-semibold text-lg hover:opacity-90"
                         onClick={goToPaymentHandler}
@@ -39,7 +66,11 @@ export const CheckoutOverview = () => {
                                 <th scope="col" className="px-12 py-3">
                                     <span className="sr-only">Image</span>
                                 </th>
-                                <th scope="col" className="px-6 py-3">
+                                <th
+                                    scope="col"
+                                    colSpan="1"
+                                    className="px-6 py-3"
+                                >
                                     Product
                                 </th>
                                 <th scope="col" className="px-6 py-3">
@@ -57,29 +88,48 @@ export const CheckoutOverview = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {cartItems.map((item, index) => (
-                                <CheckoutItem
-                                    key={index}
-                                    cartItem={item}
-                                    index={index}
-                                />
-                            ))}
+                            {cartItems.length === 0 ? (
+                                <tr className="bg-lightestPeach border-b text-center hover:bg-whitePeach">
+                                    <td
+                                        colSpan="6"
+                                        className=" font-medium text-md py-10 text-darkestBrown"
+                                    >
+                                        Your cart is empty.{' '}
+                                        <Link
+                                            to="/shop"
+                                            className=" text-buttonPeach hover:underline underline-offset-4"
+                                        >
+                                            Check our baked goods!
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ) : (
+                                cartItems.map((item, index) => (
+                                    <CheckoutItem
+                                        key={index}
+                                        cartItem={item}
+                                        index={index}
+                                    />
+                                ))
+                            )}
                         </tbody>
-                        {/* Total */}
-                        <tfoot>
-                            <tr className="bg-lightestPeach border-b text-center hover:bg-whitePeach">
-                                <td className="px-6 py-4 font-semibold text-xl text-darkestBrown font-playfairDisplay">
-                                    Total:
-                                </td>
-                                <td className="px-6 py-4"></td>
-                                <td className="px-6 py-4"></td>
-                                <td className="px-6 py-4"></td>
-                                <td className="px-6 py-4 font-bold text-2xl text-center text-darkestBrown font-playfairDisplay">
-                                    ₱{cartTotal}
-                                </td>
-                                <td className="px-6 py-4"></td>
-                            </tr>
-                        </tfoot>
+
+                        {cartItems.length > 0 && (
+                            <tfoot>
+                                <tr className="bg-lightestPeach border-b text-center hover:bg-whitePeach">
+                                    <td className="px-6 py-4 font-semibold text-xl text-darkestBrown font-playfairDisplay">
+                                        Total:
+                                    </td>
+                                    <td className="px-6 py-4"></td>
+                                    <td className="px-6 py-4"></td>
+                                    <td className="px-6 py-4"></td>
+                                    <td className="px-6 py-4 font-bold text-2xl text-center text-darkestBrown font-playfairDisplay">
+                                        ₱{cartTotal}
+                                    </td>
+                                    <td className="px-6 py-4"></td>
+                                </tr>
+                            </tfoot>
+                        )}
                     </table>
                 </div>
             </div>

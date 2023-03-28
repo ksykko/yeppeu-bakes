@@ -1,5 +1,7 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+
+import { AlertMessageContext } from '../../contexts/alert-message.context'
 
 import { ReactComponent as FacebookSVG } from '../../assets/svgs/facebook.svg'
 import { ReactComponent as GoogleSVG } from '../../assets/svgs/google.svg'
@@ -27,6 +29,8 @@ const SigninForm = () => {
     const { email, password } = formFields
     const navigate = useNavigate()
 
+    const { alertMessage, showAlertMessage } = useContext(AlertMessageContext)
+
     const resetFormFields = () => {
         setFormFields(defaultFormFields)
     }
@@ -40,10 +44,12 @@ const SigninForm = () => {
             if (role === 'admin') {
                 navigate('/admin-dashboard')
             } else {
-                navigate('/shop/order-tracking')
+                navigate(`/profile/${user.displayName}`)
             }
+            showAlertMessage('You have successfully signed in', 'success')
         } catch (error) {
             console.log(error)
+            showAlertMessage('Something went wrong, please try again', 'error')
         }
     }
 
@@ -56,10 +62,12 @@ const SigninForm = () => {
             if (role === 'admin') {
                 navigate('/admin-dashboard')
             } else {
-                navigate('/shop/order-tracking')
+                navigate(`/profile/${user.displayName}`)
             }
+            showAlertMessage('You have successfully signed in', 'success')
         } catch (error) {
             console.error(error)
+            showAlertMessage('Something went wrong, please try again', 'error')
         }
     }
 
@@ -73,25 +81,26 @@ const SigninForm = () => {
             )
 
             const userSnapshot = await createUserProfileDocumentFromAuth(user)
+
             const { role } = userSnapshot.data()
             if (role === 'admin') {
                 navigate('/admin-dashboard')
             } else {
-                navigate('/shop/order-tracking')
+                navigate(`/profile/${user.displayName}`)
             }
-
+            showAlertMessage('You have successfully signed in', 'success')
             resetFormFields()
         } catch (error) {
             switch (error.code) {
                 case 'auth/wrong-password':
-                    alert('Wrong password')
+                    showAlertMessage('Wrong password', 'error')
                     break
                 case 'auth/user-not-found':
-                    alert('User not found')
+                    showAlertMessage('User not found', 'error')
                     break
                 default:
                     console.log(error)
-                    alert('Something went wrong, please try again')
+                    showAlertMessage('Something went wrong, please try again', 'error')
             }
         }
     }

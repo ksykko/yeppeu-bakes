@@ -8,6 +8,7 @@ import ViewProduct from './routes/view-product/view-product.route'
 import Checkout from './routes/checkout/checkout.route'
 import Payment from './routes/payment/payment.route'
 import UserDashBoard from './routes/user-dashboard/user-dashboard.route'
+import Invoice from './components/invoice/invoice.component'
 import AdminDashboard from './routes/admin-dashboard/admin-dashboard.route'
 
 const App = () => {
@@ -20,7 +21,12 @@ const App = () => {
             <Route path="shop/:name" element={<ViewProduct />} />
             <Route path="shop/check-out" element={<Checkout />} />
             <Route path="shop/payment" element={<Payment />} />
-            <Route path="shop/order-tracking" element={<UserDashBoard />} />
+            <Route path="profile/:userName" element={<UserDashBoard />} />
+            <Route
+                path="profile/:userName/order-tracking"
+                element={<UserDashBoard />}
+            />
+            <Route path="invoice/:orderId" element={<Invoice />} />
             <Route path="sign-up" element={<SignUp />} />
             <Route path="*" element={<h1> 404 Not Found </h1>} />
         </Routes>

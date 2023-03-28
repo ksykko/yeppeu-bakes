@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app'
+import { initializeApp, } from 'firebase/app'
 import {
     getAuth,
     signInWithRedirect,
@@ -8,6 +8,7 @@ import {
     signInWithEmailAndPassword,
     FacebookAuthProvider,
     signOut,
+    updateProfile,
     onAuthStateChanged
 } from 'firebase/auth'
 import {
@@ -20,11 +21,14 @@ import {
     writeBatch,
     query,
     getDocs,
+    updateDoc,
     serverTimestamp,
     orderBy,
     where,
     limit
 } from 'firebase/firestore'
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 
 import { getAnalytics } from "firebase/analytics";
 
@@ -61,6 +65,9 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider)
 
 // Initialize Firestore
 export const db = getFirestore();
+
+// Initialize Storage
+export const storage = getStorage(firebaseApp);
 
 
 // Add collection and documents
@@ -106,42 +113,82 @@ export const createUserProfileDocumentFromAuth = async(
     userAuth,
     additionalInfo = {}
 ) => {
-    // Check if userAuth is valid
     if (!userAuth) return;
 
-    const userDocRef = doc(db, 'users', userAuth.uid);
+    const userDocRef = doc(db, "users", userAuth.uid);
     const userSnapshot = await getDoc(userDocRef);
 
-    // If user does not exist, create user
     if (!userSnapshot.exists()) {
-        const { displayName, email } = userAuth;
+        const { displayName, email, photoURL } = userAuth;
         const createdAt = new Date();
 
         try {
+            let downloadURL = "";
+            if (photoURL) {
+                const file = await fetch(photoURL).then((res) => res.blob());
+                const storageRef = ref(
+                    storage,
+                    `users/${userAuth.uid}/avatar/${file.name}`
+                );
+                await uploadBytes(storageRef, file);
+                downloadURL = await getDownloadURL(storageRef);
+            }
+
             await setDoc(userDocRef, {
                 displayName,
                 email,
+                contactNum: null,
+                delivertAddress: null,
                 createdAt,
-                role: 'user',
-                ...additionalInfo
+                role: "user",
+                photoUrl: downloadURL,
+                ...additionalInfo,
+            });
+
+            // return the updated user document snapshot
+            return await getDoc(userDocRef);
+        } catch (error) {
+            console.log("Error creating user", error.message);
+        }
+    } else if (!userSnapshot.data().role) {
+        try {
+            await updateDoc(userDocRef, {
+                role: "user",
             });
         } catch (error) {
-            console.log('Error creating user', error.message);
+            console.log("Error updating user", error.message);
         }
     }
 
+    // return the existing user document snapshot
     return userSnapshot;
-}
+};
+
+
 
 
 // Create user with email and password
-export const createAuthUserWithEmailAndPassword = async(email, password) => {
-
+export const createAuthUserWithEmailAndPassword = async(email, password, displayName) => {
     // Check if email and password have been provided
     if (!email || !password) return;
 
-    return await createUserWithEmailAndPassword(auth, email, password)
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+
+    if (displayName) {
+        await updateProfile(user, { displayName });
+    }
+
+    // if no photoURL is provided by Google, set to null
+    if (!user.photoURL) {
+        await updateProfile(user, { photoURL: null });
+    }
+
+
+    await createUserProfileDocumentFromAuth(user);
+
+    return { user };
 }
+
 
 
 // Signin with email and password
@@ -205,7 +252,7 @@ export const storeCartItems = async(currentUser, cartItems) => {
         orderId: nextOrderId,
         userId: currentUser.uid,
         createdAt: serverTimestamp(),
-        status: 'baking',
+        status: 'preparing',
         totalCost: totalCost // Add totalCost field to orderData object
     };
     await setDoc(orderRef, orderData);
@@ -250,3 +297,33 @@ export const getCartItems = async(currentUser) => {
 
     return orders;
 };
+
+
+export const getUserAvatarURL = async(userId) => {
+    const userRef = doc(db, 'users', userId);
+    const userSnapshot = await getDoc(userRef);
+    return userSnapshot.data().avatarURL;
+}
+
+export const updateUserProfileDocument = async(userId, data) => {
+    const userDocRef = doc(db, "users", userId);
+    await updateDoc(userDocRef, data);
+};
+
+
+export const getUserProfileDocument = async(userId) => {
+    const userDocRef = doc(db, "users", userId);
+    const userSnapshot = await getDoc(userDocRef);
+    return userSnapshot.data();
+}
+
+
+export const updateUserDetailsDocument = async(userId, newContactNum, newDeliveryAddress) => {
+    const userDocRef = doc(db, "users", userId);
+    await updateDoc(userDocRef, {
+            contactNum: newContactNum,
+            deliveryAddress: newDeliveryAddress,
+        }
+
+    );
+}
