@@ -7,7 +7,7 @@ import CardBarChart from '../../cards/CardBarChart'
 
 const AdminDashboard = () => {
     return (
-        <div className="flex flex-col">
+        <div className="flex-1 flex-col">
             <div className=" ml-[15.5rem] mr-5">
                 <HeaderStats />
             </div>
