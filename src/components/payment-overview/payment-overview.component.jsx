@@ -81,6 +81,12 @@ const PaymentOverview = () => {
         setShowEditModal(true)
     }
 
+    const handleAllowOnlyNumbers = (event) => {
+        if (!/^\d+$/.test(event.key)) {
+            event.preventDefault()
+        }
+    }
+
     const handleChange = (event) => {
         const { name, value } = event.target
 
@@ -220,6 +226,8 @@ const PaymentOverview = () => {
                                                 className="w-full px-3 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors"
                                                 placeholder="XXXXXX"
                                                 type="text"
+                                                maxLength="6"
+                                                onKeyPress={handleAllowOnlyNumbers}
                                             />
                                         </div>
                                     </div>
@@ -435,16 +443,7 @@ const PaymentOverview = () => {
                                                         name="cvv"
                                                         required
                                                         onChange={handleChange}
-                                                        onKeyPress={(event) => {
-                                                            // Allow only numbers
-                                                            if (
-                                                                !/^\d+$/.test(
-                                                                    event.key
-                                                                )
-                                                            ) {
-                                                                event.preventDefault()
-                                                            }
-                                                        }}
+                                                        onKeyPress={handleAllowOnlyNumbers}
                                                         className="w-full px-3 py-2 mb-1 border border-gray-200 rounded-md focus:outline-none focus:border-lightBrown transition-colors"
                                                         placeholder="000"
                                                         type="text"

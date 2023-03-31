@@ -25,8 +25,7 @@ import { signOutUser } from '../../utils/firebase/firebase.utils'
 
 const SideNav = () => {
     const { currentUser } = useContext(UserContext)
-    const { isCartOpen, clearAllCartItems, cartRef, toggleCart } =
-        useContext(CartContext)
+    const { clearAllCartItems } = useContext(CartContext)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
     const tabs = [

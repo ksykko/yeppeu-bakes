@@ -69,25 +69,30 @@ export const CartProvider = ({ children }) => {
     const location = useLocation()
     const cartRef = useRef(null)
 
-    useEffect(() => {
-        const handleOutsideClick = (event) => {
-            if (cartRef.current && !cartRef.current.contains(event.target)) {
-                const isCartButton = event.target.closest('.cart-button')
-                if (!isCartButton && isCartOpen) {
-                    setIsCartOpen(false)
-                }
-            }
-        }
-        document.addEventListener('mousedown', handleOutsideClick)
+    // useEffect(() => {
+    //     const handleOutsideClick = (event) => {
+    //         if (cartRef.current && !cartRef.current.contains(event.target)) {
+    //             const isCartButton = event.target.closest('.cart-button')
+    //             if (!isCartButton && isCartOpen) {
+    //                 setIsCartOpen(false)
+    //             }
+    //         }
+    //     }
+    //     document.addEventListener('mousedown', handleOutsideClick)
 
-        return () => {
-            document.removeEventListener('mousedown', handleOutsideClick)
-        }
-    }, [cartRef, setIsCartOpen, isCartOpen])
+    //     return () => {
+    //         document.removeEventListener('mousedown', handleOutsideClick)
+    //     }
+    // }, [cartRef, setIsCartOpen, isCartOpen])
 
     const toggleCart = (event) => {
         event.stopPropagation()
         setIsCartOpen(!isCartOpen)
+
+        const isCartButton = event.target.closest('.cart-button')
+        if (!isCartButton && isCartOpen) {
+            setIsCartOpen(false)
+        }
     }
 
     useEffect(() => {

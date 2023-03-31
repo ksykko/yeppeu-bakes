@@ -11,7 +11,7 @@ import { CartContext } from '../../contexts/cart-context'
 import BagIcon from '../../components/bag-icon/bag-icon.component'
 import HamburgerIcon from '../../components/hamburger-icon/hamburger-icon.component'
 import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component'
-import HamburgerMenu from '../../components/hamburger-menu/hamburger-menu.component'
+// import HamburgerMenu from '../../components/hamburger-menu/hamburger-menu.component'
 
 import Logo from '../../assets/logo.png'
 
