@@ -1,7 +1,4 @@
-import { Fragment, useContext, useState, useEffect } from 'react'
-
-import { BakedGoodsContext } from '../../../contexts/baked-goods.context'
-import { OrdersContext } from '../../../contexts/orders-context'
+import { Fragment, useState, useEffect } from 'react'
 
 import { getAllCartItems } from '../../../utils/firebase/firebase.utils'
 
@@ -9,8 +6,6 @@ import { css } from '@emotion/react'
 import { BeatLoader } from 'react-spinners'
 
 const AdminOrders = () => {
-    const { bakedGoodsMap } = useContext(BakedGoodsContext)
-    const { ordersMap } = useContext(OrdersContext)
     const [isLoading, setIsLoading] = useState(true)
 
     const [allCartItems, setAllCartItems] = useState([])
@@ -31,7 +26,6 @@ const AdminOrders = () => {
         margin: 0 auto;
         border-color: red;
     `
-
 
     return (
         <Fragment>
@@ -83,13 +77,15 @@ const AdminOrders = () => {
                                         </td>
                                     </tr>
                                 ) : (
-                                    allCartItems.map((cartItem) => {
-                                        return (
-                                            <tr
-                                                key={cartItem.orderId}
-                                                className="bg-lightestPeach border-b text-center hover:bg-whitePeach text-darkestBrown font-semibold"
-                                            >
-                                                {/* <td className="px-6 py-4">
+                                    allCartItems
+                                        .sort((a, b) => b.orderId - a.orderId)
+                                        .map((cartItem) => {
+                                            return (
+                                                <tr
+                                                    key={cartItem.orderId}
+                                                    className="bg-lightestPeach border-b text-center hover:bg-whitePeach text-darkestBrown font-semibold"
+                                                >
+                                                    {/* <td className="px-6 py-4">
                                                     <img
                                                         src={
                                                             bakedGoodsMap[
@@ -100,65 +96,64 @@ const AdminOrders = () => {
                                                         className="h-28 w-28 object-cover rounded-xl"
                                                     />
                                                 </td> */}
-                                                <td className="px-6 py-4 text-center">
-                                                    #{cartItem.orderId}
-                                                </td>
-                                                <td className="px-6 py-4 text-center">
-                                                    {cartItem.createdAt &&
-                                                        new Date(
-                                                            cartItem.createdAt
-                                                                .seconds * 1000
-                                                        ).toLocaleDateString()}
-                                                </td>
-                                                <td className="px-6 py-4 text-center">
-                                                    {/* {cartItem.orderStatus} */}
-                                                    <div className="relative">
-                                                        <select
+                                                    <td className="px-6 py-4 text-center">
+                                                        #{cartItem.orderId}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-center">
+                                                        {cartItem.createdAt &&
+                                                            new Date(
+                                                                cartItem
+                                                                    .createdAt
+                                                                    .seconds *
+                                                                    1000
+                                                            ).toLocaleDateString()}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-center">
+                                                        {/* {cartItem.orderStatus} */}
+                                                        <div className="relative">
+                                                            <select className="block appearance-none w-full text-darkestBrown bg-white border border-gray-200 hover:border-lightBrown px-4 py-2 pr-8 rounded-xl shadow leading-tight focus:outline-lightBrown">
+                                                                <option>
+                                                                    <div className="h-2.5 w-2.5 rounded-full bg-orange-500"></div>
+                                                                    Pending
+                                                                </option>
+                                                                <option>
+                                                                    {
+                                                                        cartItem.status
+                                                                    }
+                                                                </option>
+                                                                <option>
+                                                                    In-Transit
+                                                                </option>
+                                                                <option>
+                                                                    Delivered
+                                                                </option>
+                                                            </select>
 
-
-                                                            className="block appearance-none w-full text-darkestBrown bg-white border border-gray-200 hover:border-lightBrown px-4 py-2 pr-8 rounded-xl shadow leading-tight focus:outline-lightBrown"
-                                                        >
-
-                                                            <option>
-                                                                <div className="h-2.5 w-2.5 rounded-full bg-orange-500"></div>
-                                                                Pending
-                                                            </option>
-                                                            <option>
-                                                                {cartItem.status}
-                                                            </option>
-                                                            <option>
-                                                                In-Transit
-                                                            </option>
-                                                            <option>
-                                                                Delivered
-                                                            </option>
-                                                        </select>
-
-                                                        <svg
-                                                            className="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            fill="none"
-                                                            viewBox="0 0 24 24"
-                                                            stroke="currentColor"
-                                                        >
-                                                            <path
-                                                                strokeLinecap="round"
-                                                                strokeLinejoin="round"
-                                                                strokeWidth="2"
-                                                                d="M8 9l4-4 4 4m0 6l-4 4-4-4"
-                                                            />
-                                                        </svg>
-                                                    </div>
-                                                </td>
-                                                <td className="px-6 py-4 text-center">
-                                                    ₱{cartItem.totalCost}
-                                                </td>
-                                                <td className="px-6 py-4 text-center">
-                                                    View Items
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
+                                                            <svg
+                                                                className="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2"
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                stroke="currentColor"
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    strokeWidth="2"
+                                                                    d="M8 9l4-4 4 4m0 6l-4 4-4-4"
+                                                                />
+                                                            </svg>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-6 py-4 text-center">
+                                                        ₱{cartItem.totalCost}
+                                                    </td>
+                                                    <td className="px-6 py-4 text-center">
+                                                        View Items
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
                                 )}
                             </tbody>
                         </table>
